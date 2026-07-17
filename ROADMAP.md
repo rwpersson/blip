@@ -41,7 +41,7 @@ and *that* handle is the one Windows focuses, so the control panel was silently
 activatable (clicking a button could steal focus from the game). See CLAUDE.md
 gotcha #1.
 
-## Phase 2 — Data model (1 day) — **now a hard blocker**
+## Phase 2 — Data model ☑ DONE
 
 The Anki-style direction (users author + import cards, see Phase 5) makes this
 non-negotiable: **global integer ids cannot survive user-created or imported
@@ -52,16 +52,19 @@ brings ids from a foreign system entirely. Do this before anyone has decks in th
 - ☑ Deck validation with human-readable errors — third-party decks *will* be malformed
 - ☑ `paths.py` routes user data to `%APPDATA%\ChinesePop\` once frozen
   (dev stays in-tree). Still to verify under a real installed build.
-- ☐ **Content-addressed audio** — key clips by `hash(say_text + voice + rate)`
-  instead of a word id. This is the keystone:
-  - ids stop being global, so authored/imported cards can't collide
-  - identical words across decks share one clip (free dedupe)
-  - a voice change re-keys instead of corrupting the cache
-  - **sharing a deck becomes sharing a small JSON** — no media bundle, no
-    redistribution question, because audio is synthesized on the recipient's machine
-- ☐ Versioned schemas + migration for `state.json` (v3) and deck files
-- ☐ Generic field rename `hanzi`→`term`, `pinyin`→`reading` + deck `language`/`voice`
-  (contained to `decks.py`; the app already reads via accessors)
+- ☑ **Content-addressed audio** (`audio/clips.py`) — clips keyed by
+  `hash(text + voice + rate)`. ids no longer decide filenames, so authored/imported
+  cards can't collide; identical speech shares one file; a voice change re-keys only
+  the affected clips. Sharing a deck = sharing a small JSON.
+- ☑ Deck schema 1 + generic fields (`term`/`reading`, deck `language`/`voice`);
+  accessors still read the old `hanzi`/`pinyin` so foreign decks keep working
+- ☑ `migrate.py` — renamed the existing 1259 clips in place (**no re-synthesis**) and
+  rewrote the decks. Real result: **1259 → 924 clips, 22 MB → 16 MB**, because 335
+  were duplicate tone read-outs.
+- ☑ `generate_audio.py --prune` removes clips nothing references
+- ☐ Verify `%APPDATA%` user-data routing under a real frozen build (needs Phase 7)
+- ☐ `state.json` migration is trivial today (v3 is additive); revisit if the shape
+  changes again
 
 ## Phase 3 — TTS: move to Piper (1–2 days)
 

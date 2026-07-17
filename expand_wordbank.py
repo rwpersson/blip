@@ -5,13 +5,19 @@ Add words to a deck.
 2. Run:  python expand_wordbank.py --deck <deck-id>
          (deck-id is the decks/<id>.json filename, e.g. week-2)
 
-IDs are assigned automatically and are globally unique (max id across ALL decks
-+ 1), so audio never collides. Entries whose `hanzi` already exists in ANY deck
-are skipped, so it's safe to re-run. After adding, run generate_audio.py.
+Word fields are language-neutral: `term` (was hanzi) and `reading` (was pinyin);
+`tones` is optional and Chinese-specific.
+
+IDs only need to be unique *within* a deck — audio is content-addressed, so ids no
+longer decide filenames. We still allocate them globally for tidiness. Entries whose
+`term` already exists in ANY deck are skipped, so it's safe to re-run. After adding,
+run generate_audio.py.
 """
 import json
 import sys
 from pathlib import Path
+
+from chinesepop import decks as decks_mod
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -21,10 +27,10 @@ except Exception:
 ROOT = Path(__file__).resolve().parent
 DECKS_DIR = ROOT / "decks"
 
-# Each entry: hanzi, pinyin, tones, cat, meaning, note (+ optional alt / say).
+# Each entry: term, reading, tones, cat, meaning, note (+ optional alt / say).
 # cat: hsk | idiom | slang | swear | gaming | common
 NEW = [
-    # {"hanzi": "词", "pinyin": "cí", "tones": "2", "cat": "hsk",
+    # {"term": "词", "reading": "cí", "tones": "2", "cat": "hsk",
     #  "meaning": "word", "note": "example note"},
 ]
 
@@ -57,16 +63,18 @@ def main():
     deck = json.loads(path.read_text(encoding="utf-8"))
     deck.setdefault("words", [])
     every = _all_words()
-    existing = {w["hanzi"] for w in every}
+    # read via the accessor so this works whether decks are pre- or post-migration
+    existing = {decks_mod.word_term(w) for w in every}
     nid = _next_id(every)
     added = 0
     for w in NEW:
-        if w["hanzi"] in existing:
+        term = decks_mod.word_term(w)
+        if term in existing:
             continue
         entry = {"id": f"{nid:02d}"}
         entry.update(w)
         deck["words"].append(entry)
-        existing.add(w["hanzi"])
+        existing.add(term)
         nid += 1
         added += 1
     path.write_text(json.dumps(deck, ensure_ascii=False, indent=2),

@@ -76,6 +76,12 @@ class App:
         self._refresh_decks()
 
     # ---------- decks ----------
+    @property
+    def deck(self):
+        """The active deck — carries its own language/voice, so it must be passed
+        to anything that synthesizes or plays audio."""
+        return self.decks[self.deck_index]
+
     def _initial_deck(self):
         if self.s.active_deck:
             for i, d in enumerate(self.decks):
@@ -151,11 +157,12 @@ class App:
             # read-out; audio events drive the flash.
             self.card.render_answer(word)
             self.flash.render(word)
-            player.play_word(word, self.s, on_event=self._fx_emit, chime=chiming)
+            player.play_word(word, self.s, self.deck, on_event=self._fx_emit,
+                             chime=chiming)
         else:
             self.card.place()
             self.card.show()
-            player.play_word(word, self.s, chime=chiming)
+            player.play_word(word, self.s, self.deck, chime=chiming)
             if self.s.reveal_quiz and self.s.reveal_delay > 0 and not self._is_new:
                 self._reveal_job = self.root.after(
                     int(self.s.reveal_delay * 1000), lambda w=word: self._reveal(w))
@@ -230,7 +237,7 @@ class App:
 
     def replay(self):
         if self.current:
-            player.play_word(self.current, self.s)
+            player.play_word(self.current, self.s, self.deck)
 
     def toggle_annoy(self):
         self.annoying = not self.annoying

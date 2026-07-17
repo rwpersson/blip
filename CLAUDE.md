@@ -16,11 +16,12 @@ stealing focus or the cursor. Windows-only.
 - **Generic language overlay**: decks declare their own `language`/`voice`; tones and
   readings are optional Chinese niceties, not the core model. Chinese stays the
   flagship (tone colors, tone read-out) but isn't hardcoded.
-- **Consequence to respect**: because users author and import cards, word ids
-  **cannot** stay globally-unique integers keyed to audio files — audio becomes
-  content-addressed (`hash(text+voice+rate)`). Don't build anything new that assumes
-  id↔audio coupling. Deck sharing then = sharing a small JSON; audio is synthesized
-  on the recipient's machine.
+- **Audio is content-addressed** (done, Phase 2): the filename is
+  `hash(text + voice + rate)`, never the word id. This is what lets people author and
+  import cards — two users can both author id `421`, and Anki ids can arrive from a
+  foreign system, without anyone clobbering anyone's audio. Deck sharing = sharing a
+  small JSON; the recipient synthesizes locally. **Word ids now only need to be
+  unique within a deck** (they identify progress in state.json, nothing else).
 
 ## Run / test / regenerate
 
@@ -36,8 +37,10 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
 ## Current state (keep this updated)
 
 - **Decks** (`decks/*.json`, loaded in filename order): 1st Week (226), Week 2 (75),
-  Week 3 (62), Week 4 (57) = **420 words**, ids `01`–`420`.
-- **Audio**: `audio/<id>.mp3`, `<id>_tones.mp3`, `<id>_meaning.mp3` — **1259 clips, ~22 MB**.
+  Week 3 (62), Week 4 (57) = **420 words**. Deck schema 1 (`term`/`reading`).
+- **Audio**: **content-addressed** — `audio/<hash>.mp3` where the hash covers
+  `text + voice + rate` (see `audio/clips.py`). **924 clips, ~16 MB** (down from 1259
+  / 22 MB: 335 were duplicate tone read-outs that now share one file).
 - **Voices**: word = `zh-CN-YunyangNeural` @ `-15%` (clear news-anchor male, chosen so
   tones are audible); English tone/meaning read-out = `en-US-GuyNeural`.
 - **Cues**: `sounds/*.wav` — 4 chimes + got/miss, synthesized at runtime from the
@@ -68,12 +71,18 @@ generate_audio.py · new_deck.py · expand_wordbank.py    (thin CLIs)
 
 | Data | Shape |
 |---|---|
-| `decks/<id>.json` | `{"name":…, "language":"zh-CN", "voice":null, "words":[…]}` |
-| word | `{id,hanzi,pinyin,tones,cat,meaning,note,alt?,say?}` |
+| `decks/<id>.json` | `{"schema":1,"name":…,"language":"zh-CN","voice":null,"words":[…]}` |
+| word | `{id, term, reading?, tones?, cat, meaning, note, alt?, say?}` |
 | `state.json` | `{"schema":3,"decks":{<id>:{"words":{id:{e,due,intro}},"last":id}},"last_deck":…}` |
 
 **Read words via `decks.word_term/word_reading/word_tones/word_say`**, never
-`w["hanzi"]` — that's what makes the Phase-2 generic rename a one-file change.
+`w["term"]`/`w["hanzi"]` — the accessors still tolerate the old `hanzi`/`pinyin`
+names, which is what keeps imported/third-party decks working.
+
+`audio/clips.py` is the **single source of truth** for what audio a word needs and
+where it lives: `tts.py` generates from `specs_for()`, `player.py` plays from
+`paths_for()`, so generation and playback can't disagree about a filename. Anything
+that touches audio goes through it — never build a path by hand.
 
 `cat` ∈ `hsk | slang | swear | gaming | idiom | common` (drives the pill color).
 `say` overrides the TTS text when `hanzi` has latin/digits (`666` → `六六六`).

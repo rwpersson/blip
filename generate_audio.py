@@ -3,6 +3,11 @@ Generate the spoken audio for every word in every deck.
 
     python generate_audio.py            # fill in anything missing
     python generate_audio.py --force    # rebuild everything (after a voice change)
+    python generate_audio.py --prune    # also delete clips nothing references
+
+Clips are content-addressed (see chinesepop/audio/clips.py), so this only ever
+synthesizes speech that doesn't already exist — identical words across decks share
+a file, and changing a voice re-keys just the affected clips rather than the lot.
 
 This is a thin CLI over chinesepop.audio.tts — the voices, the profanity filter
 and the clip layout all live in the package, so there's one source of truth.
@@ -45,6 +50,11 @@ def main():
         log.info("All audio already present. Nothing to do.")
     else:
         log.info("Done: %s/%s generated. Files in %s", ok, total, paths.audio_dir())
+
+    if "--prune" in sys.argv:
+        n, freed = tts.prune(decks, s)
+        log.info("Pruned %s unreferenced clip(s), freed %.1f MB",
+                 n, freed / 1_000_000)
     return 0
 
 
