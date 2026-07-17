@@ -1,0 +1,563 @@
+{
+  "name": "Week 3",
+  "words": [
+    {
+      "id": "302",
+      "hanzi": "弊端",
+      "pinyin": "bì duān",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "a drawback; malpractice",
+      "note": "制度弊端 = the flaws baked into a system."
+    },
+    {
+      "id": "303",
+      "hanzi": "隐瞒",
+      "pinyin": "yǐn mán",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to conceal; cover up",
+      "note": "隐瞒真相 = hide the truth. Deliberate concealment, not mere silence."
+    },
+    {
+      "id": "304",
+      "hanzi": "揣测",
+      "pinyin": "chuǎi cè",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to conjecture; second-guess",
+      "note": "妄加揣测 = to speculate baselessly."
+    },
+    {
+      "id": "305",
+      "hanzi": "铺垫",
+      "pinyin": "pū diàn",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "groundwork; foreshadowing",
+      "note": "做铺垫 = lay the groundwork. In stories: setup for a later payoff."
+    },
+    {
+      "id": "306",
+      "hanzi": "渊源",
+      "pinyin": "yuān yuán",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "origin; deep roots",
+      "note": "历史渊源 = deep historical origins."
+    },
+    {
+      "id": "307",
+      "hanzi": "蓄意",
+      "pinyin": "xù yì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "deliberate; premeditated",
+      "note": "蓄意破坏 = wilful sabotage. Always negative."
+    },
+    {
+      "id": "308",
+      "hanzi": "侥幸",
+      "pinyin": "jiǎo xìng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "by sheer luck; a fluke",
+      "note": "侥幸心理 = the 'I'll probably get away with it' mindset."
+    },
+    {
+      "id": "309",
+      "hanzi": "拙劣",
+      "pinyin": "zhuō liè",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "clumsy; inept; shoddy",
+      "note": "拙劣的借口 = a pathetic excuse."
+    },
+    {
+      "id": "310",
+      "hanzi": "恰当",
+      "pinyin": "qià dàng",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "appropriate; apt",
+      "note": "用词恰当 = well-chosen wording."
+    },
+    {
+      "id": "311",
+      "hanzi": "妥当",
+      "pinyin": "tuǒ dàng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "proper; settled; squared away",
+      "note": "安排妥当 = all properly arranged."
+    },
+    {
+      "id": "312",
+      "hanzi": "磋商",
+      "pinyin": "cuō shāng",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "to consult; negotiate",
+      "note": "双方磋商 = the two sides are in talks. Formal/diplomatic."
+    },
+    {
+      "id": "313",
+      "hanzi": "呈现",
+      "pinyin": "chéng xiàn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to present; take on (an appearance)",
+      "note": "呈现出新的面貌 = takes on a whole new look."
+    },
+    {
+      "id": "314",
+      "hanzi": "凸显",
+      "pinyin": "tū xiǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to highlight; stand out sharply",
+      "note": "凸显优势 = make the advantage stand out."
+    },
+    {
+      "id": "315",
+      "hanzi": "折射",
+      "pinyin": "zhé shè",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to refract; reflect indirectly",
+      "note": "折射出社会问题 = indirectly mirrors deeper social issues."
+    },
+    {
+      "id": "316",
+      "hanzi": "剖析",
+      "pinyin": "pōu xī",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "to dissect; analyze deeply",
+      "note": "深入剖析 = take it apart and examine it thoroughly."
+    },
+    {
+      "id": "317",
+      "hanzi": "界定",
+      "pinyin": "jiè dìng",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to define; delimit",
+      "note": "界定范围 = pin down the scope."
+    },
+    {
+      "id": "318",
+      "hanzi": "沦为",
+      "pinyin": "lún wéi",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to be reduced to (something worse)",
+      "note": "沦为笑柄 = to become a laughingstock. Always a fall."
+    },
+    {
+      "id": "319",
+      "hanzi": "彰显",
+      "pinyin": "zhāng xiǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to manifest; showcase",
+      "note": "彰显实力 = put one's strength on full display."
+    },
+    {
+      "id": "320",
+      "hanzi": "兼容",
+      "pinyin": "jiān róng",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "compatible; to accommodate both",
+      "note": "兼容并包 = inclusive of all. Also tech 'compatible'."
+    },
+    {
+      "id": "321",
+      "hanzi": "造诣",
+      "pinyin": "zào yì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "attainments; mastery (in a field)",
+      "note": "造诣很深 = deeply accomplished. For art/scholarship."
+    },
+    {
+      "id": "322",
+      "hanzi": "潜规则",
+      "pinyin": "qián guī zé",
+      "tones": "2-1-2",
+      "cat": "slang",
+      "meaning": "unspoken rules; the shady real rules",
+      "note": "行业潜规则 = the dirty open secret of how an industry really works."
+    },
+    {
+      "id": "323",
+      "hanzi": "爆冷",
+      "pinyin": "bào lěng",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "an upset; a shock result",
+      "note": "爆冷门 = the underdog wins. Sports/competition staple."
+    },
+    {
+      "id": "324",
+      "hanzi": "打脸",
+      "pinyin": "dǎ liǎn",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "to be proven wrong; egg on your face",
+      "note": "被打脸了 = reality slapped me. Said what wouldn't happen — then it did."
+    },
+    {
+      "id": "325",
+      "hanzi": "反转",
+      "pinyin": "fǎn zhuǎn",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "a plot twist; a reversal",
+      "note": "剧情反转 = the story flips. Common in news/drama takes."
+    },
+    {
+      "id": "326",
+      "hanzi": "割韭菜",
+      "pinyin": "gē jiǔ cài",
+      "tones": "1-3-4",
+      "cat": "slang",
+      "meaning": "to fleece the suckers",
+      "note": "'Cutting chives' — they grow back, so you harvest naive investors/customers again and again."
+    },
+    {
+      "id": "327",
+      "hanzi": "躺枪",
+      "pinyin": "tǎng qiāng",
+      "tones": "3-1",
+      "cat": "slang",
+      "meaning": "to catch a stray; hit by crossfire",
+      "note": "我又躺枪了 = I got dragged in for nothing. From 躺着也中枪."
+    },
+    {
+      "id": "328",
+      "hanzi": "人设",
+      "pinyin": "rén shè",
+      "tones": "2-4",
+      "cat": "slang",
+      "meaning": "a public persona; character image",
+      "note": "人设崩塌 = the persona collapses when the truth comes out."
+    },
+    {
+      "id": "329",
+      "hanzi": "恰饭",
+      "pinyin": "qià fàn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "to take sponsorship; gotta eat",
+      "note": "恰饭视频 = a sponsored video. Half-apologetic 'a creator's gotta eat'."
+    },
+    {
+      "id": "330",
+      "hanzi": "上岸",
+      "pinyin": "shàng àn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "to make it; land the job/pass the exam",
+      "note": "考研上岸 = passed the grad exam. Literally 'reached the shore'."
+    },
+    {
+      "id": "331",
+      "hanzi": "双标",
+      "pinyin": "shuāng biāo",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "a double standard",
+      "note": "你这是双标 = you're applying two different rules."
+    },
+    {
+      "id": "332",
+      "hanzi": "杠精",
+      "pinyin": "gàng jīng",
+      "tones": "4-1",
+      "cat": "slang",
+      "meaning": "a contrarian troll; argue-for-argument's-sake type",
+      "note": "抬杠 = to bicker; 杠精 is the person who does it professionally."
+    },
+    {
+      "id": "333",
+      "hanzi": "键盘侠",
+      "pinyin": "jiàn pán xiá",
+      "tones": "4-2-2",
+      "cat": "slang",
+      "meaning": "a keyboard warrior",
+      "note": "Brave and righteous online, invisible in real life."
+    },
+    {
+      "id": "334",
+      "hanzi": "柠檬精",
+      "pinyin": "níng méng jīng",
+      "tones": "2-2-1",
+      "cat": "slang",
+      "meaning": "a jealous person; sour-grapes type",
+      "note": "我柠檬了 = I'm so jealous. 'Lemon spirit' — sour with envy."
+    },
+    {
+      "id": "335",
+      "hanzi": "舔狗",
+      "pinyin": "tiǎn gǒu",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "a simp; a boot-licker",
+      "note": "Crude and mocking: someone who grovels for affection and gets nothing back."
+    },
+    {
+      "id": "336",
+      "hanzi": "海王",
+      "pinyin": "hǎi wáng",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "a player juggling many romantic options",
+      "note": "'Aquaman' — he keeps a whole sea of fish on the line."
+    },
+    {
+      "id": "337",
+      "hanzi": "绿茶",
+      "pinyin": "lǜ chá",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "a sweet-seeming manipulator",
+      "note": "Innocent on the surface, calculating underneath. Usually aimed at women — loaded/sexist."
+    },
+    {
+      "id": "338",
+      "hanzi": "冤种",
+      "pinyin": "yuān zhǒng",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "a sucker; a poor sap",
+      "note": "大冤种 = the world's biggest chump. Self-deprecating and affectionate."
+    },
+    {
+      "id": "339",
+      "hanzi": "泪目",
+      "pinyin": "lèi mù",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "teary-eyed; moved to tears",
+      "note": "泪目了 = I'm welling up. Common in comments on touching clips."
+    },
+    {
+      "id": "340",
+      "hanzi": "心态崩了",
+      "pinyin": "xīn tài bēng le",
+      "tones": "1-4-1-·",
+      "cat": "slang",
+      "meaning": "I've lost it; totally tilted",
+      "note": "Your mental game collapsed — gaming, exams, anything."
+    },
+    {
+      "id": "341",
+      "hanzi": "求生欲",
+      "pinyin": "qiú shēng yù",
+      "tones": "2-1-4",
+      "cat": "slang",
+      "meaning": "'survival instinct' — a save-your-skin save",
+      "note": "求生欲很强 = quick save! Saying exactly the right thing to avoid trouble (esp. with a partner)."
+    },
+    {
+      "id": "342",
+      "hanzi": "妈的",
+      "pinyin": "mā de",
+      "tones": "1-·",
+      "cat": "swear",
+      "meaning": "damn it",
+      "note": "Everyday curse; 他妈的 is the stronger, more aggressive version."
+    },
+    {
+      "id": "343",
+      "hanzi": "混账",
+      "pinyin": "hùn zhàng",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "scoundrel; damn (you)",
+      "note": "混账话 = outrageous talk. Slightly old-fashioned, still cutting."
+    },
+    {
+      "id": "344",
+      "hanzi": "畜生",
+      "pinyin": "chù sheng",
+      "tones": "4-·",
+      "cat": "swear",
+      "meaning": "beast; brute (of a person)",
+      "note": "A savage insult — calling someone subhuman. Very harsh."
+    },
+    {
+      "id": "345",
+      "hanzi": "猪头",
+      "pinyin": "zhū tóu",
+      "tones": "1-2",
+      "cat": "swear",
+      "meaning": "dummy; pighead",
+      "note": "Mild and often playful/affectionate between friends or couples."
+    },
+    {
+      "id": "346",
+      "hanzi": "二逼",
+      "pinyin": "èr bī",
+      "tones": "4-1",
+      "cat": "swear",
+      "meaning": "dumbass (vulgar)",
+      "note": "二 (dumb) + the crude 逼. Rude; cousin of 傻逼."
+    },
+    {
+      "id": "347",
+      "hanzi": "傻叉",
+      "pinyin": "shǎ chā",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "idiot (censor-dodging 傻逼)",
+      "note": "Written to slip past filters; still clearly an insult."
+    },
+    {
+      "id": "348",
+      "hanzi": "见鬼",
+      "pinyin": "jiàn guǐ",
+      "tones": "4-3",
+      "cat": "swear",
+      "meaning": "damn it!; what the hell",
+      "note": "'See a ghost.' Mild exclamation of frustration."
+    },
+    {
+      "id": "349",
+      "hanzi": "该死",
+      "pinyin": "gāi sǐ",
+      "tones": "1-3",
+      "cat": "swear",
+      "meaning": "damn!; blast it",
+      "note": "该死的 = damned/blasted (as a modifier). Fairly mild."
+    },
+    {
+      "id": "350",
+      "hanzi": "有病",
+      "pinyin": "yǒu bìng",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "you're sick / out of your mind",
+      "note": "你有病啊 = what's wrong with you?! Rude; cf. 神经病."
+    },
+    {
+      "id": "351",
+      "hanzi": "不要脸",
+      "pinyin": "bú yào liǎn",
+      "tones": "2-4-3",
+      "cat": "swear",
+      "meaning": "shameless!; no shame",
+      "note": "真不要脸 = utterly shameless. A serious accusation in Chinese culture."
+    },
+    {
+      "id": "352",
+      "hanzi": "缺德",
+      "pinyin": "quē dé",
+      "tones": "1-2",
+      "cat": "swear",
+      "meaning": "rotten; immoral; low",
+      "note": "缺德玩意 = a rotten piece of work. Accuses you of having no morals."
+    },
+    {
+      "id": "353",
+      "hanzi": "一针见血",
+      "pinyin": "yī zhēn jiàn xuè",
+      "tones": "1-1-4-4",
+      "cat": "idiom",
+      "meaning": "to hit the nail on the head",
+      "note": "'One needle draws blood' — a remark that cuts straight to the point."
+    },
+    {
+      "id": "354",
+      "hanzi": "醍醐灌顶",
+      "pinyin": "tí hú guàn dǐng",
+      "tones": "2-2-4-3",
+      "cat": "idiom",
+      "meaning": "a sudden flash of enlightenment",
+      "note": "Like having wisdom poured over your head — everything clicks at once."
+    },
+    {
+      "id": "355",
+      "hanzi": "顺其自然",
+      "pinyin": "shùn qí zì rán",
+      "tones": "4-2-4-2",
+      "cat": "idiom",
+      "meaning": "to let nature take its course",
+      "note": "Stop forcing it; let things unfold. Cousin of 佛系."
+    },
+    {
+      "id": "356",
+      "hanzi": "无济于事",
+      "pinyin": "wú jì yú shì",
+      "tones": "2-4-2-4",
+      "cat": "idiom",
+      "meaning": "of no help at all",
+      "note": "后悔也无济于事 = regretting it won't fix anything."
+    },
+    {
+      "id": "357",
+      "hanzi": "力不从心",
+      "pinyin": "lì bù cóng xīn",
+      "tones": "4-4-2-1",
+      "cat": "idiom",
+      "meaning": "willing but unable",
+      "note": "The spirit is ready but the strength isn't there."
+    },
+    {
+      "id": "358",
+      "hanzi": "三思而行",
+      "pinyin": "sān sī ér xíng",
+      "tones": "1-1-2-2",
+      "cat": "idiom",
+      "meaning": "think thrice before you act",
+      "note": "Look before you leap."
+    },
+    {
+      "id": "359",
+      "hanzi": "抬",
+      "pinyin": "tái",
+      "tones": "2",
+      "cat": "gaming",
+      "meaning": "to carry (lift) a teammate",
+      "note": "抬不动了 = I can't carry them anymore. Cf. 带 / 躺赢."
+    },
+    {
+      "id": "360",
+      "hanzi": "混子",
+      "pinyin": "hùn zi",
+      "tones": "4-·",
+      "cat": "gaming",
+      "meaning": "a slacker; dead weight",
+      "note": "A player who coasts and contributes nothing."
+    },
+    {
+      "id": "361",
+      "hanzi": "排位",
+      "pinyin": "pái wèi",
+      "tones": "2-4",
+      "cat": "gaming",
+      "meaning": "ranked queue",
+      "note": "打排位 = grind ranked. Cf. 上分."
+    },
+    {
+      "id": "362",
+      "hanzi": "秒杀",
+      "pinyin": "miǎo shā",
+      "tones": "3-1",
+      "cat": "gaming",
+      "meaning": "to insta-kill; one-shot",
+      "note": "被秒杀 = deleted instantly. Also a 'flash sale' in shopping."
+    },
+    {
+      "id": "363",
+      "hanzi": "复活",
+      "pinyin": "fù huó",
+      "tones": "4-2",
+      "cat": "gaming",
+      "meaning": "to respawn; revive",
+      "note": "复活时间 = respawn timer."
+    }
+  ]
+}

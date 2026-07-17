@@ -1,0 +1,518 @@
+{
+  "name": "Week 4",
+  "words": [
+    {
+      "id": "364",
+      "hanzi": "顾虑",
+      "pinyin": "gù lǜ",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "misgivings; qualms",
+      "note": "有顾虑 = to have reservations; 打消顾虑 = put someone's worries to rest."
+    },
+    {
+      "id": "365",
+      "hanzi": "蜕变",
+      "pinyin": "tuì biàn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to transform; metamorphose",
+      "note": "完成蜕变 = complete a profound change (like a cicada shedding its shell)."
+    },
+    {
+      "id": "366",
+      "hanzi": "萌芽",
+      "pinyin": "méng yá",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to sprout; the first signs",
+      "note": "萌芽阶段 = the budding/early stage of something."
+    },
+    {
+      "id": "367",
+      "hanzi": "弥漫",
+      "pinyin": "mí màn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to permeate; fill the air",
+      "note": "硝烟弥漫 = smoke filling the air; also a mood/atmosphere spreading."
+    },
+    {
+      "id": "368",
+      "hanzi": "静谧",
+      "pinyin": "jìng mì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "tranquil; serene",
+      "note": "静谧的夜晚 = a hushed, peaceful night. Literary."
+    },
+    {
+      "id": "369",
+      "hanzi": "惬意",
+      "pinyin": "qiè yì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "cozy; content; pleasant",
+      "note": "过得很惬意 = living comfortably and at ease."
+    },
+    {
+      "id": "370",
+      "hanzi": "舒缓",
+      "pinyin": "shū huǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "soothing; gentle; unhurried",
+      "note": "舒缓的音乐 = mellow, relaxing music."
+    },
+    {
+      "id": "371",
+      "hanzi": "婉转",
+      "pinyin": "wǎn zhuǎn",
+      "tones": "3-3",
+      "cat": "hsk",
+      "meaning": "tactful; roundabout; melodious",
+      "note": "婉转地拒绝 = decline gently/indirectly."
+    },
+    {
+      "id": "372",
+      "hanzi": "拘泥",
+      "pinyin": "jū nì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to be a stickler; rigid",
+      "note": "不拘泥于形式 = not hung up on formalities. Note 泥 is read nì here."
+    },
+    {
+      "id": "373",
+      "hanzi": "潦草",
+      "pinyin": "liáo cǎo",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "sloppy; careless (writing/work)",
+      "note": "字迹潦草 = messy, scrawled handwriting."
+    },
+    {
+      "id": "374",
+      "hanzi": "琐碎",
+      "pinyin": "suǒ suì",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "trivial; petty; fiddly",
+      "note": "琐碎的小事 = a pile of trivial little tasks."
+    },
+    {
+      "id": "375",
+      "hanzi": "精简",
+      "pinyin": "jīng jiǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to streamline; trim down",
+      "note": "精简机构 = slim down an organization; cut the fat."
+    },
+    {
+      "id": "376",
+      "hanzi": "甄别",
+      "pinyin": "zhēn bié",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "to screen; tell apart",
+      "note": "甄别真伪 = distinguish real from fake. Formal."
+    },
+    {
+      "id": "377",
+      "hanzi": "筛选",
+      "pinyin": "shāi xuǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to filter; screen out",
+      "note": "层层筛选 = filter through stage after stage."
+    },
+    {
+      "id": "378",
+      "hanzi": "归纳",
+      "pinyin": "guī nà",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to sum up; generalize",
+      "note": "归纳总结 = distill and summarize. Opposite of 演绎 (deduce)."
+    },
+    {
+      "id": "379",
+      "hanzi": "诠释",
+      "pinyin": "quán shì",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to interpret; give meaning to",
+      "note": "完美诠释 = to embody/express something perfectly."
+    },
+    {
+      "id": "380",
+      "hanzi": "洞察",
+      "pinyin": "dòng chá",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to discern; see through",
+      "note": "洞察力 = keen insight; the ability to read situations."
+    },
+    {
+      "id": "381",
+      "hanzi": "领悟",
+      "pinyin": "lǐng wù",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to grasp; comprehend",
+      "note": "领悟其中的道理 = grasp the underlying point."
+    },
+    {
+      "id": "382",
+      "hanzi": "顿悟",
+      "pinyin": "dùn wù",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "a sudden realization; epiphany",
+      "note": "刹那顿悟 = it all clicks in an instant. From Zen enlightenment."
+    },
+    {
+      "id": "383",
+      "hanzi": "揣摩",
+      "pinyin": "chuǎi mó",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to figure out; read (intentions)",
+      "note": "揣摩心思 = try to work out what someone's really thinking."
+    },
+    {
+      "id": "384",
+      "hanzi": "梗",
+      "pinyin": "gěng",
+      "tones": "3",
+      "cat": "slang",
+      "meaning": "a meme; a gag; a running joke",
+      "note": "接梗 = play along with a joke; 玩梗 = riff on memes; 老梗 = a stale joke."
+    },
+    {
+      "id": "385",
+      "hanzi": "玩梗",
+      "pinyin": "wán gěng",
+      "tones": "2-3",
+      "cat": "slang",
+      "meaning": "to riff on memes / inside jokes",
+      "note": "别玩梗了 = quit doing the bit."
+    },
+    {
+      "id": "386",
+      "hanzi": "谐音梗",
+      "pinyin": "xié yīn gěng",
+      "tones": "2-1-3",
+      "cat": "slang",
+      "meaning": "a pun; a homophone joke",
+      "note": "谐音梗扣钱 = 'puns get you fined' — a jokey groan at bad puns."
+    },
+    {
+      "id": "387",
+      "hanzi": "拉黑",
+      "pinyin": "lā hēi",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "to block (someone)",
+      "note": "被拉黑了 = got blocked. From adding to a blacklist."
+    },
+    {
+      "id": "388",
+      "hanzi": "主打",
+      "pinyin": "zhǔ dǎ",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "to go all-in on; the whole vibe is",
+      "note": "主打一个真实 = 'the whole point is keeping it real.' Trendy 主打一个X frame."
+    },
+    {
+      "id": "389",
+      "hanzi": "那咋了",
+      "pinyin": "nà zǎ le",
+      "tones": "4-3-·",
+      "cat": "slang",
+      "meaning": "so what?; and?",
+      "note": "Defiant shrug. 'Yeah, and? What about it?' 咋 = 怎么 (NE)."
+    },
+    {
+      "id": "390",
+      "hanzi": "血赚",
+      "pinyin": "xuè zhuàn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "a massive win; a total steal",
+      "note": "这波血赚 = came out way ahead on that one. Opposite of 血亏."
+    },
+    {
+      "id": "391",
+      "hanzi": "血亏",
+      "pinyin": "xuè kuī",
+      "tones": "4-1",
+      "cat": "slang",
+      "meaning": "a massive loss; got wrecked",
+      "note": "亏麻了 territory — you lost big."
+    },
+    {
+      "id": "392",
+      "hanzi": "端水",
+      "pinyin": "duān shuǐ",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "to stay perfectly even-handed",
+      "note": "端水大师 = a master of not taking sides / treating everyone equally. 'Carrying the water level.'"
+    },
+    {
+      "id": "393",
+      "hanzi": "会玩",
+      "pinyin": "huì wán",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "knows how to have fun; slick move",
+      "note": "你可真会玩 = 'wow, you really know how to do it' — admiring or teasing."
+    },
+    {
+      "id": "394",
+      "hanzi": "高能",
+      "pinyin": "gāo néng",
+      "tones": "1-2",
+      "cat": "slang",
+      "meaning": "intense; epic (moment)",
+      "note": "前方高能 = 'intense scene ahead' — brace yourself. From bullet-comment culture."
+    },
+    {
+      "id": "395",
+      "hanzi": "神仙打架",
+      "pinyin": "shén xiān dǎ jià",
+      "tones": "2-1-3-4",
+      "cat": "slang",
+      "meaning": "top-tier people going head to head",
+      "note": "'Immortals fighting' — when elites compete and mortals can only watch."
+    },
+    {
+      "id": "396",
+      "hanzi": "老铁",
+      "pinyin": "lǎo tiě",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "bro; ride-or-die buddy",
+      "note": "老铁们 = 'my dudes'. From NE dialect + livestream culture (铁 = solid/close)."
+    },
+    {
+      "id": "397",
+      "hanzi": "点赞",
+      "pinyin": "diǎn zàn",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "to like; give a thumbs-up",
+      "note": "求点赞 = please hit like. Also figurative: 为你点赞 = props to you."
+    },
+    {
+      "id": "398",
+      "hanzi": "刷屏",
+      "pinyin": "shuā píng",
+      "tones": "1-2",
+      "cat": "slang",
+      "meaning": "to flood the screen / feed",
+      "note": "刷屏了 = it's all over my feed; everyone's posting about it."
+    },
+    {
+      "id": "399",
+      "hanzi": "尼玛",
+      "pinyin": "ní mǎ",
+      "tones": "2-3",
+      "cat": "swear",
+      "meaning": "damn; wtf",
+      "note": "A filter-dodging respelling of 你妈. Rude exclamation of anger/disbelief."
+    },
+    {
+      "id": "400",
+      "hanzi": "妈蛋",
+      "pinyin": "mā dàn",
+      "tones": "1-4",
+      "cat": "swear",
+      "meaning": "dang it; damn it",
+      "note": "A softened, half-cute curse — milder than 妈的."
+    },
+    {
+      "id": "401",
+      "hanzi": "傻缺",
+      "pinyin": "shǎ quē",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "idiot; dumbass",
+      "note": "Northeastern flavor; in the 傻逼 family but a bit less crude."
+    },
+    {
+      "id": "402",
+      "hanzi": "脑残",
+      "pinyin": "nǎo cán",
+      "tones": "3-2",
+      "cat": "swear",
+      "meaning": "brain-dead; moron",
+      "note": "脑残粉 = a mindless fanboy/stan. Offensive (ableist)."
+    },
+    {
+      "id": "403",
+      "hanzi": "弱智",
+      "pinyin": "ruò zhì",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "moron; imbecile",
+      "note": "Literally 'feeble-minded' — an ableist slur used as 'idiot'. Very rude."
+    },
+    {
+      "id": "404",
+      "hanzi": "犯贱",
+      "pinyin": "fàn jiàn",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "to act contemptibly; ask for it",
+      "note": "你犯贱啊 = you're being pathetic/asking for trouble. Harsh."
+    },
+    {
+      "id": "405",
+      "hanzi": "欠揍",
+      "pinyin": "qiàn zòu",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "asking for a beating; punchable",
+      "note": "欠揍是吧 = 'you want a smack, huh?' Often half-joking between friends."
+    },
+    {
+      "id": "406",
+      "hanzi": "混球",
+      "pinyin": "hún qiú",
+      "tones": "2-2",
+      "cat": "swear",
+      "meaning": "scoundrel; jerk",
+      "note": "混球儿 (with 儿) = a good-for-nothing. Cousin of 混蛋."
+    },
+    {
+      "id": "407",
+      "hanzi": "死鬼",
+      "pinyin": "sǐ guǐ",
+      "tones": "3-3",
+      "cat": "swear",
+      "meaning": "'you devil' (scolding / flirty)",
+      "note": "Often affectionate between couples: 你个死鬼 = 'you naughty thing'. Context is everything."
+    },
+    {
+      "id": "408",
+      "hanzi": "神经",
+      "pinyin": "shén jīng",
+      "tones": "2-1",
+      "cat": "swear",
+      "meaning": "crazy; nuts",
+      "note": "有神经病吧 / 你神经啊 = 'are you insane?'. Short for 神经病. Rude."
+    },
+    {
+      "id": "409",
+      "hanzi": "一举两得",
+      "pinyin": "yī jǔ liǎng dé",
+      "tones": "1-3-3-2",
+      "cat": "idiom",
+      "meaning": "kill two birds with one stone",
+      "note": "One move, two gains."
+    },
+    {
+      "id": "410",
+      "hanzi": "集思广益",
+      "pinyin": "jí sī guǎng yì",
+      "tones": "2-1-3-4",
+      "cat": "idiom",
+      "meaning": "pool everyone's ideas",
+      "note": "Gather many minds to get the best result. Common in meetings."
+    },
+    {
+      "id": "411",
+      "hanzi": "独当一面",
+      "pinyin": "dú dāng yī miàn",
+      "tones": "2-1-1-4",
+      "cat": "idiom",
+      "meaning": "to hold down the fort solo",
+      "note": "能独当一面 = capable of taking full charge of an area on your own."
+    },
+    {
+      "id": "412",
+      "hanzi": "举一反三",
+      "pinyin": "jǔ yī fǎn sān",
+      "tones": "3-1-3-1",
+      "cat": "idiom",
+      "meaning": "to extrapolate from one example",
+      "note": "Learn one thing and apply it to many. The mark of a quick learner."
+    },
+    {
+      "id": "413",
+      "hanzi": "一蹴而就",
+      "pinyin": "yī cù ér jiù",
+      "tones": "1-4-2-4",
+      "cat": "idiom",
+      "meaning": "to achieve in a single step",
+      "note": "Usually negated: 不是一蹴而就的 = it won't happen overnight."
+    },
+    {
+      "id": "414",
+      "hanzi": "循规蹈矩",
+      "pinyin": "xún guī dǎo jǔ",
+      "tones": "2-1-3-3",
+      "cat": "idiom",
+      "meaning": "to play strictly by the rules",
+      "note": "Toe the line; do everything by the book (can imply overly rigid)."
+    },
+    {
+      "id": "415",
+      "hanzi": "打野",
+      "pinyin": "dǎ yě",
+      "tones": "3-3",
+      "cat": "gaming",
+      "meaning": "to jungle (MOBA role)",
+      "note": "打野节奏 = the jungler's tempo. 反野 = invade the enemy jungle."
+    },
+    {
+      "id": "416",
+      "hanzi": "补位",
+      "pinyin": "bǔ wèi",
+      "tones": "3-4",
+      "cat": "gaming",
+      "meaning": "to fill an open role/position",
+      "note": "我来补位 = I'll flex to fill the missing slot."
+    },
+    {
+      "id": "417",
+      "hanzi": "蹲",
+      "pinyin": "dūn",
+      "tones": "1",
+      "cat": "gaming",
+      "meaning": "to camp; lie in wait",
+      "note": "蹲草丛 = hide in the bush to ambush. 蹲他 = camp that guy."
+    },
+    {
+      "id": "418",
+      "hanzi": "空大",
+      "pinyin": "kōng dà",
+      "tones": "1-4",
+      "cat": "gaming",
+      "meaning": "to whiff your ultimate",
+      "note": "大招空了 = the ult missed entirely. A painful waste (see 大招)."
+    },
+    {
+      "id": "419",
+      "hanzi": "集合",
+      "pinyin": "jí hé",
+      "tones": "2-2",
+      "cat": "gaming",
+      "meaning": "to group up; regroup",
+      "note": "中路集合 = rally mid. Also everyday 'to gather/assemble'."
+    },
+    {
+      "id": "420",
+      "hanzi": "猥琐发育",
+      "pinyin": "wěi suǒ fā yù",
+      "tones": "3-3-1-4",
+      "cat": "gaming",
+      "meaning": "to farm quietly and scale up",
+      "note": "猥琐发育别浪 = play it safe, keep farming, don't overextend."
+    }
+  ]
+}

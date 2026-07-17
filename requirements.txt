@@ -1,0 +1,8 @@
+# Runtime
+# TTS generation. edge-tts is the current generator; Phase 3 replaces it with
+# Piper (offline, MIT) — see ROADMAP.md. Everything else (tkinter, winsound,
+# ctypes/Win32, wave) is Python stdlib, so there are no other runtime deps.
+edge-tts>=6.1
+
+# Dev / test
+pytest>=8.0
