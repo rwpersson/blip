@@ -205,18 +205,20 @@ These each cost real debugging. Verify them after touching windowing/audio.
     everything comes out tiny. The two go together; never enable one alone.
 12. **`winfo_screenwidth()` is the PRIMARY monitor only.** Place windows using
     `win32.monitor_rect(settings.monitor)`, which is threaded through as `app.rect`.
-13. **Don't churn `Tk()` roots.** Creating one *per test* dies partway through with
-    `invalid command name "tcl_findLibrary"`. A handful of module-scoped roots is
-    fine (verified: `test_win32` + `test_window_fit` coexist in either order) — it's
-    repeated create/destroy that breaks Tcl. So: one root per test *module*, shared
-    by a module-scoped fixture; never a function-scoped one. **A module fixture must
-    also not `destroy()` its root at teardown** — the *next* module's `Tk()` then hits
-    the same churn, which errored `test_window_fit` in ~half of all runs. Stop the
-    audio, `withdraw()`, and let process exit clean up. Same reason: never leave
-    `after()` timers pending on a root (poll-for-layout retries did); bind
-    `<Configure>` instead and let Tk tell you when it laid the widget out.
-    Separately: focus-hungry windows (settings, editor, first-run) are their own
-    *processes* — the overlay's root is no-activate and must stay that way.
+13. **ONE `Tk()` root per PROCESS — in the tests too.** An earlier version of this
+    note claimed "a handful of module-scoped roots is fine (verified: `test_win32` +
+    `test_window_fit` coexist in either order)". **That was wrong.** A second root in
+    a live process errored `test_window_fit` in ~half of all full-suite runs, as
+    either `invalid command name "tcl_findLibrary"` or `couldn't read file init.tcl:
+    No error` — two faces of the same thing, which is why chasing the message
+    misleads. It isn't create/destroy churn specifically; a *second interpreter* is
+    the problem, alive or not. So: reuse `tk._default_root` if it exists
+    (`test_window_fit`'s `root` fixture), never `destroy()` a root you didn't create,
+    and don't destroy one at teardown either — let process exit do it. Note the app
+    already obeys this: settings/editor/first-run are separate **processes**, which
+    is the same rule, not a coincidence. Also never leave `after()` timers pending on
+    a root (poll-for-layout retries did) — bind `<Configure>` and let Tk tell you
+    when it laid the widget out.
 14. **Rounded corners come from a window REGION** (`SetWindowRgn`), not DWM's corner
     preference — DWM rounding doesn't apply to layered, override-redirect windows.
     The region is in **pixels**, so it must be re-applied on every `place()`; the card

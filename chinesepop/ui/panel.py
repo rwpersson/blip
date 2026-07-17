@@ -176,10 +176,13 @@ class Panel:
         name = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB,
                         font=(self.f, 9, "bold"), anchor="w")
         name.pack(side="left", padx=(6, 0))
-        # The chevron only appears on the current deck: it's the affordance for
-        # "there are others", and it's the thing you click to put them away again.
-        chev = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB, font=(self.f, 7))
-        chev.pack(side="right", padx=(4, 6))
+        # Only on the current deck: it's the whole affordance for "there are
+        # others". It shipped as a 7px glyph — the dimmest thing on the panel —
+        # and went unnoticed, so it gets a word and a readable size like every
+        # other control here.
+        chev = tk.Label(head, text="", bg=theme.BG, fg=theme.FG,
+                        font=(self.f, 8, "bold"))
+        chev.pack(side="right", padx=(6, 6))
         count = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB, font=(self.f, 7))
         count.pack(side="right")
         bar = tk.Canvas(row, height=3, bg=theme.BG, highlightthickness=0, bd=0,
@@ -242,8 +245,10 @@ class Panel:
             # and a chevron pointing the wrong way is a lie about what a click does.
             # With one deck there's nothing to open, so it promises nothing.
             mine = i == self.deck_index and len(self.deck_rows) > 1
-            r["chev"].configure(
-                text=("▴" if self.expanded else "▾") if mine else "")
+            n = len(self.deck_rows) - 1
+            r["chev"].configure(text="" if not mine else (
+                "▴  close" if self.expanded
+                else f"▾  {n} more deck{'s' if n > 1 else ''}"))
         for r in show:                  # re-pack in order; pack_forget appends
             r["row"].pack(fill="x", pady=1)
         self.deck_list.update_idletasks()
