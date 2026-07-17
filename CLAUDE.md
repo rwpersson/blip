@@ -172,7 +172,11 @@ These each cost real debugging. Verify them after touching windowing/audio.
    both `winfo_id()` and `GetParent()`**. Withdrawing first is what makes realizing
    safe: realizing a *visible* window maps and activates it (the old flash-to-
    foreground bug). `tests/test_win32.py::test_windows_are_no_activate` asserts this
-   on every window — keep it.
+   on every window — keep it. **This applies to _every_ Toplevel, not just the
+   obvious three.** Panel tooltips are windows too, created over the game on
+   hover, so `_Tooltip._show()` calls `prevent_focus_steal()` + `show_no_activate()`
+   like everything else (`test_tooltips_do_not_steal_focus`). Any new window =
+   the same two calls.
 2. **Never `deiconify()`.** Show with `ShowWindow(SW_SHOWNOACTIVATE)`; hide with
    `SW_HIDE`. Tk's own map/unmap can activate the window.
 3. **Click-through** = `WS_EX_TRANSPARENT` (+ layered). The card and flash are
@@ -223,6 +227,12 @@ These each cost real debugging. Verify them after touching windowing/audio.
     for 583px of content and lost both its buttons. Also **pack action bars before
     expanding content** — pack allocates space in order, so a bar packed last is the
     first thing squeezed out. `tests/test_window_fit.py` guards both.
+17. **Every button needs a word, and only one may be filled.** The panel shipped as
+    nine identical buttons in one row; users could not tell what "📝" did (it meant
+    *make your own flashcards*), and the primary action looked exactly like the
+    destructive one. Group by job, label with text, fill exactly one button (Play),
+    and put Quit away from the controls people press. `test_every_panel_button_has_a_word`
+    guards the labels. Icon-only is only ever acceptable with a `_Tooltip`.
 
 ## Testing
 
