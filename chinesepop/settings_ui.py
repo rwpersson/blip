@@ -72,6 +72,8 @@ SPEC = [
          "The panel only — the text stays solid."),
         ("card_radius", "Corner rounding (px, 0 = square)", "int", (0, 40), ""),
         ("margin", "Margin from screen edge (px)", "int", (0, 300), ""),
+        ("panel_max_deck_rows", "Deck list: rows before it scrolls", "int", (3, 40),
+         "The panel shows only the current deck; click it to open the list."),
         ("hanzi_size", "Term size", "int", (12, 160), ""),
         ("pinyin_size", "Reading size", "int", (8, 80), ""),
         ("halo_thickness", "Outline thickness", "int", (0, 6),

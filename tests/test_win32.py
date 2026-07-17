@@ -120,6 +120,37 @@ def test_windows_are_no_activate(app):
         assert win32.ex_style(win) & win32.WS_EX_NOACTIVATE, f"{win} can take focus"
 
 
+def test_overlay_never_calls_deiconify():
+    """Gotcha #2: show with ShowWindow(SW_SHOWNOACTIVATE), never deiconify() —
+    Tk's own map/unmap can activate the window.
+
+    A *static* check, and deliberately so: mutation testing showed that nothing
+    else catches this. Swapping show_no_activate() for deiconify() leaves every
+    other test in this file green, because Windows refuses our process the
+    foreground while another app owns it — so on a developer's desktop a broken
+    overlay can't demonstrate the theft, and the behavioural test below passes
+    vacuously. AST, not grep: the word appears in docstrings that explain the rule.
+
+    Only the overlay is covered. Settings/editor/first-run are separate processes
+    and are *supposed* to want focus.
+    """
+    import ast
+
+    pkg = HERE.parent / "chinesepop"
+    files = [pkg / "app.py", pkg / "win32.py", *sorted((pkg / "ui").glob("*.py"))]
+    offenders = []
+    for f in files:
+        tree = ast.parse(f.read_text(encoding="utf-8"), filename=str(f))
+        for node in ast.walk(tree):
+            if (isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Attribute)
+                    and node.func.attr == "deiconify"):
+                offenders.append(f"{f.name}:{node.lineno}")
+    assert not offenders, (
+        f"{offenders} call deiconify(); use win32.show_no_activate() — Tk's map "
+        "can activate the window and pull focus off the game")
+
+
 def test_dpi_scale_is_sane(app):
     """Asserted here because this module owns the process's only Tk root."""
     scale = win32.scale_for_window(app.root)
@@ -279,8 +310,20 @@ def test_click_at_card_center_passes_through(app, words):
 
 
 def test_pops_never_steal_focus_from_another_process(app, words, tmp_path):
-    """The headline guarantee. A window in another process must keep focus while
-    we fire pops at it."""
+    """Pops must not take the foreground from another process's window.
+
+    KNOW WHAT THIS IS WORTH. Mutation testing (strip the NOACTIVATE style, swap
+    show_no_activate() for deiconify()) says this test catches NONE of it on a
+    desktop where another app owns the foreground: Windows won't grant our
+    process the foreground either, so a thoroughly broken overlay still can't
+    steal it here, and this passes. It has teeth only when the helper actually
+    wins the foreground (an idle desktop, CI).
+
+    What genuinely guards the invariant is test_windows_are_no_activate (the
+    style, which mutation testing does catch) and test_overlay_never_calls_
+    deiconify. This stays because it's the only end-to-end, cross-process check
+    of the real thing — but don't mistake it for the safety net.
+    """
     # A per-run file: the helper outlives a failed run by up to 25s, and a shared
     # fixed path let one run read the previous run's stale HWND.
     hwnd_file = str(tmp_path / "helper_hwnd.txt")

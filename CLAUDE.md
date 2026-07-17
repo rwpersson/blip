@@ -262,8 +262,26 @@ These each cost real debugging. Verify them after touching windowing/audio.
 **real Win32 state**, because pure-logic tests cannot prove the two things the app
 lives or dies on — that a pop never steals focus, and that the cursor passes through
 the card. It spawns a **separate-process** window (`helper_window.py`) as a stand-in
-for your game and checks `GetForegroundWindow()` never moves. That test is what caught
-gotcha #1. Pump `root.update()` in a loop rather than calling `mainloop()`.
+for your game and checks `GetForegroundWindow()` never moves. Pump `root.update()` in
+a loop rather than calling `mainloop()`.
+
+**But know what that foreground test is worth — it is not the safety net.** Mutation
+testing (strip the NOACTIVATE style; swap `show_no_activate()` for `deiconify()`) found
+it catches **none** of those regressions on a normal desktop: Windows won't grant *our*
+process the foreground while another app owns it, so a thoroughly broken overlay can't
+steal focus there either and the test passes vacuously. It only bites when the helper
+actually wins the foreground (idle desktop / CI). What genuinely guards the invariant:
+
+| Guard | Catches |
+|---|---|
+| `test_windows_are_no_activate` | the NOACTIVATE style going missing (incl. gotcha #1's wrapper) |
+| `test_overlay_never_calls_deiconify` | gotcha #2 — static (AST), because nothing behavioural sees it |
+| `test_pops_never_steal_focus…` | the real end-to-end thing, *when the desktop cooperates* |
+
+Re-run the mutation check after touching `win32.py`: break each defense, confirm
+something goes red. A test that cannot fail is decoration — this one silently was.
+Same lesson elsewhere: `tests/test_settings_ui.py` exists because a typo'd key in the
+spec-driven `SPEC` yields a control that changes nothing, with no error.
 
 Isolation: always point `state_file` at a tmp path (`conftest.py` does) — the real
 `state.json` is the user's progress.
