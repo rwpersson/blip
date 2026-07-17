@@ -22,7 +22,7 @@ class Panel:
         self.decks = decks
         self.a = actions
         self.visible = False
-        f = settings.font
+        f = theme.ui_font(root)      # the panel is prose, not CJK
 
         outer = tk.Frame(root, bg=theme.BORDER)
         outer.pack(fill="both", expand=True)
@@ -80,7 +80,8 @@ class Panel:
 
     def _btn(self, parent, text, cmd, wide=False):
         b = tk.Label(parent, text=text, bg=theme.BTN, fg=theme.FG,
-                     font=(self.s.font, 9, "bold"), padx=(10 if wide else 8),
+                     font=(theme.ui_font(self.root), 9, "bold"),
+                     padx=(10 if wide else 8),
                      pady=4, cursor="hand2")
         b.bind("<Button-1>", lambda e: cmd())
         b.bind("<Enter>", lambda e: b.configure(bg=theme.BTN_HI))
@@ -129,10 +130,13 @@ class Panel:
     def place(self, rect=None):
         self.root.update_idletasks()
         w = self.root.winfo_reqwidth()
+        h = self.root.winfo_reqheight()
         mx, my, mw, _mh = rect or (0, 0, self.root.winfo_screenwidth(),
                                    self.root.winfo_screenheight())
         self.root.geometry(f"+{mx + mw - w - self.s.margin}+{my + self.s.margin}")
-        return self.root.winfo_reqheight()
+        if self.s.get("card_radius"):
+            win32.round_window(self.root, int(self.s.card_radius), size=(w, h))
+        return h
 
     def show(self, rect=None):
         self.place(rect)

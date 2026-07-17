@@ -58,6 +58,7 @@ DEFAULTS = {
     # --- appearance ---
     "card_width": 360,
     "card_alpha": 0.62,           # panel only; text stays solid
+    "card_radius": 12,            # rounded corners (0 = square)
     "margin": 24,
     "hanzi_size": 50,
     "pinyin_size": 17,

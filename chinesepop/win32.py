@@ -240,3 +240,41 @@ def monitor_rect(index=0):
         index = 0                       # a monitor that was unplugged
     m = mons[index]
     return m["x"], m["y"], m["width"], m["height"]
+
+
+# ---------------------------- appearance ------------------------------------
+_gdi32 = windll.gdi32
+_gdi32.CreateRoundRectRgn.restype = wintypes.HRGN
+_gdi32.CreateRoundRectRgn.argtypes = [ctypes.c_int] * 6
+_user32.SetWindowRgn.restype = ctypes.c_int
+_user32.SetWindowRgn.argtypes = [wintypes.HWND, wintypes.HRGN, wintypes.BOOL]
+
+
+def round_window(win, radius, size=None):
+    """Clip a window to a rounded rectangle.
+
+    A hard rectangle is the thing that makes an overlay look pasted on. We do it
+    with a window *region* rather than DWM's corner preference because DWM
+    rounding doesn't apply to layered, override-redirect windows like ours —
+    a region clips anything.
+
+    Must be re-applied whenever the window resizes: the region is in pixels.
+    """
+    if radius <= 0:
+        return
+    hwnd = hwnd_of(win)
+    if size:
+        w, h = size
+    else:
+        win.update_idletasks()
+        w, h = win.winfo_width(), win.winfo_height()
+    if w <= 1 or h <= 1:
+        return
+    # +1: CreateRoundRectRgn's bottom/right are exclusive
+    rgn = _gdi32.CreateRoundRectRgn(0, 0, w + 1, h + 1, radius, radius)
+    if rgn:
+        _user32.SetWindowRgn(hwnd, rgn, True)   # window owns the region now
+
+
+def unround_window(win):
+    _user32.SetWindowRgn(hwnd_of(win), None, True)

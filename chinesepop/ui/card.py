@@ -22,7 +22,8 @@ class Card:
     def __init__(self, root, settings):
         self.root = root
         self.s = settings
-        f = settings.font
+        f = theme.ui_font(root)          # prose: a real UI face, not the CJK one
+        self.cjk = settings.font         # the term itself needs CJK glyphs
 
         # --- layer 1: semi-transparent backing panel ---
         self.back = tk.Toplevel(root, bg=theme.BORDER)
@@ -50,35 +51,39 @@ class Card:
 
         body = tk.Frame(self.text, bg=theme.BG)
         body.pack(fill="both", expand=True, padx=1, pady=1)
+        P, PL = theme.PAD, theme.PAD_L
 
         top = tk.Frame(body, bg=theme.BG)
-        top.pack(fill="x", padx=14, pady=(12, 0))
-        self.cat_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.BG,
-                                font=(f, 9, "bold"), padx=8, pady=1)
-        self.cat_lbl.pack(side="left")
+        top.pack(fill="x", padx=PL, pady=(P + 4, 0))
+        # a dot, not a filled pill — category is context, tones are the signal
+        self.cat_dot = tk.Label(top, text="●", bg=theme.BG, fg=theme.SUB,
+                                font=(f, 8))
+        self.cat_dot.pack(side="left")
+        self.cat_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.SUB,
+                                font=(f, 8, "bold"))
+        self.cat_lbl.pack(side="left", padx=(4, 0))
         self.new_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.NEW_BADGE,
-                                font=(f, 9, "bold"))
-        self.new_lbl.pack(side="left", padx=(6, 0))
+                                font=(f, 8, "bold"))
+        self.new_lbl.pack(side="left", padx=(P, 0))
         self.count_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.SUB,
-                                  font=(f, 9))
+                                  font=(f, 8))
         self.count_lbl.pack(side="right")
 
         self.term_cv = tk.Canvas(body, bg=theme.BG, highlightthickness=0, bd=0)
-        self.term_cv.pack(anchor="w", padx=12, pady=(2, 0))
+        self.term_cv.pack(anchor="w", padx=PL - 4, pady=(2, 0))
         self.alt_lbl = tk.Label(body, text="", bg=theme.BG, fg=theme.SUB,
-                                font=(f, 10), justify="left")
-        self.alt_lbl.pack(anchor="w", padx=14)
+                                font=(f, 9), justify="left")
+        self.alt_lbl.pack(anchor="w", padx=PL)
         self.reading_cv = tk.Canvas(body, bg=theme.BG, highlightthickness=0, bd=0)
-        self.reading_cv.pack(anchor="w", padx=12, pady=(6, 0))
-        wrap = settings.card_width - 28
+        self.reading_cv.pack(anchor="w", padx=PL - 4, pady=(4, 0))
+        wrap = settings.card_width - PL * 2
         self.meaning_lbl = tk.Label(body, text="", bg=theme.BG, fg=theme.MEAN,
-                                    font=(f, 13, "bold"), justify="left",
-                                    wraplength=wrap)
-        self.meaning_lbl.pack(anchor="w", padx=14, pady=(6, 0))
+                                    font=(f, 12), justify="left", wraplength=wrap)
+        self.meaning_lbl.pack(anchor="w", padx=PL, pady=(P, 0))
         self.note_lbl = tk.Label(body, text="", bg=theme.BG, fg=theme.SUB,
-                                 font=(f, 10), justify="left", wraplength=wrap)
-        self.note_lbl.pack(anchor="w", padx=14, pady=(6, 0))
-        tk.Frame(body, bg=theme.BG, height=12).pack()
+                                 font=(f, 9), justify="left", wraplength=wrap)
+        self.note_lbl.pack(anchor="w", padx=PL, pady=(6, 0))
+        tk.Frame(body, bg=theme.BG, height=P + 4).pack()
 
         win32.make_click_through(self.back)
         win32.make_click_through(self.text)
@@ -87,14 +92,14 @@ class Card:
     def render_prompt(self, word, is_new, seen, known, total):
         """Characters + counters only; the answer stays hidden for the recall beat."""
         cat = word.get("cat", "common")
-        self.cat_lbl.configure(text=f" {cat.upper()} ", fg="#12141a",
-                               bg=theme.CAT_COLORS.get(cat, theme.SUB))
+        self.cat_dot.configure(fg=theme.CAT_COLORS.get(cat, theme.SUB))
+        self.cat_lbl.configure(text=cat.upper())
         self.new_lbl.configure(text="✦ NEW" if is_new else "")
         self.count_lbl.configure(text=f"seen {seen}×   ·   {known}/{total} learned")
         render.draw_row(self.term_cv, [(decks_mod.word_term(word), theme.FG)],
-                        self.s.hanzi_size, self.s.font, self.s.halo_thickness)
+                        self.s.hanzi_size, self.cjk, self.s.halo_thickness)
         self.alt_lbl.configure(text="")
-        render.draw_row(self.reading_cv, [], self.s.pinyin_size, self.s.font)
+        render.draw_row(self.reading_cv, [], self.s.pinyin_size, self.cjk)
         self.meaning_lbl.configure(text="🤔  recall it…", fg=theme.SUB)
         self.note_lbl.configure(text="")
 
@@ -102,7 +107,7 @@ class Card:
         alt = word.get("alt")
         self.alt_lbl.configure(text=f"also: {alt}" if alt else "")
         render.draw_row(self.reading_cv, render.reading_segments(word),
-                        self.s.pinyin_size, self.s.font, self.s.halo_thickness)
+                        self.s.pinyin_size, self.cjk, self.s.halo_thickness)
         self.meaning_lbl.configure(text=censor_display(word.get("meaning", "")),
                                    fg=theme.MEAN)
         self.note_lbl.configure(text=word.get("note", ""))
@@ -121,6 +126,12 @@ class Card:
         y = my + self.s.margin
         self.back.geometry(f"{w}x{h}+{x}+{y}")
         self.text.geometry(f"+{x}+{y}")
+        # Round the backing panel — a hard rectangle is what makes an overlay look
+        # pasted on. Only the panel needs it: the text layer's background is
+        # colour-keyed away, so it has no corners to show. Re-applied every place()
+        # because the region is in pixels and the card resizes with its content.
+        if self.s.get("card_radius"):
+            win32.round_window(self.back, int(self.s.card_radius), size=(w, h))
 
     def show(self):
         win32.show_no_activate(self.back)      # panel first, text on top

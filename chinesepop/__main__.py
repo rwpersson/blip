@@ -2,6 +2,7 @@
 import sys
 
 from . import decks as decks_mod
+from . import firstrun
 from . import paths, settings as settings_mod, win32
 from .app import App
 from .audio import cues, tts
@@ -13,6 +14,7 @@ def main(argv=None):
     log = get("main")
     paths.ensure_dirs()
 
+    first = firstrun.is_first_run()
     s = settings_mod.load()
     # Must happen before any window exists, or Windows renders us at 96 DPI and
     # bitmap-stretches the result (blurry text on any scaled display).
@@ -39,6 +41,19 @@ def main(argv=None):
                  len(decks), len(all_decks),
                  sum(len(d["words"]) for d in decks),
                  sum(len(d["words"]) for d in all_decks))
+
+    if first:
+        # Show the welcome BEFORE synthesizing: the first run has ~900 clips to
+        # make, and a stranger staring at a silent screen deserves to know why.
+        # It can also change hide_swears, which decides what we synthesize at all.
+        log.info("First run — showing the welcome window")
+        s = firstrun.show(deck_count=len(decks),
+                          word_count=sum(len(d["words"]) for d in decks),
+                          clips_needed=len(tts.missing_clips(decks, s)))
+        decks = decks_mod.apply_filters(all_decks, s)
+        if not decks:
+            log.error("Every deck is filtered out.")
+            return 1
 
     ok, total = tts.generate(decks, s)
     if total:

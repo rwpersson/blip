@@ -33,6 +33,7 @@ stealing focus or the cursor. Windows-only.
 python -m chinesepop                   # run the overlay (or run.bat)
 python -m chinesepop.editor            # deck editor / importer (standalone)
 python -m chinesepop.settings_ui       # settings (standalone)
+python -m chinesepop.firstrun          # the welcome window (auto-shown on run 1)
 python -m pytest tests -q              # the suite MUST stay green
 python generate_audio.py               # fill in any missing audio
 python generate_audio.py --force       # rebuild ALL audio (after a voice change)
@@ -203,8 +204,17 @@ These each cost real debugging. Verify them after touching windowing/audio.
 13. **Only ONE `Tk()` root per process, ever.** A second one after the first is
     destroyed dies with `invalid command name "tcl_findLibrary"`. Tests share a
     module-scoped root (`test_win32.py`); don't create Tk in other test modules.
-    Focus-hungry windows (settings, editor) are separate *processes* for the same
-    reason — the overlay's root is no-activate and must stay that way.
+    Focus-hungry windows (settings, editor, first-run) are separate *processes* for
+    the same reason — the overlay's root is no-activate and must stay that way.
+14. **Rounded corners come from a window REGION** (`SetWindowRgn`), not DWM's corner
+    preference — DWM rounding doesn't apply to layered, override-redirect windows.
+    The region is in **pixels**, so it must be re-applied on every `place()`; the card
+    resizes with its content. Only the *backing* panel is clipped: the text layer's
+    background is colour-keyed away, so it has no corners to show.
+15. **The overlay works over fullscreen games** (confirmed: Minecraft, PUBG). Don't
+    add "pause when fullscreen" — it was on the roadmap and was dropped because it
+    would break the main use case. Only genuinely *exclusive* fullscreen (older DX
+    titles) can hide an overlay, and no app can fix that.
 
 ## Testing
 

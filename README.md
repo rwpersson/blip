@@ -209,6 +209,10 @@ stays clickable as normal.
 
 ## Note on fullscreen games
 
-The overlay floats over normal and **borderless-windowed** games. True
-*exclusive fullscreen* can hide any overlay — if you don't see the pop, switch
-that game to Borderless/Windowed mode.
+The overlay floats over windowed, borderless, **and fullscreen** games — confirmed
+in Minecraft and PUBG on fullscreen. Modern Windows composits most "fullscreen"
+games in a way that still lets a topmost overlay draw over them.
+
+A genuinely *exclusive* fullscreen game (older titles, some DX9/DX11 ones) can
+still hide any overlay. If a pop never appears, switch that game to Borderless or
+Windowed — that's a limitation of every overlay, not something this app can fix.

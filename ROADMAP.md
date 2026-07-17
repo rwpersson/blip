@@ -100,7 +100,7 @@ promise that justified Piper in the first place.
   polyphone guesser, since the author specified the reading. Pairs with the Phase-5
   `pypinyin` auto-fill.
 
-## Phase 4 — Product UX ◐ (settings/DPI/monitors/filters done)
+## Phase 4 — Product UX ☑ DONE (tray moved to Phase 7)
 
 Everything a stranger needs that you don't, because you edit the source.
 
@@ -108,8 +108,11 @@ Everything a stranger needs that you don't, because you edit the source.
   panel. Spec-driven (`SPEC` in settings_ui.py): 39 settings across 8 tabs, so adding
   one is a single line. Launches as its own process — it needs focus, the overlay
   must never take it.
-- ☐ **First-run wizard** — pick decks, set interval, test the overlay, explain the
-  hotkeys and the fullscreen caveat
+- ☑ **First-run welcome** (`firstrun.py`) — shown *before* the ~900-clip first
+  synthesis, so a silent screen is explained rather than mysterious. Tells you the
+  three things you can't guess (the panel is hidden; the hotkeys; fullscreen is
+  fine), and offers interval / hide-swears / annoying-mode up front. Its own
+  process, like Settings.
 - ☑ **Deck manager** — enable/disable decks (Settings ▸ Content). ☐ reorder
 - ☑ **Rebindable hotkeys** + conflict detection: a **Test** button probes whether the
   combo is actually free (RegisterHotKey is the only honest check), duplicates within
@@ -124,8 +127,13 @@ Everything a stranger needs that you don't, because you edit the source.
   `enabled_decks` picks what's in rotation. Filters copy rather than mutate, so the
   editor still sees every card; a deck emptied by a filter is dropped rather than
   stalling the scheduler.
-- ☐ Tray icon (show/hide/quit/pause) — more discoverable than a hidden panel
-- ☐ Pause when a fullscreen app is foreground / do-not-disturb
+- → **Tray icon: moved to Phase 7.** It needs an .ico asset, which packaging
+  needs anyway, so they're one job. Discoverability is covered meanwhile by the
+  first-run welcome, the launch peek at the panel, and the console line.
+- ✗ ~~Pause when a fullscreen app is foreground~~ — **dropped**: the overlay
+  demonstrably works over fullscreen Minecraft and PUBG, so this would break the
+  main use case rather than protect it. The premise ("fullscreen hides overlays")
+  was wrong for modern Windows.
 
 ## Phase 5 — User content: author, generate, import ☑ DONE ★
 
@@ -177,6 +185,8 @@ Acceptable — it's one short request per new card, and playback is cached forev
 
 ## Phase 7 — Packaging & release (1–2 days)
 
+- ☐ **App icon** (.ico) — needed by PyInstaller *and* by the tray icon; do them together
+- ☐ **Tray icon** — show/hide panel, pause, quit (moved from Phase 4)
 - ☐ **PyInstaller** build (one-folder), icon, version info — users will not install Python
 - ☐ Installer (Inno Setup) **or** portable zip; per-user install avoids admin
 - ☐ Code signing, or document the SmartScreen warning (unsigned = scary first-run)
@@ -187,7 +197,8 @@ Acceptable — it's one short request per new card, and playback is cached forev
 ## Phase 8 — Polish & distribution
 
 - ☐ README with GIFs/screenshots, landing page or itch.io/GitHub Releases
-- ☐ Onboarding docs: fullscreen-exclusive caveat, antivirus false-positives (PyInstaller)
+- ☐ Onboarding docs: antivirus false-positives (PyInstaller), the rare
+  exclusive-fullscreen caveat
 - ☐ Accessibility: font scaling, colorblind-safe tone palette (red/green tones today)
 - ☐ Opt-in telemetry only, if at all
 
@@ -232,5 +243,6 @@ rename is a single-file change later.
 - **edge-tts licensing** — the one thing that can actually stop a release (Phase 3).
 - **Global word ids** — decks are not portable until audio is content-addressed (Phase 2).
 - **Antivirus/SmartScreen** false positives on unsigned PyInstaller binaries.
-- **Exclusive-fullscreen games** can hide any overlay; must be documented, not fixed.
+- **Truly exclusive-fullscreen games** (older DX titles) can hide any overlay.
+  Rare in practice — fullscreen Minecraft/PUBG are fine — but document it.
 - **Regression risk** in the Win32 invariants listed in `CLAUDE.md` — keep the tests.

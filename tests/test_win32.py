@@ -112,6 +112,38 @@ def test_dpi_scale_is_sane(app):
     assert win32.dpi_for_window(app.root) >= 96
 
 
+def test_card_panel_is_rounded_but_text_layer_is_not(app, words):
+    """Rounded corners come from a window REGION (DWM rounding doesn't apply to
+    layered override-redirect windows). Only the panel needs clipping — the text
+    layer's background is colour-keyed away, so it has no corners to show."""
+    u.GetWindowRgn.argtypes = [wintypes.HWND, wintypes.HRGN]
+    probe = win32._gdi32.CreateRectRgn(0, 0, 1, 1)
+    app.annoying = False
+    app._show(words[0])
+    pump(app, 0.3)
+    assert u.GetWindowRgn(win32.hwnd_of(app.card.back), probe) != 0
+    assert u.GetWindowRgn(win32.hwnd_of(app.card.text), probe) == 0
+
+
+def test_rounding_survives_a_resize(app, words):
+    """The region is in pixels, so it must be re-applied every place() — the card
+    resizes with its content."""
+    u.GetWindowRgn.argtypes = [wintypes.HWND, wintypes.HRGN]
+    probe = win32._gdi32.CreateRectRgn(0, 0, 1, 1)
+    app.annoying = False
+    for w in words[:2]:
+        app._show(w)
+        pump(app, 0.3)
+        assert u.GetWindowRgn(win32.hwnd_of(app.card.back), probe) != 0
+
+
+def test_zero_radius_means_square(app):
+    win32.unround_window(app.card.back)
+    u.GetWindowRgn.argtypes = [wintypes.HWND, wintypes.HRGN]
+    probe = win32._gdi32.CreateRectRgn(0, 0, 1, 1)
+    assert u.GetWindowRgn(win32.hwnd_of(app.card.back), probe) == 0
+
+
 def test_card_is_placed_on_the_target_monitor(app, words):
     """winfo_screenwidth() is the primary screen only; the card must land on the
     monitor the user picked."""
