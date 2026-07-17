@@ -66,16 +66,39 @@ brings ids from a foreign system entirely. Do this before anyone has decks in th
 - ☐ `state.json` migration is trivial today (v3 is additive); revisit if the shape
   changes again
 
-## Phase 3 — TTS: move to Piper (1–2 days)
+## Phase 3 — TTS ☑ EVALUATED → **staying on edge-tts**
 
-Removes the edge-tts licensing risk and makes the app fully offline.
+Piper was evaluated properly (installed, models downloaded, A/B synthesized) and
+**rejected by ear**. Recording the measurements so nobody re-litigates this blind:
 
-- ☐ TTS provider interface: `synthesize(text, voice, rate) -> bytes`
-- ☐ `PiperProvider` — bundle a `zh_CN` model; keep `EdgeProvider` as a dev-only option
-- ☐ Quality pass: Piper needs tuning to match Yunyang's tone clarity (rate/model choice).
-      **Verify by ear before committing** — tone clarity is the whole point of the app.
-- ☐ First-run synthesis with a progress UI + resumable cache (~1300 clips)
-- ☐ Fall back gracefully when a voice/model is missing (text-only, don't crash)
+| | huayan | chaowen | **edge-tts Yunyang** |
+|---|---|---|---|
+| phonemizer | espeak (`cmn`) | pinyin + tones (`g2pw`) | — |
+| speed/clip | 0.06 s | **5.28 s** | ~0.5 s (network) |
+| extra deps | none | `transformers`, `g2pw`, `unicode_rbnf`, `sentence_stream` | none |
+| offline | ✅ | ❌ pulls a BERT model from HF on first use | ❌ to generate |
+| gender | female | — | male |
+| **verdict** | rejected | rejected | **chosen — best tones** |
+
+Piper's only two usable zh voices both fail: `huayan` is female + espeak-phonemized;
+`chaowen` at 5.28 s/clip means ~81 min to build the library and a 5 s wait to hear a
+card you just authored — which would gut Phase 5's authoring UX and the offline
+promise that justified Piper in the first place.
+
+- ☑ TTS provider interface (`audio/tts.py`) — the seam survives and is the mitigation
+- ☑ Graceful degradation: a failed/missing clip logs and shows a quiet card, never crashes
+- ☐ **Risk to manage**: edge-tts talks to an undocumented Edge endpoint that Microsoft
+  can change or block. If that happens, existing users are fine (clips are cached
+  forever) but new ones can't generate. Mitigations, in order of cost:
+  - keep the provider interface clean (done) so a swap is contained
+  - offer `PiperProvider` as an **optional offline fallback** (huayan) — insurance, not default
+  - if it ever dies for real: revisit a bundled engine, or distribute a prebuilt
+    clip pack for the shipped decks
+- ☐ **Idea worth keeping** if we ever need Piper: skip `g2pw` entirely by feeding
+  phonemes from the deck's own `reading`+`tones` (we already store them) via
+  `phonemes_to_ids()`/`phoneme_ids_to_audio()`. Faster *and* more accurate than a
+  polyphone guesser, since the author specified the reading. Pairs with the Phase-5
+  `pypinyin` auto-fill.
 
 ## Phase 4 — Product UX (2–3 days)
 
@@ -158,9 +181,14 @@ audio in a second, with no account, no network, no licensing question).
 
 1. **Free & open-source.** GitHub Releases. Keeps legal risk low; no code signing
    required for v1 (document the SmartScreen warning instead).
-2. **TTS = Piper** (MIT, offline, bundled zh_CN model, generated on device). Removes
-   the edge-tts risk entirely and makes the app work offline with no account.
-   `edge-tts` stays as an optional dev-only generator behind the provider interface.
+2. **TTS = edge-tts.** *(Reversed after evaluation — see Phase 3.)* Piper was the plan,
+   but its Chinese voices lost the listening test: the fast one (`huayan`) is female
+   and espeak-phonemized, and the pinyin-phonemized one (`chaowen`) costs **5.3 s per
+   clip** — ~81 min to build the library, and a 5-second wait to hear a card you just
+   authored. Tone clarity is the entire point of the app, so quality wins.
+   Consequences accepted: **needs network to generate** (playback is cached and
+   offline), and the endpoint is undocumented and could change under us. Mitigated by
+   the provider interface + graceful degradation (see Phase 3).
 3. **Generic language overlay.** Decks declare their own `language` + `voice`; tones
    and readings become optional, Chinese-specific niceties rather than the core model.
    Chinese stays the flagship (tone colors, tone read-out) — it just isn't hardcoded.

@@ -1,8 +1,17 @@
 # Runtime
-# TTS generation. edge-tts is the current generator; Phase 3 replaces it with
-# Piper (offline, MIT) — see ROADMAP.md. Everything else (tkinter, winsound,
-# ctypes/Win32, wave) is Python stdlib, so there are no other runtime deps.
+# The ONLY runtime dependency. Everything else the app uses (tkinter, winsound,
+# ctypes/Win32, wave) is Python stdlib.
+#
+# edge-tts is used to SYNTHESIZE clips; playback is from the local cache, so the
+# app runs offline once its audio exists. It was chosen over Piper on tone quality
+# (ROADMAP Phase 3). It talks to an undocumented Microsoft endpoint — if that ever
+# breaks, swap the provider in chinesepop/audio/tts.py.
 edge-tts>=6.1
 
 # Dev / test
 pytest>=8.0
+
+# NOT dependencies — installed only while evaluating Piper, and not needed:
+#   piper-tts, g2pw, transformers, unicode_rbnf, sentence_stream
+# Uninstall with:
+#   pip uninstall -y piper-tts g2pw transformers unicode_rbnf sentence_stream

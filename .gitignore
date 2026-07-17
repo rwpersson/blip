@@ -2,6 +2,12 @@
 audio/
 sounds/
 
+# TTS voice models (downloaded, ~60MB each) and evaluation samples
+models/
+AB_compare/
+# g2pW dumps a 152MB BERT model into the CWD on first use (Piper eval; rejected)
+g2pW/
+
 # User data — progress is personal, never commit it
 state.json
 settings.json

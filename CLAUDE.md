@@ -10,9 +10,13 @@ stealing focus or the cursor. Windows-only.
 - **Anki-like content model**: users author their own cards, get audio generated for
   them automatically, and import decks from elsewhere (CSV, Anki `.apkg`). The
   bundled Chinese decks are a starting point, not the product.
-- **TTS = Piper** (offline, MIT) — replaces edge-tts, which is a reverse-engineered
-  Edge endpoint we can't ship against. Offline synthesis is also what makes
-  "author a card, hear it a second later" work with no account or network.
+- **TTS = edge-tts**, deliberately. Piper was evaluated and **rejected by ear**: its
+  only fast zh voice is female + espeak-phonemized, and the pinyin-phonemized one runs
+  5.3 s/clip (~81 min to build the library). Tone clarity is the product. See ROADMAP
+  Phase 3 for the numbers — don't re-litigate this without listening first.
+  Known cost: generating needs network (playback is cached/offline), and the endpoint
+  is undocumented. The provider interface in `audio/tts.py` is the mitigation; keep it
+  clean so an engine swap stays contained.
 - **Generic language overlay**: decks declare their own `language`/`voice`; tones and
   readings are optional Chinese niceties, not the core model. Chinese stays the
   flagship (tone colors, tone read-out) but isn't hardcoded.
