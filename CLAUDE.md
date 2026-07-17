@@ -209,7 +209,12 @@ These each cost real debugging. Verify them after touching windowing/audio.
     `invalid command name "tcl_findLibrary"`. A handful of module-scoped roots is
     fine (verified: `test_win32` + `test_window_fit` coexist in either order) — it's
     repeated create/destroy that breaks Tcl. So: one root per test *module*, shared
-    by a module-scoped fixture; never a function-scoped one.
+    by a module-scoped fixture; never a function-scoped one. **A module fixture must
+    also not `destroy()` its root at teardown** — the *next* module's `Tk()` then hits
+    the same churn, which errored `test_window_fit` in ~half of all runs. Stop the
+    audio, `withdraw()`, and let process exit clean up. Same reason: never leave
+    `after()` timers pending on a root (poll-for-layout retries did); bind
+    `<Configure>` instead and let Tk tell you when it laid the widget out.
     Separately: focus-hungry windows (settings, editor, first-run) are their own
     *processes* — the overlay's root is no-activate and must stay that way.
 14. **Rounded corners come from a window REGION** (`SetWindowRgn`), not DWM's corner
@@ -233,6 +238,19 @@ These each cost real debugging. Verify them after touching windowing/audio.
     destructive one. Group by job, label with text, fill exactly one button (Play),
     and put Quit away from the controls people press. `test_every_panel_button_has_a_word`
     guards the labels. Icon-only is only ever acceptable with a `_Tooltip`.
+18. **The deck list is collapsed to the current deck** (`panel._set_expanded`). You
+    study one deck for days, so switching is rare — but the list is the only part of
+    the panel that grows without bound once people import decks. Collapsed it costs
+    one row; expanded it's capped at `panel_max_deck_rows` and scrolls, so a 40-deck
+    import can't push the buttons off the screen (`test_expanded_deck_list_cannot_
+    outgrow_the_screen`). A **dropdown is not an option** — Tk menu/combobox popups
+    are native windows that take focus and mouse capture, which is the one thing this
+    app can never do. Any picker has to be drawn inside the panel.
+19. **Assert on *our* behaviour, not the machine's.** The focus test asserted
+    `foreground == game`, which also fails when a notification or the console grabs
+    focus — nothing to do with us. It cried wolf ~1 run in 8. Ask `GetWindowThread
+    ProcessId` who owns the foreground window: ours = a real failure, anyone else's
+    = skip. Don't loosen the guarantee to hide an unrelated flake.
 
 ## Testing
 

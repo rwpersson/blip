@@ -34,6 +34,9 @@ u.WindowFromPoint.restype = wintypes.HWND
 u.WindowFromPoint.argtypes = [wintypes.POINT]
 u.GetForegroundWindow.restype = wintypes.HWND
 u.SetForegroundWindow.argtypes = [wintypes.HWND]
+u.GetWindowThreadProcessId.argtypes = [wintypes.HWND,
+                                       ctypes.POINTER(wintypes.DWORD)]
+u.GetWindowThreadProcessId.restype = wintypes.DWORD
 
 
 WORDS = [
@@ -66,14 +69,25 @@ def _app(tmp_path_factory):
     s.set("play_audio", False)
     s.set("autostart", False)
     s.set("panel_hint_seconds", 0)
+    # Two decks, not one: the app ships four, and a single-deck panel can't
+    # exercise the deck picker at all.
     deck = {"id": "t", "name": "T", "language": "zh-CN", "voice": None,
             "words": WORDS, "source": None}
-    a = App([deck], s)
+    deck2 = {"id": "t2", "name": "T Two", "language": "zh-CN", "voice": None,
+             "words": WORDS[:2], "source": None}
+    a = App([deck, deck2], s)
     try:
         yield a
     finally:
+        # Stop the audio but do NOT destroy the root. Another module creates its
+        # own Tk() afterwards, and destroy-then-create is exactly the churn that
+        # wedges Tcl with 'invalid command name tcl_findLibrary' (CLAUDE.md) —
+        # it made the suite error ~50% of runs. Coexisting roots are fine; the
+        # process is about to exit and take this one with it.
         try:
-            a.quit()
+            from chinesepop.audio import player
+            player.stop()
+            a.root.withdraw()
         except Exception:
             pass
         sched_mod.paths.state_file = orig
@@ -193,6 +207,58 @@ def _all_labels(widget, out=None):
     return out
 
 
+def _visible_deck_rows(panel):
+    return [i for i, r in enumerate(panel.deck_rows) if r["row"].winfo_ismapped()]
+
+
+def test_deck_list_is_collapsed_until_asked_for(app):
+    """The panel is summoned for ~2 seconds; the deck list is the only part that
+    grows without bound. Collapsed it costs one row."""
+    p = app.panel
+    p.show(app.rect)
+    pump(app, 0.2)
+    try:
+        assert _visible_deck_rows(p) == [p.deck_index]
+        assert p.deck_rows[p.deck_index]["chev"].cget("text") == "▾"
+
+        collapsed_h = app.root.winfo_reqheight()
+        p._deck_click(p.deck_index)          # collapsed: any click means "open"
+        pump(app, 0.2)
+        assert _visible_deck_rows(p) == list(range(len(p.deck_rows)))
+        assert p.deck_rows[p.deck_index]["chev"].cget("text") == "▴"
+        assert app.root.winfo_reqheight() > collapsed_h
+
+        p._deck_click(1)                     # expanded: a click is a choice
+        pump(app, 0.2)
+        assert app.deck_index == 1, "click didn't switch deck"
+        assert not p.expanded, "picking a deck should collapse the list"
+        assert app.root.winfo_reqheight() == collapsed_h
+    finally:
+        p.hide()
+        app.select_deck(0)
+
+
+def test_expanded_deck_list_cannot_outgrow_the_screen(app):
+    """A 40-deck import must not push the buttons off the bottom. The list is
+    capped at panel_max_deck_rows and scrolls past that."""
+    p = app.panel
+    real_rows, real_counts = p.deck_rows, p._counts
+    p.deck_rows = real_rows * 15                  # pretend: 45 decks
+    p._counts = real_counts * 15
+    try:
+        p._set_expanded(True)
+        pump(app, 0.2)
+        cap = int(app.s.panel_max_deck_rows)
+        row_h = real_rows[0]["row"].winfo_reqheight() + 2
+        assert p.deck_view.winfo_reqheight() <= cap * row_h + 2, "viewport not capped"
+        _mx, _my, _mw, mh = app.rect
+        assert app.root.winfo_reqheight() <= mh, "panel taller than the monitor"
+    finally:
+        p.deck_rows, p._counts = real_rows, real_counts
+        p._set_expanded(False)
+        p.hide()
+
+
 def test_card_and_flash_are_click_through_panel_is_not(app):
     for win in (app.card.back, app.card.text, app.flash.win):
         assert win32.ex_style(win) & win32.WS_EX_TRANSPARENT
@@ -243,7 +309,18 @@ def test_pops_never_steal_focus_from_another_process(app, words, tmp_path):
             app.next_now()
             pump(app, 0.8)
 
-        assert u.GetForegroundWindow() == game, "a pop stole focus from the game!"
+        # Judge OUR behaviour, not the machine's. "foreground != game" lumps
+        # together two different events: we stole focus (the bug this test
+        # exists for) and something else did (a notification, the console —
+        # nothing to do with us). Asking *who* owns the foreground window
+        # separates them, so this fails only when we're guilty.
+        fg = u.GetForegroundWindow()
+        if fg != game:
+            pid = wintypes.DWORD()
+            u.GetWindowThreadProcessId(fg, ctypes.byref(pid))
+            assert pid.value != os.getpid(), "a pop stole focus from the game!"
+            pytest.skip(f"another app grabbed focus (hwnd {fg}, pid {pid.value}); "
+                        "our windows stayed out of the foreground")
     finally:
         helper.terminate()
 

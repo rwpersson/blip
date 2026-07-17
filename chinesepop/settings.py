@@ -76,6 +76,7 @@ DEFAULTS = {
 
     # --- panel / hotkeys ---
     "panel_hint_seconds": 4,
+    "panel_max_deck_rows": 8,     # taller deck lists scroll instead of growing
     "recall_hotkeys": True,
     "hotkeys": {
         "panel": "ctrl+alt+c",

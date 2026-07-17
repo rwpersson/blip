@@ -89,14 +89,27 @@ class Panel:
 
         self._rule(bar)
 
-        # --- decks: name + a progress bar, which reads faster than "12/226" ---
-        tk.Label(bar, text="DECKS", bg=theme.BG, fg=theme.SUB,
-                 font=(f, 7, "bold")).pack(anchor="w", padx=P + 6, pady=(2, 0))
+        # --- decks: only the current one, until you ask for the rest ------------
+        # You study one deck for days, so the list is a rare interaction — but it's
+        # also the only part of this panel that grows without bound (people import
+        # decks). Collapsed it costs one row; expanded it's capped and scrolls, so
+        # a 40-deck import can't push the buttons off the bottom of the screen.
+        self.expanded = False
+        self.deck_index = 0
+        self._counts = [(0, len(d.get("words", []))) for d in decks]
+        self._rect = None
         deck_box = tk.Frame(bar, bg=theme.BG)
         deck_box.pack(fill="x", padx=P, pady=(2, P))
-        self.deck_rows = []
-        for i in range(len(decks)):
-            self.deck_rows.append(self._deck_row(deck_box, i))
+        self.deck_view = tk.Canvas(deck_box, bg=theme.BG, highlightthickness=0,
+                                   bd=0, takefocus=0)
+        self.deck_view.pack(fill="x")
+        self.deck_list = tk.Frame(self.deck_view, bg=theme.BG)
+        self._list_id = self.deck_view.create_window((0, 0), window=self.deck_list,
+                                                     anchor="nw")
+        self.deck_rows = [self._deck_row(self.deck_list, i)
+                          for i in range(len(decks))]
+        self.deck_view.bind("<Configure>", self._fit_list)
+        self._bind_wheel(self.deck_view)
 
         self._rule(bar)
 
@@ -163,13 +176,92 @@ class Panel:
         name = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB,
                         font=(self.f, 9, "bold"), anchor="w")
         name.pack(side="left", padx=(6, 0))
+        # The chevron only appears on the current deck: it's the affordance for
+        # "there are others", and it's the thing you click to put them away again.
+        chev = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB, font=(self.f, 7))
+        chev.pack(side="right", padx=(4, 6))
         count = tk.Label(head, text="", bg=theme.BG, fg=theme.SUB, font=(self.f, 7))
-        count.pack(side="right", padx=(0, 6))
-        bar = tk.Canvas(row, height=3, bg=theme.BG, highlightthickness=0, bd=0)
+        count.pack(side="right")
+        bar = tk.Canvas(row, height=3, bg=theme.BG, highlightthickness=0, bd=0,
+                        takefocus=0)
         bar.pack(fill="x", padx=6, pady=(1, 2))
-        for w in (row, head, name, count, bar):
-            w.bind("<Button-1>", lambda e, idx=i: self.a["select_deck"](idx))
-        return {"row": row, "head": head, "name": name, "count": count, "bar": bar}
+        bar.bind("<Configure>", lambda e, idx=i: self._bar_configured(idx))
+        parts = (row, head, name, count, chev, bar)
+        for w in parts:
+            w.bind("<Button-1>", lambda e, idx=i: self._deck_click(idx))
+            w.bind("<Enter>", lambda e, idx=i: self._hover(idx, True))
+            w.bind("<Leave>", lambda e, idx=i: self._hover(idx, False))
+            self._bind_wheel(w)
+        return {"row": row, "head": head, "name": name, "count": count,
+                "chev": chev, "bar": bar, "parts": parts}
+
+    def _deck_click(self, i):
+        """Collapsed, only the current deck is on screen, so any click means
+        'show me the others'. Expanded, a click is a choice."""
+        if len(self.deck_rows) < 2:
+            return                      # nothing to expand into
+        if not self.expanded:
+            self._set_expanded(True)
+            return
+        if i != self.deck_index:
+            self.a["select_deck"](i)
+        self._set_expanded(False)
+
+    def _set_expanded(self, on):
+        self.expanded = on
+        if not on:
+            self.deck_view.yview_moveto(0)
+        self._sync_decks()
+        self.place(self._rect)          # height changed: re-anchor and re-round
+
+    def _hover(self, i, on):
+        r = self.deck_rows[i]
+        if i == self.deck_index:
+            return                      # the active row already has a background
+        bg = theme.BTN if on else theme.BG
+        for w in (r["row"], r["head"], r["name"], r["count"], r["chev"]):
+            w.configure(bg=bg)
+        r["bar"].configure(bg=bg)
+
+    def _bind_wheel(self, w):
+        w.bind("<MouseWheel>", self._wheel)
+
+    def _wheel(self, e):
+        if self.expanded:
+            self.deck_view.yview_scroll(-1 if e.delta > 0 else 1, "units")
+
+    def _fit_list(self, e):
+        self.deck_view.itemconfigure(self._list_id, width=e.width)
+
+    def _sync_decks(self):
+        """Pack the rows that should be visible, then size the viewport."""
+        show = self.deck_rows if self.expanded else [self.deck_rows[self.deck_index]]
+        for i, r in enumerate(self.deck_rows):
+            r["row"].pack_forget()
+            # here, not in set_decks(): expanding doesn't go through set_decks(),
+            # and a chevron pointing the wrong way is a lie about what a click does.
+            # With one deck there's nothing to open, so it promises nothing.
+            mine = i == self.deck_index and len(self.deck_rows) > 1
+            r["chev"].configure(
+                text=("▴" if self.expanded else "▾") if mine else "")
+        for r in show:                  # re-pack in order; pack_forget appends
+            r["row"].pack(fill="x", pady=1)
+        self.deck_list.update_idletasks()
+        need = self.deck_list.winfo_reqheight()
+        row_h = max(self.deck_rows[0]["row"].winfo_reqheight() + 2, 1)
+        cap = int(self.s.panel_max_deck_rows) * row_h
+        self.deck_view.configure(
+            height=min(need, cap) if self.expanded else need,
+            scrollregion=(0, 0, 0, need), yscrollincrement=row_h)
+        if self.expanded:               # don't open with the current deck off-view
+            top = self.deck_index * row_h
+            if top + row_h > cap:
+                self.deck_view.yview_moveto(min(top / max(need, 1), 1.0))
+        for i, r in enumerate(self.deck_rows):
+            if r["row"].winfo_ismapped():
+                known, total = self._counts[i]
+                self._draw_progress(r["bar"], known, total, i == self.deck_index,
+                                    r["bar"].cget("bg"))
 
     def _btn(self, parent, text, cmd, primary=False, tip=""):
         bg = theme.BTN_PRIMARY if primary else theme.BTN
@@ -196,6 +288,8 @@ class Panel:
     # ---------- state ----------
     def set_decks(self, deck_index, counts):
         """counts: list of (known, total) per deck."""
+        self.deck_index = deck_index
+        self._counts = list(counts)
         for i, (r, (known, total)) in enumerate(zip(self.deck_rows, counts)):
             active = i == deck_index
             name = self.decks[i]["name"]
@@ -204,18 +298,29 @@ class Panel:
             r["count"].configure(text=f"{known}/{total}",
                                  fg=theme.SUB if not active else theme.FG)
             bg = theme.BTN if active else theme.BG
-            for w in (r["row"], r["head"], r["name"], r["count"]):
+            for w in (r["row"], r["head"], r["name"], r["count"], r["chev"]):
                 w.configure(bg=bg)
-            self._draw_progress(r["bar"], known, total, active, bg)
+            r["bar"].configure(bg=bg)
+        self._sync_decks()
+
+    def _bar_configured(self, i):
+        """Tk tells us when a bar has a real width — no polling. An after() retry
+        here left timers queued against a hidden panel, and destroying a root with
+        callbacks still pending is what wedges Tcl (see 'Tk root churn' in
+        CLAUDE.md); it also cost a full redraw every 50ms for nothing."""
+        if i >= len(self._counts):
+            return
+        r = self.deck_rows[i]
+        known, total = self._counts[i]
+        self._draw_progress(r["bar"], known, total, i == self.deck_index,
+                            r["bar"].cget("bg"))
 
     def _draw_progress(self, cv, known, total, active, bg):
         cv.configure(bg=bg)
         cv.delete("all")
-        cv.update_idletasks()
-        w = max(cv.winfo_width(), 1)
-        if w <= 1:                      # not laid out yet; try again shortly
-            cv.after(50, lambda: self._draw_progress(cv, known, total, active, bg))
-            return
+        w = cv.winfo_width()
+        if w <= 1:
+            return                      # <Configure> will call back once it's laid out
         cv.create_rectangle(0, 0, w, 3, fill=theme.TRACK, width=0)
         if total:
             fill = int(w * min(known / total, 1.0))
@@ -246,6 +351,9 @@ class Panel:
 
     # ---------- visibility ----------
     def place(self, rect=None):
+        # Remembered: expanding the deck list re-places the panel, and it has to
+        # land on the same monitor rather than the primary one.
+        self._rect = rect = rect or self._rect
         self.root.update_idletasks()
         w = self.root.winfo_reqwidth()
         h = self.root.winfo_reqheight()
@@ -264,6 +372,10 @@ class Panel:
     def hide(self):
         win32.hide_window(self.root)
         self.visible = False
+        if self.expanded:               # always come back up compact
+            self.expanded = False
+            self.deck_view.yview_moveto(0)
+            self._sync_decks()
 
     def toggle(self):
         self.hide() if self.visible else self.show()
