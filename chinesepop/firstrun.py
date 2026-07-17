@@ -39,12 +39,22 @@ class WelcomeWindow:
         self.start = True
         self.root = tk.Tk()
         self.root.title("Welcome to Chinese Pop")
-        self.root.geometry("520x440")
-        self.root.resizable(False, False)
         self._build()
+        # Size to content rather than guessing: at 125% scaling this window needs
+        # ~583px, and the hard-coded 440 cut the buttons off entirely.
+        win32.fit_window(self.root, min_w=520, min_h=420)
 
     def _build(self):
         pad = {"padx": 18, "pady": 6}
+        # The action bar is packed FIRST, side="bottom". Tk's pack gives space in
+        # order, so a bar packed last is the first thing squeezed when content
+        # overflows — which is how these buttons vanished. Pinned now.
+        bar = ttk.Frame(self.root)
+        bar.pack(fill="x", side="bottom", padx=18, pady=14)
+        ttk.Button(bar, text="Start", command=self._start).pack(side="right")
+        ttk.Button(bar, text="Open Settings…",
+                   command=self._settings).pack(side="right", padx=6)
+
         ttk.Label(self.root, text="🀄  Chinese Pop",
                   font=("", 16, "bold")).pack(anchor="w", padx=18, pady=(16, 2))
         ttk.Label(self.root, wraplength=470, justify="left",
@@ -95,13 +105,7 @@ class WelcomeWindow:
 
         ttk.Label(self.root, foreground="#666", wraplength=470, justify="left",
                   text="Everything here — and a lot more — is in Settings later.").pack(
-            anchor="w", padx=18)
-
-        bar = ttk.Frame(self.root)
-        bar.pack(fill="x", side="bottom", padx=18, pady=14)
-        ttk.Button(bar, text="Start", command=self._start).pack(side="right")
-        ttk.Button(bar, text="Open Settings…",
-                   command=self._settings).pack(side="right", padx=6)
+            anchor="w", padx=18, pady=(0, 4))
 
     def _collect(self):
         try:

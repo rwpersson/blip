@@ -201,11 +201,13 @@ These each cost real debugging. Verify them after touching windowing/audio.
     everything comes out tiny. The two go together; never enable one alone.
 12. **`winfo_screenwidth()` is the PRIMARY monitor only.** Place windows using
     `win32.monitor_rect(settings.monitor)`, which is threaded through as `app.rect`.
-13. **Only ONE `Tk()` root per process, ever.** A second one after the first is
-    destroyed dies with `invalid command name "tcl_findLibrary"`. Tests share a
-    module-scoped root (`test_win32.py`); don't create Tk in other test modules.
-    Focus-hungry windows (settings, editor, first-run) are separate *processes* for
-    the same reason — the overlay's root is no-activate and must stay that way.
+13. **Don't churn `Tk()` roots.** Creating one *per test* dies partway through with
+    `invalid command name "tcl_findLibrary"`. A handful of module-scoped roots is
+    fine (verified: `test_win32` + `test_window_fit` coexist in either order) — it's
+    repeated create/destroy that breaks Tcl. So: one root per test *module*, shared
+    by a module-scoped fixture; never a function-scoped one.
+    Separately: focus-hungry windows (settings, editor, first-run) are their own
+    *processes* — the overlay's root is no-activate and must stay that way.
 14. **Rounded corners come from a window REGION** (`SetWindowRgn`), not DWM's corner
     preference — DWM rounding doesn't apply to layered, override-redirect windows.
     The region is in **pixels**, so it must be re-applied on every `place()`; the card
@@ -215,6 +217,12 @@ These each cost real debugging. Verify them after touching windowing/audio.
     add "pause when fullscreen" — it was on the roadmap and was dropped because it
     would break the main use case. Only genuinely *exclusive* fullscreen (older DX
     titles) can hide an overlay, and no app can fix that.
+16. **Never hard-code a window size.** Use `win32.fit_window(win, min_w, min_h)`.
+    Once the process is DPI-aware, Tk renders fonts at the real DPI (scaling 1.67 at
+    125%), so a size chosen at 100% silently clips: the first-run window was 520x440
+    for 583px of content and lost both its buttons. Also **pack action bars before
+    expanding content** — pack allocates space in order, so a bar packed last is the
+    first thing squeezed out. `tests/test_window_fit.py` guards both.
 
 ## Testing
 

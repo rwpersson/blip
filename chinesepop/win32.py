@@ -278,3 +278,25 @@ def round_window(win, radius, size=None):
 
 def unround_window(win):
     _user32.SetWindowRgn(hwnd_of(win), None, True)
+
+
+def fit_window(win, min_w=0, min_h=0):
+    """Size a normal window to the space its content actually needs.
+
+    Never hard-code a pixel size for these windows. Once the process is DPI-aware
+    Tk renders fonts at the real DPI (scaling 1.67 at 125%), so a size that looked
+    right at 100% silently clips — that's exactly how the first-run window lost its
+    buttons: 583px of content in a 440px non-resizable frame.
+
+    Clamped to the monitor so a long window can't grow off-screen, and left
+    resizable so the user can always recover.
+    """
+    win.update_idletasks()
+    scale = scale_for_window(win)
+    w = max(win.winfo_reqwidth(), int(min_w * scale))
+    h = max(win.winfo_reqheight(), int(min_h * scale))
+    _mx, _my, mw, mh = monitor_rect(0)
+    w, h = min(w, int(mw * 0.95)), min(h, int(mh * 0.92))
+    win.geometry(f"{w}x{h}")
+    win.minsize(min(w, int(360 * scale)), min(h, int(240 * scale)))
+    return w, h

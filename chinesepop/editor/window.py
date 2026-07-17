@@ -12,6 +12,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
 from .. import decks as decks_mod
+from .. import win32
 from ..logging_setup import get
 from .controller import EditorController
 
@@ -31,11 +32,10 @@ class EditorWindow:
 
         self.root = tk.Tk()
         self.root.title("Chinese Pop — Deck Editor")
-        self.root.geometry("1040x620")
-        self.root.minsize(880, 520)
         self.vars = {k: tk.StringVar() for k, _ in FIELDS}
         self.status = tk.StringVar(value="Ready")
         self._build()
+        win32.fit_window(self.root, min_w=1040, min_h=620)   # scales with DPI
         self._load_decks()
 
     # ------------------------------ layout ----------------------------------

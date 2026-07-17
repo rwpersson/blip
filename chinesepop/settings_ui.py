@@ -108,27 +108,30 @@ class SettingsWindow:
         self.owns_root = parent is None
         self.root = tk.Tk() if self.owns_root else tk.Toplevel(parent)
         self.root.title("Chinese Pop — Settings")
-        self.root.geometry("560x580")
         self.status = tk.StringVar(value="Changes apply next time Chinese Pop starts")
         self._monitors = win32.monitors()
         self._build()
+        # never hard-code: DPI scaling makes a hand-picked size clip (see fit_window)
+        win32.fit_window(self.root, min_w=580, min_h=560)
 
     def _build(self):
+        # Status bar and buttons are packed BEFORE the notebook: pack allocates in
+        # order, so anything packed after expanding content is what gets clipped.
+        ttk.Label(self.root, textvariable=self.status, relief="sunken", anchor="w",
+                  padding=(6, 3)).pack(fill="x", side="bottom")
+        bar = ttk.Frame(self.root, padding=(8, 0, 8, 8))
+        bar.pack(fill="x", side="bottom")
+        ttk.Button(bar, text="Save", command=self._save).pack(side="right")
+        ttk.Button(bar, text="Cancel", command=self._close).pack(side="right", padx=4)
+        ttk.Button(bar, text="Restore defaults",
+                   command=self._defaults).pack(side="left")
+
         nb = ttk.Notebook(self.root)
         nb.pack(fill="both", expand=True, padx=8, pady=8)
         for group, items in SPEC:
             tab = ttk.Frame(nb, padding=10)
             nb.add(tab, text=group)
             self._build_group(tab, group, items)
-
-        bar = ttk.Frame(self.root, padding=(8, 0, 8, 8))
-        bar.pack(fill="x")
-        ttk.Button(bar, text="Save", command=self._save).pack(side="right")
-        ttk.Button(bar, text="Cancel", command=self._close).pack(side="right", padx=4)
-        ttk.Button(bar, text="Restore defaults",
-                   command=self._defaults).pack(side="left")
-        ttk.Label(self.root, textvariable=self.status, relief="sunken", anchor="w",
-                  padding=(6, 3)).pack(fill="x", side="bottom")
 
     def _build_group(self, tab, group, items):
         for r, (key, label, kind, extra, helptext) in enumerate(items):
