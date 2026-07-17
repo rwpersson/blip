@@ -35,19 +35,62 @@ u.GetForegroundWindow.restype = wintypes.HWND
 u.SetForegroundWindow.argtypes = [wintypes.HWND]
 
 
-@pytest.fixture
-def app(settings, monkeypatch, tmp_path, words):
-    """A real App with real windows, isolated from the user's state file."""
-    monkeypatch.setattr("chinesepop.scheduler.paths.state_file",
-                        lambda: tmp_path / "state.json")
+WORDS = [
+    {"id": "01", "hanzi": "牛逼", "pinyin": "niú bī", "tones": "2-1",
+     "cat": "slang", "meaning": "awesome", "note": "n"},
+    {"id": "02", "hanzi": "加油", "pinyin": "jiā yóu", "tones": "1-2",
+     "cat": "common", "meaning": "go for it", "note": "n"},
+    {"id": "03", "hanzi": "躺平", "pinyin": "tǎng píng", "tones": "3-2",
+     "cat": "slang", "meaning": "lie flat", "note": "n"},
+]
+
+
+@pytest.fixture(scope="module")
+def _app(tmp_path_factory):
+    """ONE App for the whole module.
+
+    Tk does not survive repeated Tk() create/destroy cycles in a single process
+    ("invalid command name tcl_findLibrary"), so a per-test App makes the suite
+    flaky. The real app only ever builds one root, so a shared one is also the
+    honest thing to test.
+    """
+    from chinesepop import scheduler as sched_mod
+    from chinesepop import settings as settings_mod
+
+    tmp = tmp_path_factory.mktemp("state")
+    orig = sched_mod.paths.state_file
+    sched_mod.paths.state_file = lambda: tmp / "state.json"   # never the real one
+
+    s = settings_mod.Settings()
+    s.set("play_audio", False)
+    s.set("autostart", False)
+    s.set("panel_hint_seconds", 0)
     deck = {"id": "t", "name": "T", "language": "zh-CN", "voice": None,
-            "words": words, "source": None}
-    a = App([deck], settings)
-    yield a
+            "words": WORDS, "source": None}
+    a = App([deck], s)
     try:
-        a.quit()
-    except Exception:
-        pass
+        yield a
+    finally:
+        try:
+            a.quit()
+        except Exception:
+            pass
+        sched_mod.paths.state_file = orig
+
+
+@pytest.fixture
+def app(_app):
+    """Per-test reset of the shared App's mutable state."""
+    _app.annoying = True
+    _app.current = None
+    _app.hide_card()
+    _app.root.update()
+    return _app
+
+
+@pytest.fixture
+def words():
+    return WORDS
 
 
 def pump(app, seconds=0.3):
