@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import tkinter as tk
 from ctypes import wintypes
 from pathlib import Path
 
@@ -157,6 +158,41 @@ def test_card_is_placed_on_the_target_monitor(app, words):
     assert abs(x - (mx + (mw - w) // 2)) <= 1, "card isn't centered on it"
 
 
+def test_tooltips_do_not_steal_focus(app):
+    """Tooltips are new windows that appear over the game — every window this app
+    creates has to obey the no-activate rule, not just the obvious three."""
+    from chinesepop.ui.panel import _Tooltip
+    tip = _Tooltip(app.panel.play_btn, "hello", app.panel.f)
+    tip._show()
+    pump(app, 0.2)
+    try:
+        assert tip.tip is not None
+        assert win32.ex_style(tip.tip) & win32.WS_EX_NOACTIVATE
+    finally:
+        tip._hide()
+    assert tip.tip is None
+
+
+def test_every_panel_button_has_a_word(app):
+    """A lone glyph can't tell anyone what it does — '📝' meaning 'make your own
+    flashcards' was real user feedback."""
+    labelled = [b for b in _all_labels(app.root)
+                if b.cget("cursor") == "hand2" and b.cget("text")]
+    wordy = [b.cget("text") for b in labelled
+             if any(ch.isalpha() for ch in b.cget("text"))]
+    assert any("card" in t.lower() for t in wordy), "no button mentions cards"
+    assert any("setting" in t.lower() for t in wordy)
+
+
+def _all_labels(widget, out=None):
+    out = [] if out is None else out
+    for child in widget.winfo_children():
+        if isinstance(child, tk.Label):
+            out.append(child)
+        _all_labels(child, out)
+    return out
+
+
 def test_card_and_flash_are_click_through_panel_is_not(app):
     for win in (app.card.back, app.card.text, app.flash.win):
         assert win32.ex_style(win) & win32.WS_EX_TRANSPARENT
@@ -176,12 +212,12 @@ def test_click_at_card_center_passes_through(app, words):
     assert hit not in (card_hwnd, back_hwnd), "the card swallowed a click"
 
 
-def test_pops_never_steal_focus_from_another_process(app, words):
+def test_pops_never_steal_focus_from_another_process(app, words, tmp_path):
     """The headline guarantee. A window in another process must keep focus while
     we fire pops at it."""
-    hwnd_file = os.path.join(tempfile.gettempdir(), "cp_helper_hwnd.txt")
-    if os.path.exists(hwnd_file):
-        os.remove(hwnd_file)
+    # A per-run file: the helper outlives a failed run by up to 25s, and a shared
+    # fixed path let one run read the previous run's stale HWND.
+    hwnd_file = str(tmp_path / "helper_hwnd.txt")
     helper = subprocess.Popen([sys.executable, str(HERE / "helper_window.py"),
                                hwnd_file])
     try:

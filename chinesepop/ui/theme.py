@@ -20,6 +20,12 @@ SUB = "#8b95a5"         # notes / secondary
 MEAN = "#cfd6e2"        # meaning: near-white, not a fifth colour
 BTN = "#262b38"
 BTN_HI = "#333a4a"
+# Exactly one filled button (Play). If everything is emphasised, nothing is.
+BTN_PRIMARY = "#3d6fd6"
+BTN_PRIMARY_HI = "#4d80e8"
+BTN_PRIMARY_FG = "#ffffff"
+TRACK = "#22262f"          # progress groove
+PROGRESS_IDLE = "#3a4152"  # progress on a deck you're not studying
 HALO = "#0b0e16"        # dark navy, not pure black — depth rather than a sticker
 
 # Category is signalled by a small dot, not a filled pill, so the tone colours

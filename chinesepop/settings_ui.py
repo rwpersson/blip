@@ -125,6 +125,10 @@ class SettingsWindow:
         ttk.Button(bar, text="Cancel", command=self._close).pack(side="right", padx=4)
         ttk.Button(bar, text="Restore defaults",
                    command=self._defaults).pack(side="left")
+        # The welcome only fires when there's no settings file, so once you've
+        # saved anything it can never reappear. Give it a door.
+        ttk.Button(bar, text="Show welcome…",
+                   command=self._welcome).pack(side="left", padx=6)
 
         nb = ttk.Notebook(self.root)
         nb.pack(fill="both", expand=True, padx=8, pady=8)
@@ -266,6 +270,14 @@ class SettingsWindow:
             "Saved", "Settings saved.\n\nRestart Chinese Pop for them to take effect.",
             parent=self.root)
         self._close()
+
+    def _welcome(self):
+        """Re-open the first-run welcome. Its own process — one Tk root each."""
+        try:
+            subprocess.Popen([sys.executable, "-m", "chinesepop.firstrun"],
+                             cwd=str(paths.APP_DIR))
+        except Exception:
+            log.exception("could not open the welcome window")
 
     def _defaults(self):
         if not messagebox.askyesno("Restore defaults",
