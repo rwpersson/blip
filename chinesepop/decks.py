@@ -18,6 +18,7 @@ pinyin->reading; ROADMAP Phase 2) is a change to _normalize() and nothing else â
 the rest of the app already reads via word_term()/word_reading().
 """
 import json
+import os
 import re
 from pathlib import Path
 
@@ -102,9 +103,15 @@ def validate(deck):
 
 
 def load_all(strict=False):
-    """Every deck, bundled + user, ordered by filename."""
-    decks = []
-    for d in paths.decks_dirs():
+    """Every deck, bundled + user, ordered by filename.
+
+    A user deck with the same id as a bundled one **replaces** it. That's what
+    makes editing a shipped deck work once installed: the bundled copy is
+    read-only, so `save()` writes to the user dir, and this is where that copy
+    takes over. Without it you'd see the deck twice.
+    """
+    by_id = {}
+    for d in paths.decks_dirs():             # bundled first, user last (wins)
         if not d.exists():
             continue
         for f in sorted(d.glob("*.json")):
@@ -120,8 +127,10 @@ def load_all(strict=False):
                     log.warning("deck problem: %s", p)
                 if strict:
                     raise ValueError(f"{f.name}: {problems[0]}")
-            decks.append(deck)
-    return decks
+            if deck["id"] in by_id:
+                log.info("user deck %s overrides the bundled one", deck["id"])
+            by_id[deck["id"]] = deck
+    return sorted(by_id.values(), key=lambda d: d["id"])
 
 
 def all_words(decks=None):
@@ -150,8 +159,19 @@ def user_decks_dir():
 
 
 def deck_path(deck):
-    """Existing file if we loaded it from one, else a new file in the user dir."""
-    return deck.get("source") or (user_decks_dir() / f"{deck['id']}.json")
+    """Where this deck should be written.
+
+    Its own file if we can write there; otherwise the user dir â€” editing a
+    bundled deck after install is copy-on-write, and load_all() lets the copy win.
+    """
+    source = deck.get("source")
+    if source:
+        source = Path(source)
+        if os.access(source.parent, os.W_OK):
+            return source
+        log.info("%s is read-only; saving %s to the user deck dir",
+                 source.parent, deck["id"])
+    return user_decks_dir() / f"{deck['id']}.json"
 
 
 def to_json(deck):

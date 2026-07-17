@@ -30,7 +30,8 @@ stealing focus or the cursor. Windows-only.
 ## Run / test / regenerate
 
 ```
-python -m chinesepop                   # run (or run.bat)
+python -m chinesepop                   # run the overlay (or run.bat)
+python -m chinesepop.editor            # deck editor / importer (standalone)
 python -m pytest tests -q              # the suite MUST stay green
 python generate_audio.py               # fill in any missing audio
 python generate_audio.py --force       # rebuild ALL audio (after a voice change)
@@ -73,6 +74,8 @@ chinesepop/
   importers/  common.py (mapping, clean(), build_words) · csv_import.py ·
           anki_import.py (.apkg) · export.py
   ui/     card.py · flash.py · panel.py · render.py (outlined text) · theme.py
+  editor/ controller.py (ALL the logic, no Tk — test this) · window.py ·
+          import_wizard.py · __main__.py
 tests/            pytest; test_win32.py drives real windows
 generate_audio.py · new_deck.py · expand_wordbank.py    (thin CLIs)
 ```
@@ -92,9 +95,17 @@ where it lives: `tts.py` generates from `specs_for()`, `player.py` plays from
 `paths_for()`, so generation and playback can't disagree about a filename. Anything
 that touches audio goes through it — never build a path by hand.
 
-## Authoring & import (the content engine)
+## Authoring & import
 
-Headless and tested; the UI on top is still to come.
+**The editor is a separate program on purpose** (`python -m chinesepop.editor`). It's
+an ordinary ttk window that *wants* focus — the exact opposite of every invariant in
+`win32.py`. Keeping it out of the overlay's process means it can't regress them.
+`editor/controller.py` holds all the logic and imports no Tk, so it's tested directly;
+`window.py` stays dumb.
+
+Editing a **bundled** deck is copy-on-write: once installed the bundled dir is
+read-only, so `save()` writes to `user_dir()/decks`, and `load_all()` lets a user deck
+**override** a bundled one with the same id (otherwise you'd see the deck twice).
 
 - `decks.create/add_word/update_word/delete_word/save` — user decks are written to
   `user_dir()/decks`, never the bundled dir (read-only once installed).

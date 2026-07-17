@@ -120,7 +120,7 @@ Everything a stranger needs that you don't, because you edit the source.
 - ☐ Tray icon (show/hide/quit/pause) — more discoverable than a hidden panel
 - ☐ Pause when a fullscreen app is foreground / do-not-disturb
 
-## Phase 5 — User content: author, generate, import ◐ (engine done, UI next) ★
+## Phase 5 — User content: author, generate, import ☑ DONE ★
 
 The Anki-like half of the product: **users make their own cards, get audio for them
 automatically, and bring in decks from elsewhere.** Phase 2 is what makes it safe —
@@ -131,18 +131,19 @@ Note: authoring a card needs network for its first synthesis (edge-tts, Phase 3)
 Acceptable — it's one short request per new card, and playback is cached forever.
 
 **Authoring**
-- ◐ Deck CRUD engine done (`decks.create/add_word/update_word/delete_word/save`,
-  duplicate rejection, per-deck ids). **The editor UI is the next task.**
-- ☑ **Audio on save** — `tts.generate_word()` does one card; free when the clip
-  already exists. UI progress indicator still ☐
+- ☑ **Deck editor** — standalone `python -m chinesepop.editor`: decks | cards | form,
+  filter, create/delete decks + cards, export. Logic lives in `editor/controller.py`
+  (no Tk) so it's testable; the window is dumb.
+- ☑ **Audio on save** — one card, on a worker thread with status feedback; free when
+  the clip already exists. A failure leaves a silent card, never a crash.
 - ☑ **Auto-fill reading + tones** via `pypinyin` (`lang.py`): 你好 → `nǐ hǎo` + `3-3`,
   and it resolves polyphones from context (银行 `yín háng`, not `xíng`). Treated as a
   suggestion the author can override.
-- ☑ Duplicate detection (`add_word` raises; `find_term()` locates it across decks) — ☐ surface in UI
+- ☑ Duplicate detection — the editor warns *which deck* already has the term
 
 **Import**
 - ☑ **CSV/TSV** — sniffs delimiter/encoding (BOM, cp1252, gb18030), guesses the
-  mapping, positional fallback with no header. ☐ mapping+preview UI
+  mapping, positional fallback with no header
 - ☑ **Anki `.apkg`** — implemented; the traps, all handled:
   - `.apkg` is a ZIP: `collection.anki2` (SQLite), sometimes `collection.anki21`,
     and newer exports use **zstd-compressed `.anki21b`** — handle or reject clearly
@@ -155,6 +156,8 @@ Acceptable — it's one short request per new card, and playback is cached forev
   - imported tags are normalised onto our categories (`hsk1`→`hsk`) or dropped —
     otherwise the imported deck fails validation
 - ☑ **Export** a deck (JSON + Excel-safe CSV) — trivial, since audio isn't bundled
+- ☑ Import wizard: file → mapping (pre-guessed) → live preview → target deck
+- ☑ Import a shared Chinese Pop deck (`.json`) — sharing is just the JSON
 - ☐ Import from a URL/file drop; a shared-deck index is a stretch goal
 
 ## Phase 6 — Learning quality (1–2 days)
