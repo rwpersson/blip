@@ -2,4 +2,4 @@
 
 See CLAUDE.md for architecture and the Win32 invariants; ROADMAP.md for the plan.
 """
-__version__ = "0.1.0"
+__version__ = "0.2.0"

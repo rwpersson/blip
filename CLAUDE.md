@@ -66,8 +66,12 @@ chinesepop/
   hotkeys.py      global RegisterHotKey listener thread
   paths.py        where user data lives (dev = in-tree, frozen = %APPDATA%)
   logging_setup.py
-  audio/  player.py (MCI+winsound, the play sequence) · tts.py (provider
-          interface: Edge now, Piper in Phase 3) · cues.py (synthesized chimes)
+  lang.py         reading/tone auto-fill (pypinyin) — the only zh-specific bit
+  audio/  clips.py (content-addressed clip keys — SOURCE OF TRUTH) ·
+          player.py (MCI+winsound, the play sequence) · tts.py (provider
+          interface + generate_word for authoring) · cues.py (synthesized chimes)
+  importers/  common.py (mapping, clean(), build_words) · csv_import.py ·
+          anki_import.py (.apkg) · export.py
   ui/     card.py · flash.py · panel.py · render.py (outlined text) · theme.py
 tests/            pytest; test_win32.py drives real windows
 generate_audio.py · new_deck.py · expand_wordbank.py    (thin CLIs)
@@ -87,6 +91,34 @@ names, which is what keeps imported/third-party decks working.
 where it lives: `tts.py` generates from `specs_for()`, `player.py` plays from
 `paths_for()`, so generation and playback can't disagree about a filename. Anything
 that touches audio goes through it — never build a path by hand.
+
+## Authoring & import (the content engine)
+
+Headless and tested; the UI on top is still to come.
+
+- `decks.create/add_word/update_word/delete_word/save` — user decks are written to
+  `user_dir()/decks`, never the bundled dir (read-only once installed).
+  `add_word` auto-fills reading/tones and rejects duplicate terms.
+- `lang.derive_reading("银行")` → `("yín háng", "2-2")`. pypinyin resolves polyphones
+  from context, which is why we don't need g2pw's BERT. **Auto-fill is a suggestion**
+  — it can disagree with a careful reading (it neutralises 电子 to "diàn zi"), so the
+  author must always be able to override.
+- `tts.generate_word(word, settings, deck)` — audio for ONE card, for authoring.
+  Free when the clip already exists (content-addressed).
+- **Import is two-phase on purpose**: `parse()` → `ImportResult(fields, rows)`, then
+  the caller supplies a mapping → `build_words()`. Neither CSV nor Anki has a fixed
+  schema, so the user must confirm which column is the term.
+  `guess_mapping()` pre-fills it.
+- Gotchas already handled — don't undo them:
+  - Anki fields are HTML with `[sound:…]`/`<img>`/`&nbsp;` → `common.clean()`
+  - `.apkg` may hold `collection.anki21b`, which is **zstd**-compressed → we report
+    that actionably instead of crashing
+  - field *names* come from the notetype; newer files hide them in a protobuf, so we
+    fall back to positional `Field N`
+  - **imported tags are not our categories** ("hsk1" → `hsk`, unknown → dropped),
+    or the imported deck fails validation
+  - **media is deliberately not imported** — we re-synthesize, for one consistent
+    voice and no redistribution question
 
 `cat` ∈ `hsk | slang | swear | gaming | idiom | common` (drives the pill color).
 `say` overrides the TTS text when `hanzi` has latin/digits (`666` → `六六六`).

@@ -8,6 +8,14 @@
 # breaks, swap the provider in chinesepop/audio/tts.py.
 edge-tts>=6.1
 
+# Reading/tone auto-fill when authoring Chinese cards (type 你好 -> nǐ hǎo, 3-3).
+# Pure-python, MIT, and resolves polyphones from context (银行 -> yín háng).
+pypinyin>=0.53
+
+# Optional: only needed to import .apkg files exported by very recent Anki,
+# whose collection is zstd-compressed. Import explains this if it's missing.
+# zstandard>=0.22
+
 # Dev / test
 pytest>=8.0
 

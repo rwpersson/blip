@@ -120,35 +120,41 @@ Everything a stranger needs that you don't, because you edit the source.
 - ☐ Tray icon (show/hide/quit/pause) — more discoverable than a hidden panel
 - ☐ Pause when a fullscreen app is foreground / do-not-disturb
 
-## Phase 5 — User content: author, generate, import (3–4 days) ★ core direction
+## Phase 5 — User content: author, generate, import ◐ (engine done, UI next) ★
 
 The Anki-like half of the product: **users make their own cards, get audio for them
-automatically, and bring in decks from elsewhere.** Depends on Phase 2
-(content-addressed audio) and Phase 3 (Piper: offline synthesis means a new card gets
-audio in a second, with no account, no network, no licensing question).
+automatically, and bring in decks from elsewhere.** Phase 2 is what makes it safe —
+content-addressed audio means an authored or imported card can't collide with
+anyone's, and a new card's audio is free if that exact clip already exists.
+
+Note: authoring a card needs network for its first synthesis (edge-tts, Phase 3).
+Acceptable — it's one short request per new card, and playback is cached forever.
 
 **Authoring**
-- ☐ Deck editor: create/rename/delete decks, add/edit/delete cards, live validation
-- ☐ **Audio on save** — synthesize just the new/edited card's clips immediately with a
-  small progress indicator; never a full batch pass
-- ☐ **Auto-fill reading + tones** for Chinese via `pypinyin` (MIT): the user types
-  你好, we derive `nǐ hǎo` + `3-3`. Removes the tedious part of authoring and is why
-  tone data stays optional/derivable in the schema.
-- ☐ Duplicate detection across decks on add (we already validate; surface it in the UI)
+- ◐ Deck CRUD engine done (`decks.create/add_word/update_word/delete_word/save`,
+  duplicate rejection, per-deck ids). **The editor UI is the next task.**
+- ☑ **Audio on save** — `tts.generate_word()` does one card; free when the clip
+  already exists. UI progress indicator still ☐
+- ☑ **Auto-fill reading + tones** via `pypinyin` (`lang.py`): 你好 → `nǐ hǎo` + `3-3`,
+  and it resolves polyphones from context (银行 `yín háng`, not `xíng`). Treated as a
+  suggestion the author can override.
+- ☑ Duplicate detection (`add_word` raises; `find_term()` locates it across decks) — ☐ surface in UI
 
 **Import**
-- ☐ **CSV/TSV first** — covers most "I have a word list" cases; column-mapping step
-  (which column is term / reading / meaning / note) + preview before commit
-- ☐ **Anki `.apkg`** — the real ask. Notes:
+- ☑ **CSV/TSV** — sniffs delimiter/encoding (BOM, cp1252, gb18030), guesses the
+  mapping, positional fallback with no header. ☐ mapping+preview UI
+- ☑ **Anki `.apkg`** — implemented; the traps, all handled:
   - `.apkg` is a ZIP: `collection.anki2` (SQLite), sometimes `collection.anki21`,
     and newer exports use **zstd-compressed `.anki21b`** — handle or reject clearly
   - `notes.flds` packs fields joined by `\x1f`; field *names* come from the notetype
     JSON, so there is no fixed schema → **a field-mapping UI is mandatory**
   - fields contain **HTML** and `[sound:file.mp3]` / `<img>` refs — strip them
   - media is a JSON name→number map plus numbered files
-  - **Prefer re-synthesizing over importing their media**: one consistent voice, no
-    redistribution question, smaller. Offer "use bundled audio" only as an option.
-- ☐ **Export** a deck (JSON, and CSV) — trivial once audio isn't bundled
+  - media is **not** imported: we re-synthesize for one consistent voice and no
+    redistribution question
+  - imported tags are normalised onto our categories (`hsk1`→`hsk`) or dropped —
+    otherwise the imported deck fails validation
+- ☑ **Export** a deck (JSON + Excel-safe CSV) — trivial, since audio isn't bundled
 - ☐ Import from a URL/file drop; a shared-deck index is a stretch goal
 
 ## Phase 6 — Learning quality (1–2 days)
