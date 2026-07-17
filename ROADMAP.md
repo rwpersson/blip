@@ -4,58 +4,64 @@ Status legend: ☐ todo · ◐ in progress · ☑ done
 
 The app *works*. What's missing is everything that assumes a second user exists:
 someone without Python, without your file paths, on a different monitor setup, who
-will never open `pop.py` to change a constant.
+will never open a `.py` file to change a constant — and who wants to make their own
+cards and bring in decks from elsewhere.
 
-Ordered so each phase unblocks the next. Phases 0–3 are the real "can I ship this
-at all" work; 4+ is what makes it good.
+Ordered so each phase unblocks the next. Phases 2–3 are what "can I ship this at
+all" hinges on; **Phase 5 (user content) is the core product direction** and is why
+Phase 2 can't be skipped.
 
 ---
 
-## Phase 0 — Foundations (half a day)
+## Phase 0 — Foundations ☑ DONE
 
 Nothing here is glamorous; everything after it is harder without it.
 
-- ☐ `git init` + `.gitignore` (`audio/`, `sounds/`, `state.json`, `__pycache__/`, `dist/`, `build/`)
-- ☐ `requirements.txt` / `pyproject.toml` — right now `edge-tts` is an undeclared dependency
-- ☐ `LICENSE` + attribution for word data
+- ☑ `git init` + `.gitignore` (`audio/`, `sounds/`, `state.json`, `__pycache__/`, `dist/`, `build/`)
+- ☑ `requirements.txt` — right now `edge-tts` is an undeclared dependency
+- ☑ `LICENSE` (MIT) + attribution for word data
 - ☑ `CLAUDE.md` context doc
-- ☐ Decide the product shape (see **Open decisions**) — this changes Phases 3 & 6
+- ☑ Decide the product shape (see **Open decisions**) — this changes Phases 3 & 6
 
-## Phase 1 — Architecture (1–2 days)
+## Phase 1 — Architecture ☑ DONE
 
-`pop.py` is 1230 lines doing Win32 interop, audio, scheduling, and four windows.
-It's at the size where every new feature risks the focus/click-through invariants.
+`pop.py` had reached 1230 lines doing Win32 interop, audio, scheduling and four
+windows at once — every new feature risked the focus/click-through invariants.
+Split into `chinesepop/` (see CLAUDE.md for the layout).
 
-- ☐ Split into a package:
-  ```
-  chinesepop/
-    __main__.py        app entry
-    app.py             orchestration only
-    settings.py        load/save/migrate user settings
-    decks.py           deck load + schema validation
-    scheduler.py       SRS
-    platform/win32.py  ctypes: no-activate, click-through, hotkeys, DPI
-    audio/player.py    MCI + winsound playback
-    audio/tts.py       TTS provider interface (see Phase 3)
-    audio/cues.py      chime synthesis
-    ui/card.py  ui/flash.py  ui/panel.py  ui/settings_window.py
-  ```
-- ☐ Replace bare `except: pass` with real logging → `%APPDATA%\ChinesePop\logs\`
-  (you cannot debug a stranger's crash without this)
-- ☐ Commit a real test suite (port the throwaway scripts: focus-steal, click-through,
-  scheduler, censor, chime cadence) + `pytest` + GitHub Actions
+- ☑ Package split; behaviour in `app.py`, all ctypes isolated in `win32.py`
+- ☑ Replace bare `except: pass` with real logging (`logs/`, `%APPDATA%` once frozen)
+- ☑ Test suite: **33 tests**, incl. driving real windows and a separate-process
+  window proving focus is never stolen
+- ☐ GitHub Actions to run the suite on push
+  (note: `test_win32.py` needs a desktop session — headless CI will skip it)
 
-## Phase 2 — Data model (1 day)
+**Found in passing:** a real focus bug — Tk creates a wrapper toplevel at map time
+and *that* handle is the one Windows focuses, so the control panel was silently
+activatable (clicking a button could steal focus from the game). See CLAUDE.md
+gotcha #1.
 
-- ☐ **Move user data out of the install dir** → `%APPDATA%\ChinesePop\`
-  (settings, state, custom decks). Installed under `Program Files`, today's writes fail.
-- ☐ **Content-addressed audio**: key clips by `hash(say_text + voice + rate)` instead of
-  a global int id. Fixes the id-collision landmine when users import decks, dedupes
-  identical words across decks, and makes voice changes cache-safe.
-- ☐ Versioned schemas + migration for `state.json` and deck files (`"schema": 1`)
-- ☐ Deck validation with human-readable errors (bad pinyin/tones counts, dup hanzi,
-  missing fields) — third-party decks *will* be malformed
-- ☐ Settings file (JSON) replacing the module constants
+## Phase 2 — Data model (1 day) — **now a hard blocker**
+
+The Anki-style direction (users author + import cards, see Phase 5) makes this
+non-negotiable: **global integer ids cannot survive user-created or imported
+cards.** Two users both author id `421` and get each other's audio; an Anki import
+brings ids from a foreign system entirely. Do this before anyone has decks in the wild.
+
+- ☑ Settings file (JSON) replacing the module constants
+- ☑ Deck validation with human-readable errors — third-party decks *will* be malformed
+- ☑ `paths.py` routes user data to `%APPDATA%\ChinesePop\` once frozen
+  (dev stays in-tree). Still to verify under a real installed build.
+- ☐ **Content-addressed audio** — key clips by `hash(say_text + voice + rate)`
+  instead of a word id. This is the keystone:
+  - ids stop being global, so authored/imported cards can't collide
+  - identical words across decks share one clip (free dedupe)
+  - a voice change re-keys instead of corrupting the cache
+  - **sharing a deck becomes sharing a small JSON** — no media bundle, no
+    redistribution question, because audio is synthesized on the recipient's machine
+- ☐ Versioned schemas + migration for `state.json` (v3) and deck files
+- ☐ Generic field rename `hanzi`→`term`, `pinyin`→`reading` + deck `language`/`voice`
+  (contained to `decks.py`; the app already reads via accessors)
 
 ## Phase 3 — TTS: move to Piper (1–2 days)
 
@@ -77,8 +83,7 @@ Everything a stranger needs that you don't, because you edit the source.
   product now" change.
 - ☐ **First-run wizard** — pick decks, set interval, test the overlay, explain the
   hotkeys and the fullscreen caveat
-- ☐ **Deck manager** — enable/disable, create/edit words in-app, import/export,
-  CSV + Anki `.apkg` import
+- ☐ **Deck manager** — enable/disable decks, reorder (authoring/import is Phase 5)
 - ☐ **Rebindable hotkeys** + conflict detection (today `Ctrl+Alt+C/J/K/M` are hardcoded
   and silently fail if taken)
 - ☐ **Multi-monitor + DPI awareness** — `winfo_screenwidth()` is the primary monitor
@@ -89,7 +94,38 @@ Everything a stranger needs that you don't, because you edit the source.
 - ☐ Tray icon (show/hide/quit/pause) — more discoverable than a hidden panel
 - ☐ Pause when a fullscreen app is foreground / do-not-disturb
 
-## Phase 5 — Learning quality (1–2 days)
+## Phase 5 — User content: author, generate, import (3–4 days) ★ core direction
+
+The Anki-like half of the product: **users make their own cards, get audio for them
+automatically, and bring in decks from elsewhere.** Depends on Phase 2
+(content-addressed audio) and Phase 3 (Piper: offline synthesis means a new card gets
+audio in a second, with no account, no network, no licensing question).
+
+**Authoring**
+- ☐ Deck editor: create/rename/delete decks, add/edit/delete cards, live validation
+- ☐ **Audio on save** — synthesize just the new/edited card's clips immediately with a
+  small progress indicator; never a full batch pass
+- ☐ **Auto-fill reading + tones** for Chinese via `pypinyin` (MIT): the user types
+  你好, we derive `nǐ hǎo` + `3-3`. Removes the tedious part of authoring and is why
+  tone data stays optional/derivable in the schema.
+- ☐ Duplicate detection across decks on add (we already validate; surface it in the UI)
+
+**Import**
+- ☐ **CSV/TSV first** — covers most "I have a word list" cases; column-mapping step
+  (which column is term / reading / meaning / note) + preview before commit
+- ☐ **Anki `.apkg`** — the real ask. Notes:
+  - `.apkg` is a ZIP: `collection.anki2` (SQLite), sometimes `collection.anki21`,
+    and newer exports use **zstd-compressed `.anki21b`** — handle or reject clearly
+  - `notes.flds` packs fields joined by `\x1f`; field *names* come from the notetype
+    JSON, so there is no fixed schema → **a field-mapping UI is mandatory**
+  - fields contain **HTML** and `[sound:file.mp3]` / `<img>` refs — strip them
+  - media is a JSON name→number map plus numbered files
+  - **Prefer re-synthesizing over importing their media**: one consistent voice, no
+    redistribution question, smaller. Offer "use bundled audio" only as an option.
+- ☐ **Export** a deck (JSON, and CSV) — trivial once audio isn't bundled
+- ☐ Import from a URL/file drop; a shared-deck index is a stretch goal
+
+## Phase 6 — Learning quality (1–2 days)
 
 - ☐ Real SRS (**FSRS** or SM-2) now that the recall hotkeys provide grades; keep the
   current exposure-based mode as "passive mode" for when you don't want to press keys
@@ -97,7 +133,7 @@ Everything a stranger needs that you don't, because you edit the source.
 - ☐ Leech detection (words you keep missing → surface differently, not just more often)
 - ☐ Example sentences (the one high-value learning feature never built)
 
-## Phase 6 — Packaging & release (1–2 days)
+## Phase 7 — Packaging & release (1–2 days)
 
 - ☐ **PyInstaller** build (one-folder), icon, version info — users will not install Python
 - ☐ Installer (Inno Setup) **or** portable zip; per-user install avoids admin
@@ -106,7 +142,7 @@ Everything a stranger needs that you don't, because you edit the source.
 - ☐ Crash reporting: "copy log" button
 - ☐ CI: build + test on tag; publish releases
 
-## Phase 7 — Polish & distribution
+## Phase 8 — Polish & distribution
 
 - ☐ README with GIFs/screenshots, landing page or itch.io/GitHub Releases
 - ☐ Onboarding docs: fullscreen-exclusive caveat, antivirus false-positives (PyInstaller)

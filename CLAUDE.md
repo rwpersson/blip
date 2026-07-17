@@ -1,8 +1,26 @@
 # Chinese Pop — project context
 
-Always-on-top desktop flashcard overlay for passively learning Chinese while
-gaming. A card pops up on a timer, speaks the word, and disappears. Windows-only.
-Currently a personal tool being hardened into a shippable product (see ROADMAP.md).
+Always-on-top desktop flashcard overlay for passively learning a language while
+gaming. A card pops up on a timer, speaks the word, and disappears — without ever
+stealing focus or the cursor. Windows-only.
+
+**Direction** (decided; drives everything — see ROADMAP.md):
+
+- **Free & open-source** (MIT), shipped via GitHub Releases.
+- **Anki-like content model**: users author their own cards, get audio generated for
+  them automatically, and import decks from elsewhere (CSV, Anki `.apkg`). The
+  bundled Chinese decks are a starting point, not the product.
+- **TTS = Piper** (offline, MIT) — replaces edge-tts, which is a reverse-engineered
+  Edge endpoint we can't ship against. Offline synthesis is also what makes
+  "author a card, hear it a second later" work with no account or network.
+- **Generic language overlay**: decks declare their own `language`/`voice`; tones and
+  readings are optional Chinese niceties, not the core model. Chinese stays the
+  flagship (tone colors, tone read-out) but isn't hardcoded.
+- **Consequence to respect**: because users author and import cards, word ids
+  **cannot** stay globally-unique integers keyed to audio files — audio becomes
+  content-addressed (`hash(text+voice+rate)`). Don't build anything new that assumes
+  id↔audio coupling. Deck sharing then = sharing a small JSON; audio is synthesized
+  on the recipient's machine.
 
 ## Run / test / regenerate
 
@@ -138,9 +156,10 @@ Isolation: always point `state_file` at a tmp path (`conftest.py` does) — the 
   UI for it yet (ROADMAP Phase 4). Add new knobs to `DEFAULTS`, never as constants.
 - Log, don't swallow: no bare `except: pass` — use `log.exception(...)`. You can't
   debug a stranger's crash otherwise.
-- Word ids are **globally unique across decks** because audio is keyed by id.
-  ⚠️ This breaks if users ever import third-party decks — see ROADMAP Phase 2
-  (content-addressed audio).
+- Word ids are currently **globally unique across decks** because audio is keyed by
+  id (`audio/<id>.mp3`). ⚠️ **This is on borrowed time**: authored + imported cards
+  make it collide (two users both author id `421`; Anki brings foreign ids). Phase 2
+  moves to content-addressed audio — don't add code that depends on id↔audio.
 - Swears: `meaning` is stored uncensored; `censor_display()` asterisks it for the card
   and `censor_speech()` swaps in a clean word so TTS never voices it (`_PROFANITY` in
   `generate_audio.py`).
