@@ -1,7 +1,7 @@
 """Entry point:  python -m chinesepop.editor"""
 import sys
 
-from .. import paths, settings as settings_mod
+from .. import paths, settings as settings_mod, win32
 from ..logging_setup import get, setup
 from .window import EditorWindow
 
@@ -11,6 +11,8 @@ def main():
     log = get("editor")
     paths.ensure_dirs()
     s = settings_mod.load()
+    if s.dpi_aware:
+        win32.set_dpi_aware()      # before any window — otherwise blurry text
     log.info("Deck editor — decks in %s",
              ", ".join(str(d) for d in paths.decks_dirs()))
     EditorWindow(s).run()

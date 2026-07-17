@@ -61,19 +61,42 @@ class App:
         self.root.attributes("-topmost", True)
         self.root.configure(bg=theme.BORDER)
         self.root.withdraw()
+        self._apply_dpi()
+        self.rect = win32.monitor_rect(settings.monitor)
 
         self.panel = Panel(self.root, settings, decks, {
             "play": self.toggle_play, "stop": self.stop, "next": self.next_now,
             "replay": self.replay, "annoy": self.toggle_annoy,
             "mute": self.toggle_mute, "quit": self.quit,
             "select_deck": self.select_deck,
+            "settings": self.open_settings, "editor": self.open_editor,
         })
         self.card = Card(self.root, settings)
         self.flash = Flash(self.root, settings)
-        self._bar_h = self.panel.place()
+        self._bar_h = self.panel.place(self.rect)
         self.panel.set_annoy(self.annoying)
         self.panel.set_sound(self.sound_on)
         self._refresh_decks()
+
+    def _apply_dpi(self):
+        """Declaring DPI awareness stops Windows bitmap-stretching us (which is
+        what makes the card blurry at 125%/150%), but it also means nothing is
+        scaled for us any more — so scale the fonts and pixel sizes ourselves,
+        or everything comes out tiny on a HiDPI screen."""
+        if not self.s.dpi_aware:
+            return
+        scale = win32.scale_for_window(self.root)
+        self.scale = scale
+        if abs(scale - 1.0) < 0.01:
+            return
+        try:
+            # Tk sizes fonts in points; this is pixels-per-point.
+            self.root.tk.call("tk", "scaling", win32.dpi_for_window(self.root) / 72.0)
+        except tk.TclError:
+            log.exception("could not set Tk scaling")
+        for key in ("card_width", "margin"):     # pixel dimensions
+            self.s.set(key, int(self.s[key] * scale))
+        log.info("display scale %.2fx — scaled fonts and card geometry", scale)
 
     # ---------- decks ----------
     @property
@@ -155,19 +178,19 @@ class App:
         if self._flashing:
             # card is filled with the answer but stays hidden until the English
             # read-out; audio events drive the flash.
-            self.card.render_answer(word)
-            self.flash.render(word)
+            self.card.render_answer(word, self.rect)
+            self.flash.render(word, self.rect)
             player.play_word(word, self.s, self.deck, on_event=self._fx_emit,
                              chime=chiming)
         else:
-            self.card.place()
+            self.card.place(self.rect)
             self.card.show()
             player.play_word(word, self.s, self.deck, chime=chiming)
             if self.s.reveal_quiz and self.s.reveal_delay > 0 and not self._is_new:
                 self._reveal_job = self.root.after(
                     int(self.s.reveal_delay * 1000), lambda w=word: self._reveal(w))
             else:
-                self.card.render_answer(word)
+                self.card.render_answer(word, self.rect)
 
         if self.s.display_seconds > 0:
             self._hide_job = self.root.after(
@@ -176,7 +199,7 @@ class App:
     def _reveal(self, word):
         self._reveal_job = None
         if self.current is word:
-            self.card.render_answer(word)
+            self.card.render_answer(word, self.rect)
 
     def _tick(self):
         if self.state != RUNNING:
@@ -197,7 +220,7 @@ class App:
                     continue
                 if kind == "word_on":
                     self.card.hide()          # flash replaces the card
-                    self.flash.show()
+                    self.flash.show(self.rect)
                 elif kind == "word_off":
                     self.flash.hide()
                 elif kind == "english":
@@ -249,6 +272,22 @@ class App:
         self.sound_on = not self.sound_on
         player.set_audio(self.sound_on)
         self.panel.set_sound(self.sound_on)
+
+    def open_settings(self):
+        """Launch Settings as a separate process — it needs focus, and our
+        windows must never take it."""
+        from .settings_ui import open_settings
+        open_settings()
+
+    def open_editor(self):
+        import subprocess
+        import sys
+        from . import paths
+        try:
+            subprocess.Popen([sys.executable, "-m", "chinesepop.editor"],
+                             cwd=str(paths.APP_DIR))
+        except Exception:
+            log.exception("could not launch the deck editor")
 
     def rate_current(self, got):
         if not self.current:
@@ -305,11 +344,19 @@ class App:
         self.root.after(80, self._poll_hotkey)
 
     def _check_hotkeys(self):
-        # If the panel hotkey is taken, force the panel visible — otherwise the
-        # user has no way to control or quit the app.
+        """A hotkey another app already owns just fails to register. Say so —
+        silently dead shortcuts are the worst kind."""
+        dead = [hk.NAMES.get(hid, hid) for hid, ok in self._hotkeys.ok.items()
+                if not ok]
+        if dead:
+            binds = ", ".join(f"{n} ({self.s.hotkeys.get(n, '?')})" for n in dead)
+            log.warning("These hotkeys are taken by another app: %s. "
+                        "Rebind them in Settings.", binds)
+        # Without the panel hotkey there's no way to control or quit, so force
+        # the panel visible rather than leaving the user stranded.
         if self._hotkeys.ok.get(hk.PANEL) is False:
             log.warning("panel hotkey unavailable; leaving the panel visible")
-            self.panel.show()
+            self.panel.show(self.rect)
 
     def run(self):
         self._status()
@@ -323,7 +370,7 @@ class App:
         self.root.after(30, self._poll_fx)
 
         if self.s.panel_hint_seconds > 0:
-            self.panel.show()
+            self.panel.show(self.rect)
             self.root.after(int(self.s.panel_hint_seconds * 1000),
                             lambda: self._hotkeys.ok.get(hk.PANEL) is not False
                             and self.panel.hide())

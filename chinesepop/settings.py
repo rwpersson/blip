@@ -64,9 +64,14 @@ DEFAULTS = {
     "halo_thickness": 2,
     "font": "Microsoft YaHei UI",
 
+    # --- display ---
+    "dpi_aware": True,            # crisp on scaled displays; off = let Windows blur us
+    "monitor": 0,                 # which screen the overlay lives on (0 = primary)
+
     # --- content ---
     "active_deck": "",            # "" = resume last used
-    "hide_swears": False,         # Phase 4: filter the swear category
+    "hide_swears": False,         # skip the swear category entirely
+    "enabled_decks": [],          # [] = all; otherwise deck ids to study
 
     # --- panel / hotkeys ---
     "panel_hint_seconds": 4,

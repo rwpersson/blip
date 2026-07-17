@@ -2,7 +2,7 @@
 import sys
 
 from . import decks as decks_mod
-from . import paths, settings as settings_mod
+from . import paths, settings as settings_mod, win32
 from .app import App
 from .audio import cues, tts
 from .logging_setup import get, setup
@@ -14,13 +14,31 @@ def main(argv=None):
     paths.ensure_dirs()
 
     s = settings_mod.load()
+    # Must happen before any window exists, or Windows renders us at 96 DPI and
+    # bitmap-stretches the result (blurry text on any scaled display).
+    if s.dpi_aware and not win32.set_dpi_aware():
+        log.info("could not enable DPI awareness — the overlay may look soft")
     cues.ensure()
 
-    decks = decks_mod.load_all()
-    if not decks:
+    all_decks = decks_mod.load_all()
+    if not all_decks:
         log.error("No decks found in %s — nothing to run.",
                   ", ".join(str(d) for d in paths.decks_dirs()))
         return 1
+
+    # Only synthesize what we'll actually study — no point generating swear audio
+    # for someone who turned swears off.
+    decks = decks_mod.apply_filters(all_decks, s)
+    if not decks:
+        log.error("Every deck is filtered out (check hide_swears / enabled_decks).")
+        return 1
+    if len(decks) != len(all_decks) or any(
+            len(d["words"]) != len(o["words"])
+            for d, o in zip(decks, all_decks) if d["id"] == o["id"]):
+        log.info("Filters active: studying %s of %s deck(s), %s of %s word(s)",
+                 len(decks), len(all_decks),
+                 sum(len(d["words"]) for d in decks),
+                 sum(len(d["words"]) for d in all_decks))
 
     ok, total = tts.generate(decks, s)
     if total:

@@ -98,7 +98,7 @@ class Card:
         self.meaning_lbl.configure(text="🤔  recall it…", fg=theme.SUB)
         self.note_lbl.configure(text="")
 
-    def render_answer(self, word):
+    def render_answer(self, word, rect=None):
         alt = word.get("alt")
         self.alt_lbl.configure(text=f"also: {alt}" if alt else "")
         render.draw_row(self.reading_cv, render.reading_segments(word),
@@ -106,17 +106,19 @@ class Card:
         self.meaning_lbl.configure(text=censor_display(word.get("meaning", "")),
                                    fg=theme.MEAN)
         self.note_lbl.configure(text=word.get("note", ""))
-        self.place()          # height changed — re-anchor
+        self.place(rect)      # height changed — re-anchor
 
     # ---------- geometry / visibility ----------
-    def place(self):
-        """Size the backing to the text layer and center both at the top."""
+    def place(self, rect=None):
+        """Size the backing to the text layer and center both at the top of the
+        target monitor (not just the primary screen)."""
         self.text.update_idletasks()
         w = self.text.winfo_reqwidth()
         h = self.text.winfo_reqheight()
-        sw = self.root.winfo_screenwidth()
-        x = (sw - w) // 2
-        y = self.s.margin
+        mx, my, mw, _mh = rect or (0, 0, self.root.winfo_screenwidth(),
+                                   self.root.winfo_screenheight())
+        x = mx + (mw - w) // 2
+        y = my + self.s.margin
         self.back.geometry(f"{w}x{h}+{x}+{y}")
         self.text.geometry(f"+{x}+{y}")
 

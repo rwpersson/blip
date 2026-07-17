@@ -36,11 +36,11 @@ class Flash:
         self.cv.pack(fill="both", expand=True)
         win32.make_click_through(self.win)
 
-    def render(self, word):
+    def render(self, word, rect=None):
         cv = self.cv
         cv.delete("all")
-        sw = self.root.winfo_screenwidth()
-        sh = self.root.winfo_screenheight()
+        _mx, _my, sw, sh = rect or (0, 0, self.root.winfo_screenwidth(),
+                                    self.root.winfo_screenheight())
         cv.configure(width=sw, height=sh)
         term = decks_mod.word_term(word)
         n = max(1, len(str(term)))
@@ -51,10 +51,10 @@ class Flash:
         render.draw_centered(cv, cx, cy + int(size * 0.55) + read_size,
                              render.reading_segments(word), read_size, self.s.font)
 
-    def show(self):
-        sw = self.root.winfo_screenwidth()
-        sh = self.root.winfo_screenheight()
-        self.win.geometry(f"{sw}x{sh}+0+0")
+    def show(self, rect=None):
+        mx, my, sw, sh = rect or (0, 0, self.root.winfo_screenwidth(),
+                                  self.root.winfo_screenheight())
+        self.win.geometry(f"{sw}x{sh}+{mx}+{my}")   # cover the target monitor only
         win32.show_no_activate(self.win)
         win32.raise_without_focus(self.win)
 

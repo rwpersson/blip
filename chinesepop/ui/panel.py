@@ -62,6 +62,8 @@ class Panel:
         self.annoy_btn.pack(side="left", padx=2)
         self.mute_btn = self._btn(btns, "🔊 Sound", self.a["mute"])
         self.mute_btn.pack(side="left", padx=2)
+        self._btn(btns, "⚙", self.a["settings"]).pack(side="left", padx=2)
+        self._btn(btns, "📝", self.a["editor"]).pack(side="left", padx=2)
         self._btn(btns, "✕", self.a["quit"]).pack(side="left", padx=2)
 
         hk = settings.hotkeys
@@ -124,15 +126,16 @@ class Panel:
         self.mute_btn.configure(text="🔊 Sound" if on else "🔇 Silent")
 
     # ---------- visibility ----------
-    def place(self):
+    def place(self, rect=None):
         self.root.update_idletasks()
         w = self.root.winfo_reqwidth()
-        sw = self.root.winfo_screenwidth()
-        self.root.geometry(f"+{sw - w - self.s.margin}+{self.s.margin}")
+        mx, my, mw, _mh = rect or (0, 0, self.root.winfo_screenwidth(),
+                                   self.root.winfo_screenheight())
+        self.root.geometry(f"+{mx + mw - w - self.s.margin}+{my + self.s.margin}")
         return self.root.winfo_reqheight()
 
-    def show(self):
-        self.place()
+    def show(self, rect=None):
+        self.place(rect)
         win32.show_no_activate(self.root)
         self.visible = True
 

@@ -105,6 +105,26 @@ def test_windows_are_no_activate(app):
         assert win32.ex_style(win) & win32.WS_EX_NOACTIVATE, f"{win} can take focus"
 
 
+def test_dpi_scale_is_sane(app):
+    """Asserted here because this module owns the process's only Tk root."""
+    scale = win32.scale_for_window(app.root)
+    assert 0.5 <= scale <= 4.0
+    assert win32.dpi_for_window(app.root) >= 96
+
+
+def test_card_is_placed_on_the_target_monitor(app, words):
+    """winfo_screenwidth() is the primary screen only; the card must land on the
+    monitor the user picked."""
+    mx, my, mw, _mh = app.rect
+    app.annoying = False
+    app._show(words[0])
+    pump(app, 0.4)
+    app.card.text.update_idletasks()
+    x, w = app.card.text.winfo_x(), app.card.text.winfo_reqwidth()
+    assert x >= mx and x + w <= mx + mw, "card spilled off the target monitor"
+    assert abs(x - (mx + (mw - w) // 2)) <= 1, "card isn't centered on it"
+
+
 def test_card_and_flash_are_click_through_panel_is_not(app):
     for win in (app.card.back, app.card.text, app.flash.win):
         assert win32.ex_style(win) & win32.WS_EX_TRANSPARENT
@@ -141,9 +161,13 @@ def test_pops_never_steal_focus_from_another_process(app, words):
         game = int(open(hwnd_file).read().strip())
         time.sleep(0.5)
 
-        pump(app, 0.3)
-        u.SetForegroundWindow(game)        # user tabs into their game
-        pump(app, 0.3)
+        # Give the helper focus, retrying: a single SetForegroundWindow can lose
+        # a race on a busy machine, and a flaky *setup* would mean the real
+        # assertion below never runs — which is worse than a failure.
+        deadline = time.time() + 5
+        while time.time() < deadline and u.GetForegroundWindow() != game:
+            u.SetForegroundWindow(game)    # user tabs into their game
+            pump(app, 0.25)
         assert u.GetForegroundWindow() == game, "test setup: helper never got focus"
 
         app.annoying = True

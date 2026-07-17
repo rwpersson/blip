@@ -136,3 +136,107 @@ def ex_style(win_or_hwnd):
     """Extended style — used by tests to assert the invariants."""
     hwnd = win_or_hwnd if isinstance(win_or_hwnd, int) else hwnd_of(win_or_hwnd)
     return _GetWL(hwnd, GWL_EXSTYLE)
+
+
+# ------------------------------- DPI ---------------------------------------
+# Without this the process is DPI-*unaware*: Windows renders us at 96 DPI and
+# bitmap-stretches the result, so on any scaled display (125%/150%, i.e. most
+# laptops and 4K monitors) the card is visibly blurry and lands in the wrong
+# place. Declaring per-monitor awareness fixes both — but then nothing is scaled
+# for us any more, so the caller MUST scale fonts and pixel dimensions by
+# scale_for_window(). Call before any window exists.
+DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4
+_BASE_DPI = 96.0
+
+
+def set_dpi_aware():
+    """True if we got per-monitor DPI awareness."""
+    try:
+        fn = _user32.SetProcessDpiAwarenessContext
+        fn.restype = wintypes.BOOL
+        fn.argtypes = [ctypes.c_void_p]
+        if fn(ctypes.c_void_p(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)):
+            return True
+    except (AttributeError, OSError):
+        pass                      # pre-1703 Windows
+    try:                          # older API: system-wide awareness
+        ctypes.windll.shcore.SetProcessDpiAwareness(2)   # PROCESS_PER_MONITOR_DPI_AWARE
+        return True
+    except (AttributeError, OSError):
+        pass
+    try:
+        return bool(_user32.SetProcessDPIAware())
+    except (AttributeError, OSError):
+        return False
+
+
+def dpi_for_window(win):
+    try:
+        fn = _user32.GetDpiForWindow
+        fn.restype = wintypes.UINT
+        fn.argtypes = [wintypes.HWND]
+        dpi = fn(hwnd_of(win))
+        if dpi:
+            return float(dpi)
+    except (AttributeError, OSError):
+        pass
+    return _BASE_DPI
+
+
+def scale_for_window(win):
+    """1.0 at 100%, 1.5 at 150%. Multiply pixel sizes by this."""
+    return dpi_for_window(win) / _BASE_DPI
+
+
+# --------------------------- monitors --------------------------------------
+# winfo_screenwidth() only ever describes the PRIMARY monitor, so on a multi-head
+# setup the overlay always lands there — often not the screen you're gaming on.
+class _RECT(ctypes.Structure):
+    _fields_ = [("left", ctypes.c_long), ("top", ctypes.c_long),
+                ("right", ctypes.c_long), ("bottom", ctypes.c_long)]
+
+
+class _MONITORINFO(ctypes.Structure):
+    _fields_ = [("cbSize", wintypes.DWORD), ("rcMonitor", _RECT),
+                ("rcWork", _RECT), ("dwFlags", wintypes.DWORD)]
+
+
+_MONITORINFOF_PRIMARY = 0x1
+_MONITORENUMPROC = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HMONITOR,
+                                      wintypes.HDC, ctypes.POINTER(_RECT),
+                                      wintypes.LPARAM)
+
+
+def monitors():
+    """[{x, y, width, height, primary}] in virtual-desktop coordinates."""
+    found = []
+
+    def _cb(hmon, _hdc, _lprect, _lparam):
+        info = _MONITORINFO()
+        info.cbSize = ctypes.sizeof(_MONITORINFO)
+        if _user32.GetMonitorInfoW(hmon, ctypes.byref(info)):
+            r = info.rcMonitor
+            found.append({"x": r.left, "y": r.top,
+                          "width": r.right - r.left,
+                          "height": r.bottom - r.top,
+                          "primary": bool(info.dwFlags & _MONITORINFOF_PRIMARY)})
+        return True
+
+    try:
+        _user32.EnumDisplayMonitors(None, None, _MONITORENUMPROC(_cb), 0)
+    except OSError:
+        pass
+    if not found:                       # never leave the caller with nothing
+        found = [{"x": 0, "y": 0,
+                  "width": _user32.GetSystemMetrics(0),
+                  "height": _user32.GetSystemMetrics(1), "primary": True}]
+    found.sort(key=lambda m: (not m["primary"], m["x"], m["y"]))
+    return found
+
+
+def monitor_rect(index=0):
+    mons = monitors()
+    if not 0 <= index < len(mons):
+        index = 0                       # a monitor that was unplugged
+    m = mons[index]
+    return m["x"], m["y"], m["width"], m["height"]

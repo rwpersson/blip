@@ -139,6 +139,31 @@ def all_words(decks=None):
     return [w for d in decks for w in d["words"]]
 
 
+def apply_filters(decks, settings):
+    """The decks/words actually studied, per the user's settings.
+
+    Shipping decks full of profanity with no way to turn it off is a support
+    problem, so `hide_swears` drops that category outright. `enabled_decks`
+    narrows which decks are in rotation ([] means all).
+
+    Returns new deck dicts — never mutates the loaded ones, or a filter would
+    quietly delete cards from the editor's view too.
+    """
+    enabled = set(settings.get("enabled_decks") or [])
+    hide_swears = settings.get("hide_swears")
+    out = []
+    for d in decks:
+        if enabled and d["id"] not in enabled:
+            continue
+        words = d["words"]
+        if hide_swears:
+            words = [w for w in words if w.get("cat") != "swear"]
+        if not words:
+            continue                  # an empty deck would stall the scheduler
+        out.append({**d, "words": words})
+    return out
+
+
 # --------------------------- writing (authoring / import) --------------------
 SCHEMA = 1
 _WORD_FIELDS = ("id", "term", "reading", "tones", "cat", "meaning", "note",

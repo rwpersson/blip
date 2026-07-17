@@ -32,6 +32,7 @@ stealing focus or the cursor. Windows-only.
 ```
 python -m chinesepop                   # run the overlay (or run.bat)
 python -m chinesepop.editor            # deck editor / importer (standalone)
+python -m chinesepop.settings_ui       # settings (standalone)
 python -m pytest tests -q              # the suite MUST stay green
 python generate_audio.py               # fill in any missing audio
 python generate_audio.py --force       # rebuild ALL audio (after a voice change)
@@ -191,6 +192,19 @@ These each cost real debugging. Verify them after touching windowing/audio.
 9. Tk `attributes()` can return a `Tcl_Obj`, not `str` — compare with `str(...)`.
 10. The card auto-sizes to content; anchor it by its **measured** width or it spills
     off-screen.
+11. **DPI**: `win32.set_dpi_aware()` must run *before any window exists* (it's called
+    in each `__main__`). Without it Windows renders us at 96 DPI and bitmap-stretches
+    the result — blurry on any scaled display (this machine is 125%, so Tk reported
+    1536×960 for a real 1920×1200 screen). *With* it, nothing is scaled for us, so
+    `app._apply_dpi()` must scale Tk fonts and the pixel settings — otherwise
+    everything comes out tiny. The two go together; never enable one alone.
+12. **`winfo_screenwidth()` is the PRIMARY monitor only.** Place windows using
+    `win32.monitor_rect(settings.monitor)`, which is threaded through as `app.rect`.
+13. **Only ONE `Tk()` root per process, ever.** A second one after the first is
+    destroyed dies with `invalid command name "tcl_findLibrary"`. Tests share a
+    module-scoped root (`test_win32.py`); don't create Tk in other test modules.
+    Focus-hungry windows (settings, editor) are separate *processes* for the same
+    reason — the overlay's root is no-activate and must stay that way.
 
 ## Testing
 

@@ -100,23 +100,30 @@ promise that justified Piper in the first place.
   polyphone guesser, since the author specified the reading. Pairs with the Phase-5
   `pypinyin` auto-fill.
 
-## Phase 4 — Product UX (2–3 days)
+## Phase 4 — Product UX ◐ (settings/DPI/monitors/filters done)
 
 Everything a stranger needs that you don't, because you edit the source.
 
-- ☐ **Settings window** — every constant becomes a control (interval, repeats, sizes,
-  colors, alpha, chime/flash odds, batch size). This is the single biggest "it's a
-  product now" change.
+- ☑ **Settings window** — `python -m chinesepop.settings_ui`, also a ⚙ button on the
+  panel. Spec-driven (`SPEC` in settings_ui.py): 39 settings across 8 tabs, so adding
+  one is a single line. Launches as its own process — it needs focus, the overlay
+  must never take it.
 - ☐ **First-run wizard** — pick decks, set interval, test the overlay, explain the
   hotkeys and the fullscreen caveat
-- ☐ **Deck manager** — enable/disable decks, reorder (authoring/import is Phase 5)
-- ☐ **Rebindable hotkeys** + conflict detection (today `Ctrl+Alt+C/J/K/M` are hardcoded
-  and silently fail if taken)
-- ☐ **Multi-monitor + DPI awareness** — `winfo_screenwidth()` is the primary monitor
-  only; on a HiDPI or multi-head setup the card lands wrong or renders blurry.
-  Needs `SetProcessDpiAwarenessContext` + a monitor picker.
-- ☐ **Content filter** — a "hide swears" toggle. Shipping a deck of profanity with no
-  opt-out is a support problem (and an app-store one).
+- ☑ **Deck manager** — enable/disable decks (Settings ▸ Content). ☐ reorder
+- ☑ **Rebindable hotkeys** + conflict detection: a **Test** button probes whether the
+  combo is actually free (RegisterHotKey is the only honest check), duplicates within
+  our own map are caught on save, and dead bindings are now logged by name at startup
+  instead of failing silently.
+- ☑ **DPI awareness** — was affecting *this* machine: at 125% scaling Tk saw 1536×960
+  for a real 1920×1200 screen and Windows bitmap-stretched the overlay (blurry). Now
+  per-monitor aware, with fonts and pixel settings scaled to match.
+- ☑ **Multi-monitor** — `win32.monitors()` enumerates real screens; the overlay is
+  placed on `settings.monitor` (picker in Settings), falling back if it's unplugged.
+- ☑ **Content filter** — `hide_swears` drops that category (420→374 words here), and
+  `enabled_decks` picks what's in rotation. Filters copy rather than mutate, so the
+  editor still sees every card; a deck emptied by a filter is dropped rather than
+  stalling the scheduler.
 - ☐ Tray icon (show/hide/quit/pause) — more discoverable than a hidden panel
 - ☐ Pause when a fullscreen app is foreground / do-not-disturb
 

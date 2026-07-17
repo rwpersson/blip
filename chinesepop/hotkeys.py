@@ -83,6 +83,9 @@ class HotkeyListener(threading.Thread):
         return self.ok
 
 
+NAMES = {PANEL: "panel", GOT: "got", MISS: "miss", MUTE: "mute"}
+
+
 def build(settings):
     """Turn the settings hotkey map into (id, mods, vk) tuples."""
     specs = settings.hotkeys
@@ -101,3 +104,36 @@ def build(settings):
             continue
         out.append((hid, mods, vk))
     return out
+
+
+def is_available(spec, exclude=()):
+    """Can we actually register this combo right now?
+
+    The only honest way to know is to try: another app may already own it, and
+    RegisterHotKey just fails. Registering and immediately releasing is cheap and
+    is what the settings UI uses to tell you *before* you save a dead binding.
+    """
+    try:
+        mods, vk = parse(spec)
+    except ValueError:
+        return False
+    probe_id = 0x4000                       # an id we never use for real
+    if not _user32.RegisterHotKey(None, probe_id, mods | MOD_NOREPEAT, vk):
+        return False
+    _user32.UnregisterHotKey(None, probe_id)
+    return True
+
+
+def conflicts(settings):
+    """Bindings that are duplicated within our own map. Returns {spec: [names]}."""
+    seen = {}
+    for name, spec in (settings.hotkeys or {}).items():
+        if not spec:
+            continue
+        try:
+            key = parse(spec)
+        except ValueError:
+            continue
+        seen.setdefault(key, []).append(name)
+    return {settings.hotkeys[names[0]]: names
+            for names in seen.values() if len(names) > 1}
