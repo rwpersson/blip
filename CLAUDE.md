@@ -44,10 +44,11 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
 ## Current state (keep this updated)
 
 - **Decks** (`decks/*.json`, loaded in filename order): 1st Week (226), Week 2 (75),
-  Week 3 (62), Week 4 (57) = **420 words**. Deck schema 1 (`term`/`reading`).
+  Week 3 (62), Week 4 (57), Week 5 (55) = **475 words**. Deck schema 1
+  (`term`/`reading`).
 - **Audio**: **content-addressed** — `audio/<hash>.mp3` where the hash covers
-  `text + voice + rate` (see `audio/clips.py`). **924 clips, ~16 MB** (down from 1259
-  / 22 MB: 335 were duplicate tone read-outs that now share one file).
+  `text + voice + rate` (see `audio/clips.py`). **1051 clips, ~15 MB** (dedup keeps
+  it small: shared tone read-outs mean +55 words only added 127 clips, not 165).
 - **Voices**: word = `zh-CN-YunyangNeural` @ `-15%` (clear news-anchor male, chosen so
   tones are audible); English tone/meaning read-out = `en-US-GuyNeural`.
 - **Cues**: `sounds/*.wav` — 4 chimes + got/miss, synthesized at runtime from the
