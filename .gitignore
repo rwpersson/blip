@@ -5,6 +5,10 @@ sounds/
 # User data — progress is personal, never commit it
 state.json
 settings.json
+logs/
+
+# pytest
+.pytest_cache/
 
 # Python
 __pycache__/

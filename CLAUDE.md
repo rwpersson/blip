@@ -4,10 +4,11 @@ Always-on-top desktop flashcard overlay for passively learning Chinese while
 gaming. A card pops up on a timer, speaks the word, and disappears. Windows-only.
 Currently a personal tool being hardened into a shippable product (see ROADMAP.md).
 
-## Run / regenerate
+## Run / test / regenerate
 
 ```
-python pop.py                          # run (or run.bat)
+python -m chinesepop                   # run (or run.bat)
+python -m pytest tests -q              # the suite MUST stay green
 python generate_audio.py               # fill in any missing audio
 python generate_audio.py --force       # rebuild ALL audio (after a voice change)
 python new_deck.py "Week 5"            # scaffold decks/week-5.json
@@ -23,19 +24,38 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
   tones are audible); English tone/meaning read-out = `en-US-GuyNeural`.
 - **Cues**: `sounds/*.wav` — 4 chimes + got/miss, synthesized at runtime from the
   stdlib (`wave`+`math`), no assets shipped.
-- `pop.py` is ~1230 lines and monolithic. `state.json` holds real user progress —
-  **never delete it casually** (tests must use a temp path or restore it).
+- `state.json` holds **real user progress** — never delete it casually; tests must
+  use a tmp path (see `tests/conftest.py`).
 
-## Files
+## Layout
 
-| File | Role |
+```
+chinesepop/
+  __main__.py     entry (python -m chinesepop)
+  app.py          orchestration: timing, show/reveal flow, decks, input
+  settings.py     defaults + user settings file + migration
+  decks.py        deck load/validate + the word field accessors
+  scheduler.py    spaced-repetition-lite + state I/O
+  text.py         tone read-out + profanity censor (pure, unit-tested)
+  win32.py        ALL ctypes: no-activate, click-through, show/hide
+  hotkeys.py      global RegisterHotKey listener thread
+  paths.py        where user data lives (dev = in-tree, frozen = %APPDATA%)
+  logging_setup.py
+  audio/  player.py (MCI+winsound, the play sequence) · tts.py (provider
+          interface: Edge now, Piper in Phase 3) · cues.py (synthesized chimes)
+  ui/     card.py · flash.py · panel.py · render.py (outlined text) · theme.py
+tests/            pytest; test_win32.py drives real windows
+generate_audio.py · new_deck.py · expand_wordbank.py    (thin CLIs)
+```
+
+| Data | Shape |
 |---|---|
-| `pop.py` | Everything: config, Win32 interop, audio, scheduler, all UI |
-| `generate_audio.py` | edge-tts generation + `tones_to_text` + profanity censor |
-| `expand_wordbank.py` | Add words from its `NEW` list to a deck (auto global ids) |
-| `new_deck.py` | Scaffold an empty deck |
-| `decks/<id>.json` | `{"name":…, "words":[{id,hanzi,pinyin,tones,cat,meaning,note,alt?,say?}]}` |
-| `state.json` | `{"decks":{<deck_id>:{"words":{id:{e,due,intro}},"last":id}}, "last_deck":…}` |
+| `decks/<id>.json` | `{"name":…, "language":"zh-CN", "voice":null, "words":[…]}` |
+| word | `{id,hanzi,pinyin,tones,cat,meaning,note,alt?,say?}` |
+| `state.json` | `{"schema":3,"decks":{<id>:{"words":{id:{e,due,intro}},"last":id}},"last_deck":…}` |
+
+**Read words via `decks.word_term/word_reading/word_tones/word_say`**, never
+`w["hanzi"]` — that's what makes the Phase-2 generic rename a one-file change.
 
 `cat` ∈ `hsk | slang | swear | gaming | idiom | common` (drives the pill color).
 `say` overrides the TTS text when `hanzi` has latin/digits (`666` → `六六六`).
@@ -64,10 +84,19 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
 
 These each cost real debugging. Verify them after touching windowing/audio.
 
-1. **Focus stealing.** Windows must be `WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW`, and the
-   style must be applied **before the window first maps** — `prevent_focus_steal()`
-   deliberately does *not* call `update_idletasks()`, because mapping the window even
-   a moment before the style lands makes it flash to the foreground once.
+1. **Focus stealing — Tk's wrapper window.** Windows must be
+   `WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW`. The trap: Tk creates a **wrapper
+   top-level when the window first maps**, and *that* handle — not `winfo_id()` —
+   is what Windows manages for focus. Styling only `winfo_id()` leaves the real
+   window activatable. The card/flash accidentally escaped this because
+   `make_click_through()` runs later and re-applies the style to the real handle;
+   the **panel** doesn't get that call, so it was silently activatable for a long
+   time (clicking a button could pull focus off the game).
+   `prevent_focus_steal()` therefore does **withdraw → update_idletasks → style
+   both `winfo_id()` and `GetParent()`**. Withdrawing first is what makes realizing
+   safe: realizing a *visible* window maps and activates it (the old flash-to-
+   foreground bug). `tests/test_win32.py::test_windows_are_no_activate` asserts this
+   on every window — keep it.
 2. **Never `deiconify()`.** Show with `ShowWindow(SW_SHOWNOACTIVATE)`; hide with
    `SW_HIDE`. Tk's own map/unmap can activate the window.
 3. **Click-through** = `WS_EX_TRANSPARENT` (+ layered). The card and flash are
@@ -91,17 +120,24 @@ These each cost real debugging. Verify them after touching windowing/audio.
 
 ## Testing
 
-There is no committed test suite yet (a Phase-1 item). Historically everything was
-verified with throwaway scripts driving the real app: pump `root.update()` instead of
-`mainloop()`, assert on `IsWindowVisible`/`WindowFromPoint`/ex-styles, and spawn a
-**separate-process** window to prove focus is never stolen from another app. Synthesize
-hotkeys with `keybd_event` to test them end-to-end. Keep that rigor — the Win32
-behavior above is not covered by unit tests of pure logic.
+`python -m pytest tests -q` — keep it green.
+
+`tests/test_win32.py` is the important one: it drives **real windows** and asserts on
+**real Win32 state**, because pure-logic tests cannot prove the two things the app
+lives or dies on — that a pop never steals focus, and that the cursor passes through
+the card. It spawns a **separate-process** window (`helper_window.py`) as a stand-in
+for your game and checks `GetForegroundWindow()` never moves. That test is what caught
+gotcha #1. Pump `root.update()` in a loop rather than calling `mainloop()`.
+
+Isolation: always point `state_file` at a tmp path (`conftest.py` does) — the real
+`state.json` is the user's progress.
 
 ## Conventions
 
-- Config is module-level constants at the top of `pop.py` (a Phase-2 item: move to a
-  real settings file + UI).
+- Config lives in `settings.py` (`DEFAULTS`) and a user `settings.json`; there's no
+  UI for it yet (ROADMAP Phase 4). Add new knobs to `DEFAULTS`, never as constants.
+- Log, don't swallow: no bare `except: pass` — use `log.exception(...)`. You can't
+  debug a stranger's crash otherwise.
 - Word ids are **globally unique across decks** because audio is keyed by id.
   ⚠️ This breaks if users ever import third-party decks — see ROADMAP Phase 2
   (content-addressed audio).
