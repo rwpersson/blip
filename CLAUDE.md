@@ -172,7 +172,11 @@ These each cost real debugging. Verify them after touching windowing/audio.
    both `winfo_id()` and `GetParent()`**. Withdrawing first is what makes realizing
    safe: realizing a *visible* window maps and activates it (the old flash-to-
    foreground bug). `tests/test_win32.py::test_windows_are_no_activate` asserts this
-   on every window — keep it.
+   on every window — keep it. **This applies to _every_ Toplevel, not just the
+   obvious three.** Panel tooltips are windows too, created over the game on
+   hover, so `_Tooltip._show()` calls `prevent_focus_steal()` + `show_no_activate()`
+   like everything else (`test_tooltips_do_not_steal_focus`). Any new window =
+   the same two calls.
 2. **Never `deiconify()`.** Show with `ShowWindow(SW_SHOWNOACTIVATE)`; hide with
    `SW_HIDE`. Tk's own map/unmap can activate the window.
 3. **Click-through** = `WS_EX_TRANSPARENT` (+ layered). The card and flash are
@@ -201,13 +205,20 @@ These each cost real debugging. Verify them after touching windowing/audio.
     everything comes out tiny. The two go together; never enable one alone.
 12. **`winfo_screenwidth()` is the PRIMARY monitor only.** Place windows using
     `win32.monitor_rect(settings.monitor)`, which is threaded through as `app.rect`.
-13. **Don't churn `Tk()` roots.** Creating one *per test* dies partway through with
-    `invalid command name "tcl_findLibrary"`. A handful of module-scoped roots is
-    fine (verified: `test_win32` + `test_window_fit` coexist in either order) — it's
-    repeated create/destroy that breaks Tcl. So: one root per test *module*, shared
-    by a module-scoped fixture; never a function-scoped one.
-    Separately: focus-hungry windows (settings, editor, first-run) are their own
-    *processes* — the overlay's root is no-activate and must stay that way.
+13. **ONE `Tk()` root per PROCESS — in the tests too.** An earlier version of this
+    note claimed "a handful of module-scoped roots is fine (verified: `test_win32` +
+    `test_window_fit` coexist in either order)". **That was wrong.** A second root in
+    a live process errored `test_window_fit` in ~half of all full-suite runs, as
+    either `invalid command name "tcl_findLibrary"` or `couldn't read file init.tcl:
+    No error` — two faces of the same thing, which is why chasing the message
+    misleads. It isn't create/destroy churn specifically; a *second interpreter* is
+    the problem, alive or not. So: reuse `tk._default_root` if it exists
+    (`test_window_fit`'s `root` fixture), never `destroy()` a root you didn't create,
+    and don't destroy one at teardown either — let process exit do it. Note the app
+    already obeys this: settings/editor/first-run are separate **processes**, which
+    is the same rule, not a coincidence. Also never leave `after()` timers pending on
+    a root (poll-for-layout retries did) — bind `<Configure>` and let Tk tell you
+    when it laid the widget out.
 14. **Rounded corners come from a window REGION** (`SetWindowRgn`), not DWM's corner
     preference — DWM rounding doesn't apply to layered, override-redirect windows.
     The region is in **pixels**, so it must be re-applied on every `place()`; the card
@@ -223,6 +234,25 @@ These each cost real debugging. Verify them after touching windowing/audio.
     for 583px of content and lost both its buttons. Also **pack action bars before
     expanding content** — pack allocates space in order, so a bar packed last is the
     first thing squeezed out. `tests/test_window_fit.py` guards both.
+17. **Every button needs a word, and only one may be filled.** The panel shipped as
+    nine identical buttons in one row; users could not tell what "📝" did (it meant
+    *make your own flashcards*), and the primary action looked exactly like the
+    destructive one. Group by job, label with text, fill exactly one button (Play),
+    and put Quit away from the controls people press. `test_every_panel_button_has_a_word`
+    guards the labels. Icon-only is only ever acceptable with a `_Tooltip`.
+18. **The deck list is collapsed to the current deck** (`panel._set_expanded`). You
+    study one deck for days, so switching is rare — but the list is the only part of
+    the panel that grows without bound once people import decks. Collapsed it costs
+    one row; expanded it's capped at `panel_max_deck_rows` and scrolls, so a 40-deck
+    import can't push the buttons off the screen (`test_expanded_deck_list_cannot_
+    outgrow_the_screen`). A **dropdown is not an option** — Tk menu/combobox popups
+    are native windows that take focus and mouse capture, which is the one thing this
+    app can never do. Any picker has to be drawn inside the panel.
+19. **Assert on *our* behaviour, not the machine's.** The focus test asserted
+    `foreground == game`, which also fails when a notification or the console grabs
+    focus — nothing to do with us. It cried wolf ~1 run in 8. Ask `GetWindowThread
+    ProcessId` who owns the foreground window: ours = a real failure, anyone else's
+    = skip. Don't loosen the guarantee to hide an unrelated flake.
 
 ## Testing
 

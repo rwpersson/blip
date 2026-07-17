@@ -22,17 +22,27 @@ pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="Windows only")
 
 
 @pytest.fixture(scope="module")
-def root(tmp_path_factory):
+def root():
+    """The process's ONE Tk root — reused, never a second one.
+
+    This module used to build its own Tk(). Creating a second interpreter in a
+    process that already has one is unreliable on Windows: it errored in ~half of
+    all full-suite runs, variously 'invalid command name tcl_findLibrary' or
+    'couldn't read file init.tcl: No error'. The app itself never does this — the
+    editor, settings and first-run windows are separate *processes* precisely
+    because of it (CLAUDE.md), so neither should the suite.
+    """
     import tkinter as tk
 
     from chinesepop import win32
     win32.set_dpi_aware()
-    r = tk.Tk()
-    r.withdraw()
-    try:
-        yield r
-    finally:
-        r.destroy()
+    existing = tk._default_root          # test_win32's App root, if it ran first
+    r = existing or tk.Tk()
+    if existing is None:
+        r.withdraw()
+    # Never destroy it: if it's the App's it isn't ours, and root churn is the
+    # very thing this fixture exists to avoid. Process exit cleans up.
+    yield r
 
 
 def _geometry(win):

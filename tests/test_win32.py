@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import tkinter as tk
 from ctypes import wintypes
 from pathlib import Path
 
@@ -33,6 +34,9 @@ u.WindowFromPoint.restype = wintypes.HWND
 u.WindowFromPoint.argtypes = [wintypes.POINT]
 u.GetForegroundWindow.restype = wintypes.HWND
 u.SetForegroundWindow.argtypes = [wintypes.HWND]
+u.GetWindowThreadProcessId.argtypes = [wintypes.HWND,
+                                       ctypes.POINTER(wintypes.DWORD)]
+u.GetWindowThreadProcessId.restype = wintypes.DWORD
 
 
 WORDS = [
@@ -65,14 +69,25 @@ def _app(tmp_path_factory):
     s.set("play_audio", False)
     s.set("autostart", False)
     s.set("panel_hint_seconds", 0)
+    # Two decks, not one: the app ships four, and a single-deck panel can't
+    # exercise the deck picker at all.
     deck = {"id": "t", "name": "T", "language": "zh-CN", "voice": None,
             "words": WORDS, "source": None}
-    a = App([deck], s)
+    deck2 = {"id": "t2", "name": "T Two", "language": "zh-CN", "voice": None,
+             "words": WORDS[:2], "source": None}
+    a = App([deck, deck2], s)
     try:
         yield a
     finally:
+        # Stop the audio but do NOT destroy the root. Another module creates its
+        # own Tk() afterwards, and destroy-then-create is exactly the churn that
+        # wedges Tcl with 'invalid command name tcl_findLibrary' (CLAUDE.md) —
+        # it made the suite error ~50% of runs. Coexisting roots are fine; the
+        # process is about to exit and take this one with it.
         try:
-            a.quit()
+            from chinesepop.audio import player
+            player.stop()
+            a.root.withdraw()
         except Exception:
             pass
         sched_mod.paths.state_file = orig
@@ -157,6 +172,93 @@ def test_card_is_placed_on_the_target_monitor(app, words):
     assert abs(x - (mx + (mw - w) // 2)) <= 1, "card isn't centered on it"
 
 
+def test_tooltips_do_not_steal_focus(app):
+    """Tooltips are new windows that appear over the game — every window this app
+    creates has to obey the no-activate rule, not just the obvious three."""
+    from chinesepop.ui.panel import _Tooltip
+    tip = _Tooltip(app.panel.play_btn, "hello", app.panel.f)
+    tip._show()
+    pump(app, 0.2)
+    try:
+        assert tip.tip is not None
+        assert win32.ex_style(tip.tip) & win32.WS_EX_NOACTIVATE
+    finally:
+        tip._hide()
+    assert tip.tip is None
+
+
+def test_every_panel_button_has_a_word(app):
+    """A lone glyph can't tell anyone what it does — '📝' meaning 'make your own
+    flashcards' was real user feedback."""
+    labelled = [b for b in _all_labels(app.root)
+                if b.cget("cursor") == "hand2" and b.cget("text")]
+    wordy = [b.cget("text") for b in labelled
+             if any(ch.isalpha() for ch in b.cget("text"))]
+    assert any("card" in t.lower() for t in wordy), "no button mentions cards"
+    assert any("setting" in t.lower() for t in wordy)
+
+
+def _all_labels(widget, out=None):
+    out = [] if out is None else out
+    for child in widget.winfo_children():
+        if isinstance(child, tk.Label):
+            out.append(child)
+        _all_labels(child, out)
+    return out
+
+
+def _visible_deck_rows(panel):
+    return [i for i, r in enumerate(panel.deck_rows) if r["row"].winfo_ismapped()]
+
+
+def test_deck_list_is_collapsed_until_asked_for(app):
+    """The panel is summoned for ~2 seconds; the deck list is the only part that
+    grows without bound. Collapsed it costs one row."""
+    p = app.panel
+    p.show(app.rect)
+    pump(app, 0.2)
+    try:
+        assert _visible_deck_rows(p) == [p.deck_index]
+        assert p.deck_rows[p.deck_index]["chev"].cget("text").startswith("▾")
+
+        collapsed_h = app.root.winfo_reqheight()
+        p._deck_click(p.deck_index)          # collapsed: any click means "open"
+        pump(app, 0.2)
+        assert _visible_deck_rows(p) == list(range(len(p.deck_rows)))
+        assert p.deck_rows[p.deck_index]["chev"].cget("text").startswith("▴")
+        assert app.root.winfo_reqheight() > collapsed_h
+
+        p._deck_click(1)                     # expanded: a click is a choice
+        pump(app, 0.2)
+        assert app.deck_index == 1, "click didn't switch deck"
+        assert not p.expanded, "picking a deck should collapse the list"
+        assert app.root.winfo_reqheight() == collapsed_h
+    finally:
+        p.hide()
+        app.select_deck(0)
+
+
+def test_expanded_deck_list_cannot_outgrow_the_screen(app):
+    """A 40-deck import must not push the buttons off the bottom. The list is
+    capped at panel_max_deck_rows and scrolls past that."""
+    p = app.panel
+    real_rows, real_counts = p.deck_rows, p._counts
+    p.deck_rows = real_rows * 15                  # pretend: 45 decks
+    p._counts = real_counts * 15
+    try:
+        p._set_expanded(True)
+        pump(app, 0.2)
+        cap = int(app.s.panel_max_deck_rows)
+        row_h = real_rows[0]["row"].winfo_reqheight() + 2
+        assert p.deck_view.winfo_reqheight() <= cap * row_h + 2, "viewport not capped"
+        _mx, _my, _mw, mh = app.rect
+        assert app.root.winfo_reqheight() <= mh, "panel taller than the monitor"
+    finally:
+        p.deck_rows, p._counts = real_rows, real_counts
+        p._set_expanded(False)
+        p.hide()
+
+
 def test_card_and_flash_are_click_through_panel_is_not(app):
     for win in (app.card.back, app.card.text, app.flash.win):
         assert win32.ex_style(win) & win32.WS_EX_TRANSPARENT
@@ -176,12 +278,12 @@ def test_click_at_card_center_passes_through(app, words):
     assert hit not in (card_hwnd, back_hwnd), "the card swallowed a click"
 
 
-def test_pops_never_steal_focus_from_another_process(app, words):
+def test_pops_never_steal_focus_from_another_process(app, words, tmp_path):
     """The headline guarantee. A window in another process must keep focus while
     we fire pops at it."""
-    hwnd_file = os.path.join(tempfile.gettempdir(), "cp_helper_hwnd.txt")
-    if os.path.exists(hwnd_file):
-        os.remove(hwnd_file)
+    # A per-run file: the helper outlives a failed run by up to 25s, and a shared
+    # fixed path let one run read the previous run's stale HWND.
+    hwnd_file = str(tmp_path / "helper_hwnd.txt")
     helper = subprocess.Popen([sys.executable, str(HERE / "helper_window.py"),
                                hwnd_file])
     try:
@@ -193,23 +295,46 @@ def test_pops_never_steal_focus_from_another_process(app, words):
         game = int(open(hwnd_file).read().strip())
         time.sleep(0.5)
 
-        # Give the helper focus, retrying: a single SetForegroundWindow can lose
-        # a race on a busy machine, and a flaky *setup* would mean the real
-        # assertion below never runs — which is worse than a failure.
+        # Best effort: tab into the "game". Windows only grants SetForegroundWindow
+        # to the process that already owns the foreground, so this fails whenever
+        # the developer is typing in their editor — it is NOT a precondition.
         deadline = time.time() + 5
         while time.time() < deadline and u.GetForegroundWindow() != game:
             u.SetForegroundWindow(game)    # user tabs into their game
             pump(app, 0.25)
-        assert u.GetForegroundWindow() == game, "test setup: helper never got focus"
+
+        before = u.GetForegroundWindow()
+        _assert_not_ours(before, "we owned the foreground before a single pop fired")
 
         app.annoying = True
         for _ in range(3):
             app.next_now()
             pump(app, 0.8)
 
-        assert u.GetForegroundWindow() == game, "a pop stole focus from the game!"
+        # THE guarantee, and it doesn't need the helper to have won the
+        # foreground: whoever is in front — the helper, or the editor the
+        # developer is typing in — must still be in front, and it must not be
+        # us. Demanding "the helper keeps focus" made this skip on any desktop
+        # that wouldn't hand over focus, i.e. always, silently.
+        after = u.GetForegroundWindow()
+        _assert_not_ours(after, "a pop stole focus from the game!")
+        if after == game:
+            assert before == game        # the full scenario did run
     finally:
         helper.terminate()
+
+
+def _assert_not_ours(hwnd, msg):
+    """Judge OUR behaviour, not the machine's.
+
+    'the foreground isn't the game' lumps together two unrelated events: we
+    stole focus (the bug this test exists for) and something else did (a
+    notification, the console). Asking Windows *who owns* the foreground window
+    separates them, so a failure here always means we're guilty.
+    """
+    pid = wintypes.DWORD()
+    u.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    assert pid.value != os.getpid(), msg
 
 
 def test_card_hides_and_shows(app, words):
