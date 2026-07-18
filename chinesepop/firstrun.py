@@ -54,6 +54,9 @@ class WelcomeWindow:
         ttk.Button(bar, text="Start", command=self._start).pack(side="right")
         ttk.Button(bar, text="Open Settings…",
                    command=self._settings).pack(side="right", padx=6)
+        # New users start on a small sampler; the fuller decks are opt-in.
+        ttk.Button(bar, text="Get more decks…",
+                   command=self._catalog).pack(side="left")
 
         ttk.Label(self.root, text="🀄  Chinese Pop",
                   font=("", 16, "bold")).pack(anchor="w", padx=18, pady=(16, 2))
@@ -96,7 +99,7 @@ class WelcomeWindow:
         ttk.Label(row, text="seconds").pack(side="left")
 
         self.hide_swears = tk.BooleanVar(value=self.s.hide_swears)
-        ttk.Checkbutton(opts, text="Hide swear words (the decks include them)",
+        ttk.Checkbutton(opts, text="Hide swear words (some creator decks include them)",
                         variable=self.hide_swears).pack(anchor="w", pady=3)
         self.annoying = tk.BooleanVar(value=self.s.annoying_mode)
         ttk.Checkbutton(
@@ -104,7 +107,9 @@ class WelcomeWindow:
             variable=self.annoying).pack(anchor="w", pady=3)
 
         ttk.Label(self.root, foreground="#666", wraplength=470, justify="left",
-                  text="Everything here — and a lot more — is in Settings later.").pack(
+                  text="You're starting with a small sampler deck. “Get more "
+                       "decks…” adds curated ones (HSK, slang, gaming, and more) "
+                       "whenever you like. Everything here is in Settings later.").pack(
             anchor="w", padx=18, pady=(0, 4))
 
     def _collect(self):
@@ -128,6 +133,12 @@ class WelcomeWindow:
         except Exception:
             log.exception("could not open settings")
         self.root.destroy()
+
+    def _catalog(self):
+        # Keep the welcome open behind it — picking decks isn't leaving setup.
+        self._collect()
+        from . import catalog_ui
+        catalog_ui.open_catalog()
 
     def run(self):
         self.root.mainloop()

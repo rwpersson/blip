@@ -34,6 +34,17 @@ def bundled_decks_dir() -> Path:
     return APP_DIR / "decks"
 
 
+def bundled_catalog_dir() -> Path:
+    """Creator decks that ship with the app but are NOT auto-loaded.
+
+    Unlike bundled_decks_dir() (the starter, active out of the box), these are an
+    opt-in library: the catalog browser previews them and copies the ones the
+    user picks into user_dir()/decks. Shipping the JSON costs ~130 KB; the audio
+    is synthesized on install, never shipped.
+    """
+    return APP_DIR / "catalog"
+
+
 def decks_dirs() -> list[Path]:
     """Decks that ship with the app, plus any the user added."""
     dirs = [bundled_decks_dir()]

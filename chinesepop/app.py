@@ -70,6 +70,7 @@ class App:
             "mute": self.toggle_mute, "quit": self.quit,
             "select_deck": self.select_deck,
             "settings": self.open_settings, "editor": self.open_editor,
+            "catalog": self.open_catalog,
         })
         self.card = Card(self.root, settings)
         self.flash = Flash(self.root, settings)
@@ -288,6 +289,11 @@ class App:
                              cwd=str(paths.APP_DIR))
         except Exception:
             log.exception("could not launch the deck editor")
+
+    def open_catalog(self):
+        """Browse and install creator decks — its own focus-hungry process."""
+        from .catalog_ui import open_catalog
+        open_catalog()
 
     def rate_current(self, got):
         if not self.current:

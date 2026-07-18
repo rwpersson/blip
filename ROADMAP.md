@@ -175,6 +175,18 @@ Acceptable — it's one short request per new card, and playback is cached forev
 - ☑ Import a shared Chinese Pop deck (`.json`) — sharing is just the JSON
 - ☐ Import from a URL/file drop; a shared-deck index is a stretch goal
 
+**Creator-deck catalog** ☑ DONE
+
+The author's personal decks are no longer baked in active for everyone. A fresh
+install studies a neutral **Starter** (20 words); the five week decks moved to a
+bundled `catalog/` the user browses and installs opt-in (`catalog.py` +
+`catalog_ui.py`, reachable from first-run, the panel, and the editor).
+- ☑ Bundled, not fetched — deck JSON is ~130 KB, so no hosting / offline / no 2nd
+  network dependency. `catalog.py` leaves room for a `RemoteCatalog` later.
+- ☑ Audio synthesized on install, never shipped; degrades gracefully offline.
+- ☐ Later: a *remote* catalog so decks can be added without an app release; a
+  community deck index (ties into the URL-import stretch goal above).
+
 ## Phase 6 — Learning quality (1–2 days)
 
 - ☐ Real SRS (**FSRS** or SM-2) now that the recall hotkeys provide grades; keep the

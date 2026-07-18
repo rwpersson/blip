@@ -46,6 +46,8 @@ class EditorWindow:
         ttk.Button(bar, text="Import…", command=self._import).pack(side="left", padx=4)
         ttk.Button(bar, text="Export…", command=self._export).pack(side="left")
         ttk.Button(bar, text="Delete deck", command=self._delete_deck).pack(side="left", padx=4)
+        ttk.Button(bar, text="Creator decks…",
+                   command=self._catalog).pack(side="right")
 
         panes = ttk.PanedWindow(self.root, orient="horizontal")
         panes.pack(fill="both", expand=True, padx=8, pady=(0, 4))
@@ -323,6 +325,18 @@ class EditorWindow:
             return
         self._say(f"Exported to {path}  (audio isn't bundled — it's regenerated "
                   f"on the other machine)")
+
+    def _catalog(self):
+        # A Toplevel, not a subprocess: the editor already owns a Tk root and
+        # both windows want focus, so they can share it (one root per process).
+        from ..catalog_ui import CatalogWindow
+        CatalogWindow(parent=self.root, on_installed=self._after_catalog)
+
+    def _after_catalog(self, deck_ids):
+        self.c.decks = decks_mod.load_all()
+        self._load_decks()
+        self._say(f"Installed {len(deck_ids)} creator deck(s) — they're in your "
+                  "rotation now")
 
     def _import(self):
         from .import_wizard import ImportWizard

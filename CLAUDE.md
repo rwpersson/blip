@@ -32,6 +32,7 @@ stealing focus or the cursor. Windows-only.
 ```
 python -m chinesepop                   # run the overlay (or run.bat)
 python -m chinesepop.editor            # deck editor / importer (standalone)
+python -m chinesepop.catalog_ui        # browse/install creator decks (standalone)
 python -m chinesepop.settings_ui       # settings (standalone)
 python -m chinesepop.firstrun          # the welcome window (auto-shown on run 1)
 python -m pytest tests -q              # the suite MUST stay green
@@ -43,9 +44,12 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
 
 ## Current state (keep this updated)
 
-- **Decks** (`decks/*.json`, loaded in filename order): 1st Week (226), Week 2 (75),
-  Week 3 (62), Week 4 (57), Week 5 (55) = **475 words**. Deck schema 1
-  (`term`/`reading`).
+- **Decks**: the app ships a neutral **Starter** (`decks/starter.json`, 20 common
+  words, no swears) that's active out of the box, plus a **creator-deck catalog**
+  (`catalog/*.json`, NOT auto-loaded): 1st Week (226), Week 2 (75), Week 3 (62),
+  Week 4 (57), Week 5 (55) = 475 words the user installs opt-in. Personal study
+  decks are no longer baked in active for everyone — see "Creator decks" below.
+  Deck schema 1 (`term`/`reading`).
 - **Audio**: **content-addressed** — `audio/<hash>.mp3` where the hash covers
   `text + voice + rate` (see `audio/clips.py`). **1051 clips, ~15 MB** (dedup keeps
   it small: shared tone read-outs mean +55 words only added 127 clips, not 165).
@@ -64,6 +68,8 @@ chinesepop/
   app.py          orchestration: timing, show/reveal flow, decks, input
   settings.py     defaults + user settings file + migration
   decks.py        deck load/validate + the word field accessors
+  catalog.py      creator-deck catalog: entries/install/uninstall (no Tk — tested)
+  catalog_ui.py   the catalog browser window (standalone process)
   scheduler.py    spaced-repetition-lite + state I/O
   text.py         tone read-out + profanity censor (pure, unit-tested)
   win32.py        ALL ctypes: no-activate, click-through, show/hide
@@ -97,6 +103,39 @@ names, which is what keeps imported/third-party decks working.
 where it lives: `tts.py` generates from `specs_for()`, `player.py` plays from
 `paths_for()`, so generation and playback can't disagree about a filename. Anything
 that touches audio goes through it — never build a path by hand.
+
+## Creator decks (the catalog)
+
+Shipping the author's personal study decks baked in and active for everyone is the
+opposite of the "author your own" direction, so they don't. Two bundled tiers:
+
+- `decks/` (`paths.bundled_decks_dir()`) — the **Starter**, active out of the box so
+  a fresh install is never empty. Just the one neutral sampler.
+- `catalog/` (`paths.bundled_catalog_dir()`) — the **creator decks**, a library
+  `decks.load_all()` never touches. A deck goes active only when the user installs
+  it: `catalog.install(id, settings, progress=...)` copies the JSON into
+  `user_dir()/decks` and synthesizes its audio.
+
+Decided (don't re-litigate without a reason):
+- **Bundled, not fetched.** The deck JSON is ~130 KB total — nothing next to a
+  PyInstaller runtime — so it ships in the package. No hosting, works offline, no
+  second undocumented-endpoint dependency alongside edge-tts. `catalog.py` is written
+  so a `RemoteCatalog` could slot in later, but there's no reason yet.
+- **Audio is generated on install, never shipped** (same as everything — audio is
+  content-addressed, gitignored, made locally). Install degrades gracefully: offline
+  just leaves clips missing (silent cards) to be filled on a later launch;
+  `tts.generate` never raises.
+- **`catalog_ui.py` is its own process** (like the editor/settings) — a focus-hungry
+  ttk window, the opposite of the overlay's no-activate rule. Install runs on a worker
+  thread (a 226-word deck's audio hits the network) and marshals progress back with
+  `root.after`. From the editor it opens as a **Toplevel** instead (that process
+  already owns a root — one root per process).
+- **The running overlay doesn't hot-reload.** It loads decks at startup, so a
+  newly installed deck appears next launch, not live. The install message says so —
+  don't change it to imply an instant switch without actually wiring a reload.
+- Entry points: first-run ("Get more decks…"), the panel ("📚 Get decks"), and the
+  editor ("Creator decks…"). `catalog.py` is pure logic and unit-tested
+  (`tests/test_catalog.py`); the window is a thin shell.
 
 ## Authoring & import
 

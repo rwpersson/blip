@@ -136,13 +136,20 @@ class Panel:
                                   tip="Mute everything")
         self.mute_btn.pack(side="left", padx=2)
 
-        # --- app actions: labelled, because a lone glyph explains nothing ---
+        # --- deck sources: get curated decks, or author your own ---
         row3 = tk.Frame(bar, bg=theme.BG)
-        row3.pack(fill="x", padx=P, pady=(2, P))
+        row3.pack(fill="x", padx=P, pady=(2, 2))
+        self._btn(row3, "📚 Get decks", self.a["catalog"],
+                  tip="Browse and install the creator decks (HSK, slang, gaming…)"
+                  ).pack(side="left", padx=2)
         self._btn(row3, "✏  Make cards", self.a["editor"],
                   tip="Create your own cards, or import a deck (Anki, CSV)"
                   ).pack(side="left", padx=2)
-        self._btn(row3, "⚙  Settings", self.a["settings"],
+
+        # --- app actions ---
+        row4 = tk.Frame(bar, bg=theme.BG)
+        row4.pack(fill="x", padx=P, pady=(2, P))
+        self._btn(row4, "⚙  Settings", self.a["settings"],
                   tip="Timing, sound, appearance, hotkeys"
                   ).pack(side="left", padx=2)
 
