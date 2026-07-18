@@ -7,8 +7,8 @@ rows across 8 tabs.
 
 Pure data: no Tk root here (see the one-root-per-process rule in CLAUDE.md).
 """
-from chinesepop.settings import DEFAULTS
-from chinesepop.settings_ui import SPEC
+from blip.settings import DEFAULTS
+from blip.settings_ui import SPEC
 
 
 def _rows():

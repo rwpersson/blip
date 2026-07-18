@@ -1,4 +1,4 @@
-"""Standalone deck editor: `python -m chinesepop.editor`.
+"""Standalone deck editor: `python -m blip.editor`.
 
 Deliberately a separate program from the overlay. Authoring isn't something you do
 mid-game, and it's an ordinary interactive window — it *wants* focus, which is the

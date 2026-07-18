@@ -55,7 +55,7 @@ class App:
 
         # the panel IS the root window; card/flash are Toplevels
         self.root = tk.Tk()
-        self.root.title("Chinese Pop")
+        self.root.title("Blip")
         self.root.overrideredirect(True)
         win32.prevent_focus_steal(self.root)     # BEFORE it first maps
         self.root.attributes("-topmost", True)
@@ -285,7 +285,7 @@ class App:
         import sys
         from . import paths
         try:
-            subprocess.Popen([sys.executable, "-m", "chinesepop.editor"],
+            subprocess.Popen([sys.executable, "-m", "blip.editor"],
                              cwd=str(paths.APP_DIR))
         except Exception:
             log.exception("could not launch the deck editor")

@@ -4,7 +4,7 @@ These pin the properties that make user-authored and imported decks safe:
 ids no longer decide filenames, identical speech shares one file, and changing a
 voice re-keys instead of serving stale audio.
 """
-from chinesepop.audio import clips
+from blip.audio import clips
 
 
 def test_key_is_stable_and_depends_on_everything_spoken():

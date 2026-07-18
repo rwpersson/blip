@@ -1,8 +1,8 @@
 """Scheduler: batching, graduation, per-deck state, recall feedback."""
 import time
 
-from chinesepop import decks as decks_mod
-from chinesepop.scheduler import Scheduler, last_deck, save_last_deck
+from blip import decks as decks_mod
+from blip.scheduler import Scheduler, last_deck, save_last_deck
 
 
 def test_focuses_a_small_batch(settings, state_path):

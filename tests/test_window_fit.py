@@ -34,7 +34,7 @@ def root():
     """
     import tkinter as tk
 
-    from chinesepop import win32
+    from blip import win32
     win32.set_dpi_aware()
     existing = tk._default_root          # test_win32's App root, if it ran first
     r = existing or tk.Tk()
@@ -55,7 +55,7 @@ def test_fit_window_never_clips_content(root):
     import tkinter as tk
     from tkinter import ttk
 
-    from chinesepop import win32
+    from blip import win32
     top = tk.Toplevel(root)
     try:
         for i in range(25):                     # more content than any guess
@@ -71,7 +71,7 @@ def test_fit_window_never_clips_content(root):
 def test_fit_window_respects_the_minimum(root):
     import tkinter as tk
 
-    from chinesepop import win32
+    from blip import win32
     top = tk.Toplevel(root)
     try:
         win32.fit_window(top, min_w=500, min_h=400)
@@ -88,7 +88,7 @@ def test_fit_window_stays_on_the_monitor(root):
     import tkinter as tk
     from tkinter import ttk
 
-    from chinesepop import win32
+    from blip import win32
     top = tk.Toplevel(root)
     try:
         for i in range(400):
@@ -105,7 +105,7 @@ def test_fit_window_leaves_it_resizable(root):
     """The user must be able to recover from any sizing mistake we make."""
     import tkinter as tk
 
-    from chinesepop import win32
+    from blip import win32
     top = tk.Toplevel(root)
     try:
         win32.fit_window(top, min_w=300, min_h=200)

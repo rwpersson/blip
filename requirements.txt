@@ -5,7 +5,7 @@
 # edge-tts is used to SYNTHESIZE clips; playback is from the local cache, so the
 # app runs offline once its audio exists. It was chosen over Piper on tone quality
 # (ROADMAP Phase 3). It talks to an undocumented Microsoft endpoint — if that ever
-# breaks, swap the provider in chinesepop/audio/tts.py.
+# breaks, swap the provider in blip/audio/tts.py.
 edge-tts>=6.1
 
 # Reading/tone auto-fill when authoring Chinese cards (type 你好 -> nǐ hǎo, 3-3).

@@ -20,9 +20,9 @@ from pathlib import Path
 
 import pytest
 
-from chinesepop import decks as decks_mod
-from chinesepop import win32
-from chinesepop.app import App
+from blip import decks as decks_mod
+from blip import win32
+from blip.app import App
 
 pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="Windows only")
 
@@ -67,8 +67,8 @@ def _app(tmp_path_factory):
     flaky. The real app only ever builds one root, so a shared one is also the
     honest thing to test.
     """
-    from chinesepop import scheduler as sched_mod
-    from chinesepop import settings as settings_mod
+    from blip import scheduler as sched_mod
+    from blip import settings as settings_mod
 
     tmp = tmp_path_factory.mktemp("state")
     orig = sched_mod.paths.state_file
@@ -94,7 +94,7 @@ def _app(tmp_path_factory):
         # it made the suite error ~50% of runs. Coexisting roots are fine; the
         # process is about to exit and take this one with it.
         try:
-            from chinesepop.audio import player
+            from blip.audio import player
             player.stop()
             a.root.withdraw()
         except Exception:
@@ -145,7 +145,7 @@ def test_overlay_never_calls_deiconify():
     """
     import ast
 
-    pkg = HERE.parent / "chinesepop"
+    pkg = HERE.parent / "blip"
     files = [pkg / "app.py", pkg / "win32.py", *sorted((pkg / "ui").glob("*.py"))]
     offenders = []
     for f in files:
@@ -215,9 +215,9 @@ def test_card_is_placed_on_the_target_monitor(app, words):
 def test_opening_test_mode_pauses_the_overlay(app, monkeypatch):
     """Clicking Test Mode should pause the pops and silence a word being read,
     so the user doesn't have to pause manually first."""
-    import chinesepop.quiz_ui as quiz_ui
-    from chinesepop.app import PAUSED, RUNNING
-    from chinesepop.audio import player
+    import blip.quiz_ui as quiz_ui
+    from blip.app import PAUSED, RUNNING
+    from blip.audio import player
 
     launched = {}
     monkeypatch.setattr(quiz_ui, "open_quiz",
@@ -242,7 +242,7 @@ def test_opening_test_mode_pauses_the_overlay(app, monkeypatch):
 def test_tooltips_do_not_steal_focus(app):
     """Tooltips are new windows that appear over the game — every window this app
     creates has to obey the no-activate rule, not just the obvious three."""
-    from chinesepop.ui.panel import _Tooltip
+    from blip.ui.panel import _Tooltip
     tip = _Tooltip(app.panel.play_btn, "hello", app.panel.f)
     tip._show()
     pump(app, 0.2)
@@ -258,7 +258,7 @@ def test_panel_tooltip_renders_above_the_panel(app):
     """The tooltip and the panel are both WS_EX_TOPMOST; showing the tooltip
     doesn't raise it within that band, so it drew *behind* the panel — invisible.
     _show() re-raises it. Prove it actually wins the z-fight over the panel."""
-    from chinesepop.ui.panel import _Tooltip
+    from blip.ui.panel import _Tooltip
     app.panel.show(app.rect)
     pump(app, 0.2)
     tip = _Tooltip(app.panel.play_btn, "Start / pause the cards", app.panel.f)

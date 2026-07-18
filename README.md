@@ -1,218 +1,161 @@
-# Chinese Pop 🀄
+# Blip
 
-A tiny always-on-top flashcard that pops up in the corner of your screen every
-minute while you game. Each pop shows a random Chinese word or slang term with:
+A tiny always-on-top flashcard that pops up in the corner of your screen while
+you game (or work), speaks a word, and disappears — **without ever taking your
+cursor or pulling focus out of what you're doing**. It's for learning a language
+in the background, a glance at a time.
 
-- the characters (汉字) + any alternate form
-- **pinyin** and **tone numbers**
-- an English meaning
-- a short **nuance / slang note** (why it's used, how it hits, gotchas)
-- **spoken audio** — the word is spoken **3×**, then the tones are read aloud in
-  English (e.g. "second tone, first tone") so you can drill the tone pattern
+Blip is **language-agnostic**: every deck declares its own language and voice, so
+it works for anything edge-tts can speak. Chinese is the flagship — the bundled
+decks are Chinese, and the tone colors and spoken tone read-out are Chinese
+niceties — but none of that is hardcoded.
 
-Words are organized into **decks** (like Anki). It ships with three:
-**1st Week** (226), **Week 2** (75) and **Week 3** (62), across six categories
-(colored pills): `slang` · `gaming` · `swear` · `hsk` (advanced vocab) ·
-`idiom` (chengyu) · `common`. Each deck tracks its own progress; pick a deck
-from the list on the control panel, and it resumes the last deck you used on
-relaunch. See **Decks** below to make your own.
+Free and open-source (MIT).
+
+Each pop shows:
+
+- the word (large, outlined so it stays crisp over any game background)
+- its **reading** (for Chinese, tone-colored pinyin) and any alternate form
+- a meaning
+- a short **nuance / slang note** — why it's used, how it hits, gotchas
+- **spoken audio** — the word is spoken a few times; for Chinese the tones are
+  then read aloud in English ("second tone, first tone") and the meaning too, so
+  you can learn with your eyes entirely on your game
 
 ### How it helps you memorize (passively)
 
-- **Spaced learning batch** — instead of spraying all 226 words at you, it
-  drills a small active batch (~12 at a time) on **expanding intervals**: a new
-  word comes back quickly, then less and less often as it sinks in. Once a word
-  has been seen enough it "graduates" (counts as learned) and a new one enters
-  the batch. No grading needed — it's driven purely by exposure, so it stays
-  passive. The card shows `seen 3× · 40/226 learned`.
+- **Spaced-repetition-lite, no grading** — it drills a small active batch
+  (~12 words) on **expanding intervals**: a new word returns quickly, then less
+  and less often as it sinks in, "graduating" once you've seen it enough while a
+  new word takes its place. It's driven purely by exposure, so it stays passive.
 - **Study first, test later** — the *first* time a word appears it's shown in
-  full with a `✦ NEW` badge (you can't recall what you've never seen). From the
-  **second** exposure on, the recall-delay kicks in: the characters + audio come
-  first, the meaning and pinyin stay hidden (`🤔 recall it…`) for a few seconds
-  so your brain *tries* to recall before the answer appears (the "testing
-  effect").
-- **Spoken meaning** — after the word and tones, the English meaning is read
-  aloud too, so you can learn with your eyes entirely on the game.
-- **Big, outlined word** — the characters are large and drawn with a dark halo
-  (`HALO_COLOR`) so they stay crisp over any game background, even through the
-  see-through panel.
-- **Tone-colored pinyin** — each syllable is colored by its tone
+  full (`✦ NEW`). From the second exposure on, a recall delay hides the answer
+  for a few seconds (`🤔 recall it…`) so your brain *tries* to remember before
+  the answer appears — the testing effect, without you doing anything.
+- **Tone-colored readings** — for Chinese, each syllable is colored by its tone
   (1 red · 2 gold · 3 green · 4 blue · neutral gray) to drill tones at a glance.
 - **Anti-habituation** — the danger with any recurring popup is that your brain
-  learns to tune it out. Three defenses keep it fresh:
-  - a **random-interval chime** — after a random run of cards
-    (`CHIME_EVERY_MIN`–`CHIME_EVERY_MAX`) a random chime plays (not every card,
-    which would just become background); it pulls your eyes back;
-  - **unpredictable flashes** — with annoying mode on, only *some* pops flash
-    (`FLASH_PROB`), weighted toward words you haven't learned yet
-    (`FLASH_NEW_UNTIL`), so you can't pre-filter them;
-  - **one-key recall** — while a word shows, press **`Ctrl+Alt+J`** ("I knew it",
-    shows it less) or **`Ctrl+Alt+K`** ("I didn't", brings it back soon). One
-    keypress turns a passive glance into active recall and steers the spacing.
-    Each gives an audible confirmation.
+  learns to tune it out, so three defenses keep it fresh: a **random-interval
+  chime** pulls your eyes back; **unpredictable flashes** (weighted toward words
+  you haven't learned) mean you can't pre-filter them; and **one-key recall** —
+  press **`Ctrl+Alt+J`** ("I knew it") or **`Ctrl+Alt+K`** ("I didn't") while a
+  word shows to turn a passive glance into active recall and steer the spacing.
 
-Per-deck progress is saved to `state.json`, so closing and reopening picks up
-exactly where you left off in each deck. Delete it to reset all progress.
+Progress is saved per deck, so closing and reopening picks up exactly where you
+left off.
 
-The **control panel is hidden by default** — press **`Ctrl+Alt+C`** (a global
-hotkey that works even while your game has focus) to show or hide it. It also
-appears briefly at launch as a reminder. The flashcards keep popping whether the
-panel is showing or not.
+### Test Mode
+
+Passive learning, but sometimes you want to check yourself. **🧠 Test Mode** (on
+the panel) opens a quick multiple-choice quiz: a word, four reading + meaning
+options, pick the right one. Choose how many questions and whether to draw from
+all your decks or just the one you're studying; it plays each word aloud as the
+answer is revealed. Opening it pauses the overlay automatically.
+
+## The control panel
+
+The panel is **hidden by default** — press **`Ctrl+Alt+C`** (a global hotkey that
+works even while your game has focus) to show or hide it. The flashcards keep
+popping whether it's showing or not. Drag it by its title to reposition.
 
 | Button | Does |
 |---|---|
-| ▶ Play / ⏸ Pause | Start the cycle / freeze it (card stays up) |
+| ▶ Play / ⏸ Pause | Start the cycle / freeze it |
+| ⏭ Skip | Jump to a new word now |
+| 🔁 Replay | Say the current word again |
 | ⏹ Stop | Halt and hide the card |
-| ⏭ Next | Jump to a new word right now |
-| 🔊 Replay | Replay the current word's audio |
 | 😈 Annoy | Toggle **annoying mode** (see below) |
-| 🔊 Sound / 🔇 Silent | Toggle **silent mode** — no audio at all (also `Ctrl+Alt+M`) |
+| 🔊 Sound / 🔇 Silent | Toggle all audio (also `Ctrl+Alt+M`) |
+| 📚 Get decks | Browse and install the creator decks |
+| ✏ Make cards | Open the deck editor / importer |
+| 🧠 Test Mode | Quiz yourself |
+| ⚙ Settings | Timing, sound, appearance, hotkeys |
 | ✕ | Quit |
 
-**Silent mode** turns off all sound (the spoken word, tones, meaning, chimes and
-cues). Flashcards and the fullscreen flash still work — the flash just uses timed
-beats instead of the audio — so you can study visually with no noise. Toggle it
-with the panel button or the global **`Ctrl+Alt+M`** hotkey; start silent by
-default with `PLAY_AUDIO = False`.
-
-The panel lists your **decks** with per-deck progress (e.g. `▸ 1st Week (40/226)`);
-click any one to switch to it. The active deck is remembered across restarts.
-
-Drag the panel by its title to reposition it. The **flashcard itself is
-display-only and fully click-through** — all controls live on the panel — so the
-cursor passes straight through the card to your game (see below).
-
-Change the hotkey (or its brief launch reminder) via `PANEL_HOTKEY_*` /
-`PANEL_HINT_SECONDS` in the CONFIG block of `pop.py`.
+**Silent mode** turns off all sound (word, tones, meaning, chimes). The
+flashcards and the fullscreen flash still work — the flash just uses timed beats
+instead of audio — so you can study visually with no noise.
 
 ### 😈 Annoying mode
 
-When on (`ANNOYING_MODE`, default true, toggle with the panel button), the
-hanzi + pinyin + tones **flash huge across the whole screen** in sync with each
-of the 3 spoken repeats (flash ×3), then it drops back to the normal card for
-the English tone/meaning read-out. The flash **background is transparent** (your
-game stays fully visible — only the giant text shows) and, like the card, it's
-**click-through and never takes focus**, so your cursor still reaches the game
-even while the letters are covering the screen. Tune how big the characters get
-with `ANNOY_HANZI_FRAC`.
+When on, the word + reading + tones **flash huge across the whole screen** in
+sync with each spoken repeat, then drop back to the normal card for the read-out.
+The flash background is transparent (your game stays fully visible — only the
+giant text shows) and, like the card, it's **click-through and never takes
+focus**, so your cursor still reaches the game even while the letters cover it.
+
+## Decks
+
+Blip is Anki-like: **you author your own cards, audio is generated for them
+automatically, and you can import decks from elsewhere.**
+
+A fresh install studies a small neutral **Starter** deck. Everything else is
+opt-in — **📚 Get decks** opens a catalog of bundled creator decks (Chinese: HSK,
+slang, gaming, idioms, swears, ~475 words across five decks) that you preview and
+install individually or all at once. Installing copies the deck in and
+synthesizes its audio.
+
+- **Make your own** — **✏ Make cards** opens a standalone editor. Add cards and
+  it auto-fills the reading and tones (Chinese, via pypinyin) and generates the
+  audio; you can override anything. Create, edit, and delete decks and cards.
+- **Import** — CSV/TSV (it sniffs the delimiter and guesses the column mapping)
+  or Anki `.apkg`. Media isn't imported — Blip re-synthesizes audio in one
+  consistent voice, so there's nothing to redistribute.
+- **Share** a deck by sharing its small JSON; the recipient synthesizes locally.
+
+Audio is **content-addressed** — a clip's filename is a hash of its text, voice
+and speed, never a word id — so two people can author the same id, an Anki import
+can bring foreign ids, and nothing ever collides. A word you already have costs
+nothing to add again.
+
+## Settings
+
+Everything — timing, how often a word pops, audio, appearance, the hotkeys — is
+in the **⚙ Settings** window (`python -m blip.settings_ui`, or the panel button).
+Changes apply next launch. The defaults live in `blip/settings.py`; a user
+`settings.json` overrides them.
 
 ## Requirements
 
 - Windows + Python 3 (tested on 3.14)
-- `edge-tts` for generating the audio (one-time, needs internet):
+- `edge-tts` for generating audio (one-time per clip, needs internet):
 
   ```
   pip install edge-tts
   ```
 
-Playback and the popup use only built-in Windows features (MCI + tkinter) — no
-other dependencies.
+Playback and the overlay use only built-in Windows features (MCI + tkinter) — no
+other runtime dependencies. Audio is cached, so after it's generated once the app
+works fully offline.
 
 ## Run it
 
 Double-click **`run.bat`**, or from a terminal:
 
 ```
-python pop.py
+python -m blip
 ```
 
-On first launch it generates any missing audio into `audio/`, then a card pops
-up every 60 seconds and speaks the word. After the audio is generated once, it
-works fully offline. Use the control bar (top-right) to Play / Pause / Stop /
-skip. Delete `state.json` any time to reset the shuffle back to the start.
+On first launch a welcome window appears and any missing audio is generated into
+`audio/`; after that a card pops up on a timer and speaks the word.
 
-## Tuning
+## It won't steal your cursor or focus
 
-Open `pop.py` and edit the `CONFIG` block near the top:
+The overlay windows are Windows **no-activate tool windows**
+(`WS_EX_NOACTIVATE`): they draw on top but never take keyboard focus, so a pop
+can't pull you out of a game. On top of that the **flashcard is fully
+click-through** (`WS_EX_TRANSPARENT`) — your mouse passes straight through it to
+the game underneath, so it can never intercept a click. All interaction happens
+on the control panel, which stays clickable as normal.
 
-| Setting | Meaning |
-|---|---|
-| `INTERVAL_SECONDS` | How often a new word appears |
-| `DISPLAY_SECONDS` | How long the card stays before auto-hiding (`0` = stays until next) |
-| `PLAY_AUDIO` | Start in silent mode? (toggle live with the panel button / `Ctrl+Alt+M`) |
-| `WORD_REPEATS` | How many times the word is spoken each pop (default 3) |
-| `SAY_TONES` | Read the tones aloud in English after the word (default on) |
-| `SAY_MEANING` | Read the English meaning aloud after the tones (default on) |
-| `REPEAT_GAP` | Seconds of silence between repeats |
-| `REVEAL_QUIZ` / `REVEAL_DELAY` | Recall beat: hide the answer for N seconds (`REVEAL_QUIZ=False` to always show it) |
-| `ACTIVE_SET_SIZE` | How many words are drilled at once (default 12) |
-| `GRADUATE_AT` | Exposures before a word counts as learned (default 9) |
-| `SCHEDULE_MIN` | Expanding re-show intervals, in minutes |
-| `CHIME_ON` / `CHIME_EVERY_MIN` / `CHIME_EVERY_MAX` | Attention chime, and the random card-gap between chimes |
-| `FLASH_PROB` / `FLASH_NEW_UNTIL` | Odds a pop flashes; words this new always flash |
-| `RECALL_HOTKEYS` / `GOT_*` / `MISS_*` | Enable the recall keys and rebind them |
-| `AUTOSTART` | Set `False` to launch paused (press ▶ Play yourself) |
-| `CARD_ALPHA` | Opacity of the card **panel** only — text stays fully solid (lower = more see-through) |
-| `CARD_WIDTH`, `TONE_COLORS`, colors, `FONT` | Appearance |
+## Fullscreen games
 
-The word is spoken by a clear male news-anchor voice (`zh-CN-YunyangNeural`),
-slowed a little (`RATE`) so the tones are easy to hear; the English read-outs use
-`en-US-GuyNeural`. Prefer a different voice or speed? Edit `VOICE` / `RATE`
-(Chinese word) or `TONES_VOICE` / `MEANING_VOICE` (English) at the top of
-`generate_audio.py`, then run `python generate_audio.py --force`.
+The overlay floats over windowed, borderless, **and fullscreen** games —
+confirmed in Minecraft and PUBG. A genuinely *exclusive* fullscreen game (some
+older DX titles) can still hide any overlay; if a pop never appears, switch that
+game to Borderless or Windowed. That's a limitation of every overlay, not
+something Blip can fix.
 
-**Swears are censored** in the English translation: the meaning is shown with the
-swear asterisked (`b*****d`) and the spoken audio never says it (a clean word is
-substituted). The censor list lives in `_PROFANITY` in `generate_audio.py`.
+## License
 
-## Decks
-
-Each deck is a file in `decks/`: `decks/<id>.json` = `{"name": ..., "words": [...]}`.
-The app loads every deck, ordered by filename (prefix ids like `2-`, `3-` to
-control the order), and you switch between them by clicking a deck in the list on the
-control panel. Progress is tracked per deck in `state.json`.
-
-**Make a new deck:**
-
-```
-python new_deck.py "Week 3"          # -> decks/week-3.json
-```
-
-**Add words to a deck** — put entries in the `NEW` list in `expand_wordbank.py`,
-then:
-
-```
-python expand_wordbank.py --deck week-3
-python generate_audio.py             # make audio for the new words
-```
-
-Each word entry looks like:
-
-```json
-{ "hanzi": "牛逼", "alt": "NB", "pinyin": "niú bī", "tones": "2-1",
-  "cat": "slang", "meaning": "awesome; badass", "note": "..." }
-```
-
-- **No `id` needed** — `expand_wordbank.py` assigns one that's globally unique
-  across all decks (so audio never collides), and skips any `hanzi` already in
-  any deck, so it's safe to re-run.
-- `alt`, `say` are optional. Use `say` when `hanzi` contains letters/numbers so
-  the TTS speaks the Chinese instead (e.g. `666` → `say: "六六六"`).
-- `cat` is one of `slang`, `gaming`, `swear`, `hsk`, `idiom`, `common` (colors
-  the little pill).
-- Set `ACTIVE_DECK` in `pop.py` to the deck id you want to start on (`""` = the
-  first deck).
-
-## It won't steal your cursor / focus
-
-The popup and control bar are created as Windows **no-activate tool windows**
-(`WS_EX_NOACTIVATE`): they render on top but never take keyboard focus, so a pop
-can't pull you out of a game while you're playing. On launch the app also hands
-focus straight back to whatever you were using, so even starting it mid-game is
-seamless. Quit with the ✕ button on the control panel.
-
-On top of that, the **flashcard is fully click-through** (`WS_EX_TRANSPARENT`):
-your mouse passes right through it to the game underneath, so it can never
-intercept a click or steal your cursor — handy for cursor-driven games. All
-interaction happens on the little control panel in the top-right corner, which
-stays clickable as normal.
-
-## Note on fullscreen games
-
-The overlay floats over windowed, borderless, **and fullscreen** games — confirmed
-in Minecraft and PUBG on fullscreen. Modern Windows composits most "fullscreen"
-games in a way that still lets a topmost overlay draw over them.
-
-A genuinely *exclusive* fullscreen game (older titles, some DX9/DX11 ones) can
-still hide any overlay. If a pop never appears, switch that game to Borderless or
-Windowed — that's a limitation of every overlay, not something this app can fix.
+MIT.

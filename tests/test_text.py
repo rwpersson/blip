@@ -1,7 +1,7 @@
 """Tone read-out + the profanity filter (pure functions, no Tk)."""
 import pytest
 
-from chinesepop.text import censor_display, censor_speech, tones_to_text
+from blip.text import censor_display, censor_speech, tones_to_text
 
 
 @pytest.mark.parametrize("tones,expected", [

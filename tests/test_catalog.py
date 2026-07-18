@@ -7,8 +7,8 @@ import json
 
 import pytest
 
-from chinesepop import catalog
-from chinesepop import decks as decks_mod
+from blip import catalog
+from blip import decks as decks_mod
 
 
 def _deck(deck_id, name, words):

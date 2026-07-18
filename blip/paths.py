@@ -5,13 +5,13 @@ Bundled content (decks, code) ships with the app and is read-only. User data
 once installed under Program Files the install dir is not writable.
 
 During development, running from a source checkout keeps everything in-tree so
-you don't have to hunt for files; set CHINESEPOP_PORTABLE=1 to force that.
+you don't have to hunt for files; set BLIP_PORTABLE=1 to force that.
 """
 import os
 import sys
 from pathlib import Path
 
-APP_NAME = "ChinesePop"
+APP_NAME = "Blip"
 
 # Root of the source checkout / install.
 PKG_DIR = Path(__file__).resolve().parent
@@ -24,7 +24,7 @@ def _frozen():
 
 def user_dir() -> Path:
     """Per-user writable data dir."""
-    if os.environ.get("CHINESEPOP_PORTABLE") == "1" or not _frozen():
+    if os.environ.get("BLIP_PORTABLE") == "1" or not _frozen():
         return APP_DIR                      # dev: keep everything in the checkout
     base = os.environ.get("APPDATA") or str(Path.home())
     return Path(base) / APP_NAME

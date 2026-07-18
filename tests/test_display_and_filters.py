@@ -3,10 +3,10 @@ import sys
 
 import pytest
 
-from chinesepop import decks as d
-from chinesepop import hotkeys as hk
-from chinesepop import settings as settings_mod
-from chinesepop import win32
+from blip import decks as d
+from blip import hotkeys as hk
+from blip import settings as settings_mod
+from blip import win32
 
 pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="Windows only")
 

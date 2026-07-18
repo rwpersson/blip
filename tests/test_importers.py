@@ -10,7 +10,7 @@ import zipfile
 
 import pytest
 
-from chinesepop.importers import anki_import, common, csv_import, export
+from blip.importers import anki_import, common, csv_import, export
 
 
 # ------------------------------- CSV ----------------------------------------
@@ -73,7 +73,7 @@ def test_build_words_drops_termless_and_dedupes(tmp_path):
 def test_imported_categories_are_normalized_or_dropped():
     """An Anki tag like 'hsk1' is not one of our categories. Left alone it makes
     the imported deck fail validation, so it must be normalized or dropped."""
-    from chinesepop import decks as d
+    from blip import decks as d
 
     r = common.ImportResult(["t", "m", "c"], [
         {"t": "妈妈", "m": "mother", "c": "hsk1"},        # -> hsk
@@ -207,7 +207,7 @@ def test_anki_zstd_collection_reports_actionably(tmp_path, monkeypatch):
 
 # ------------------------------- export -------------------------------------
 def test_export_roundtrips_through_csv(tmp_path):
-    from chinesepop import decks as d
+    from blip import decks as d
     deck = d.create("Round Trip")
     d.add_word(deck, {"term": "牛逼", "reading": "niú bī", "tones": "2-1",
                       "meaning": "awesome", "cat": "slang"}, autofill=False)
@@ -220,7 +220,7 @@ def test_export_roundtrips_through_csv(tmp_path):
 
 
 def test_export_json_is_a_loadable_deck(tmp_path, monkeypatch):
-    from chinesepop import decks as d
+    from blip import decks as d
     deck = d.create("Shareable")
     d.add_word(deck, {"term": "牛逼", "meaning": "awesome"}, autofill=False)
     export.to_json_file(deck, tmp_path / "shareable.json")

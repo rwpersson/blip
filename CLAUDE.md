@@ -1,4 +1,4 @@
-# Chinese Pop — project context
+# Blip — project context
 
 Always-on-top desktop flashcard overlay for passively learning a language while
 gaming. A card pops up on a timer, speaks the word, and disappears — without ever
@@ -30,12 +30,12 @@ stealing focus or the cursor. Windows-only.
 ## Run / test / regenerate
 
 ```
-python -m chinesepop                   # run the overlay (or run.bat)
-python -m chinesepop.editor            # deck editor / importer (standalone)
-python -m chinesepop.catalog_ui        # browse/install creator decks (standalone)
-python -m chinesepop.quiz_ui [deck_id] # Test Mode: multiple-choice quiz (standalone)
-python -m chinesepop.settings_ui       # settings (standalone)
-python -m chinesepop.firstrun          # the welcome window (auto-shown on run 1)
+python -m blip                   # run the overlay (or run.bat)
+python -m blip.editor            # deck editor / importer (standalone)
+python -m blip.catalog_ui        # browse/install creator decks (standalone)
+python -m blip.quiz_ui [deck_id] # Test Mode: multiple-choice quiz (standalone)
+python -m blip.settings_ui       # settings (standalone)
+python -m blip.firstrun          # the welcome window (auto-shown on run 1)
 python -m pytest tests -q              # the suite MUST stay green
 python generate_audio.py               # fill in any missing audio
 python generate_audio.py --force       # rebuild ALL audio (after a voice change)
@@ -64,8 +64,8 @@ python expand_wordbank.py --deck week-5   # add words from its NEW list
 ## Layout
 
 ```
-chinesepop/
-  __main__.py     entry (python -m chinesepop)
+blip/
+  __main__.py     entry (python -m blip)
   app.py          orchestration: timing, show/reveal flow, decks, input
   settings.py     defaults + user settings file + migration
   decks.py        deck load/validate + the word field accessors
@@ -150,7 +150,7 @@ Active self-testing to complement the passive overlay: a word, four
   the target's meaning** (that would make two answers right). Meanings are run
   through `censor_display` so swears are asterisked here too. Degrades: a 3-word
   pool gives 3-option questions; <2 answerable words gives no quiz.
-- `quiz_ui.py` is standalone (`python -m chinesepop.quiz_ui [deck_id]`) — a
+- `quiz_ui.py` is standalone (`python -m blip.quiz_ui [deck_id]`) — a
   focus-wanting window, fine because the user is testing, not gaming. Pool picker
   (All decks / current deck via `scheduler.last_deck()` or argv; a **question-count
   spinbox** persisted as `quiz_length`) → question → results, three screens swapped
@@ -172,7 +172,7 @@ Active self-testing to complement the passive overlay: a word, four
 
 ## Authoring & import
 
-**The editor is a separate program on purpose** (`python -m chinesepop.editor`). It's
+**The editor is a separate program on purpose** (`python -m blip.editor`). It's
 an ordinary ttk window that *wants* focus — the exact opposite of every invariant in
 `win32.py`. Keeping it out of the overlay's process means it can't regress them.
 `editor/controller.py` holds all the logic and imports no Tk, so it's tested directly;
