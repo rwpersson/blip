@@ -82,7 +82,9 @@ class Panel:
         quit_btn.bind("<Button-1>", lambda e: self.a["quit"]())
         quit_btn.bind("<Enter>", lambda e: quit_btn.configure(fg=theme.STATUS_STOP))
         quit_btn.bind("<Leave>", lambda e: quit_btn.configure(fg=theme.SUB))
-        _Tooltip(quit_btn, "Quit Chinese Pop", f)
+        # No tooltip: ✕ is the universal close glyph, and a panel tooltip would
+        # render *behind* the panel anyway — both are WS_EX_TOPMOST, but the
+        # tooltip is shown without being raised within that band, so it loses.
         self.status_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.SUB,
                                    font=(f, 8))
         self.status_lbl.pack(side="right", padx=(0, P))
