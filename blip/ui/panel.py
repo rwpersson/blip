@@ -78,10 +78,8 @@ class Panel:
         # --- title row: identity, live status, and the one destructive action ---
         top = tk.Frame(bar, bg=theme.BG)
         top.pack(fill="x", padx=P + 4, pady=(P, 2))
-        tk.Label(top, text="💬", bg=theme.BG, fg=theme.FG,
-                 font=(f, 10)).pack(side="left")
         tk.Label(top, text="Blip", bg=theme.BG, fg=theme.FG,
-                 font=(f, 10, "bold")).pack(side="left", padx=(4, 0))
+                 font=(f, 10, "bold")).pack(side="left")
         quit_btn = tk.Label(top, text="✕", bg=theme.BG, fg=theme.SUB,
                             font=(f, 9, "bold"), padx=5, cursor="hand2")
         quit_btn.pack(side="right")

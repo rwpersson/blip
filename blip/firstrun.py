@@ -58,7 +58,7 @@ class WelcomeWindow:
         ttk.Button(bar, text="Get more decks…",
                    command=self._catalog).pack(side="left")
 
-        ttk.Label(self.root, text="💬  Blip",
+        ttk.Label(self.root, text="Blip",
                   font=("", 16, "bold")).pack(anchor="w", padx=18, pady=(16, 2))
         ttk.Label(self.root, wraplength=470, justify="left",
                   text="A flashcard pops up in the corner while you game, says the "
