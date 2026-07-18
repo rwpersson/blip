@@ -33,6 +33,7 @@ stealing focus or the cursor. Windows-only.
 python -m chinesepop                   # run the overlay (or run.bat)
 python -m chinesepop.editor            # deck editor / importer (standalone)
 python -m chinesepop.catalog_ui        # browse/install creator decks (standalone)
+python -m chinesepop.quiz_ui [deck_id] # Test Mode: multiple-choice quiz (standalone)
 python -m chinesepop.settings_ui       # settings (standalone)
 python -m chinesepop.firstrun          # the welcome window (auto-shown on run 1)
 python -m pytest tests -q              # the suite MUST stay green
@@ -70,6 +71,8 @@ chinesepop/
   decks.py        deck load/validate + the word field accessors
   catalog.py      creator-deck catalog: entries/install/uninstall (no Tk — tested)
   catalog_ui.py   the catalog browser window (standalone process)
+  quiz.py         Test Mode logic: build_quiz -> Questions (no Tk — tested)
+  quiz_ui.py      the Test Mode quiz window (standalone process)
   scheduler.py    spaced-repetition-lite + state I/O
   text.py         tone read-out + profanity censor (pure, unit-tested)
   win32.py        ALL ctypes: no-activate, click-through, show/hide
@@ -136,6 +139,26 @@ Decided (don't re-litigate without a reason):
 - Entry points: first-run ("Get more decks…"), the panel ("📚 Get decks"), and the
   editor ("Creator decks…"). `catalog.py` is pure logic and unit-tested
   (`tests/test_catalog.py`); the window is a thin shell.
+
+## Test Mode (the quiz)
+
+Active self-testing to complement the passive overlay: a word, four
+`(reading, meaning)` options, pick the right one. Panel button "🧠 Test Mode".
+
+- `quiz.py` is pure/seedable (`build_quiz(words) -> [Question]`, tested): distinct
+  targets, distractors sampled from other words, and a distractor **never shares
+  the target's meaning** (that would make two answers right). Meanings are run
+  through `censor_display` so swears are asterisked here too. Degrades: a 3-word
+  pool gives 3-option questions; <2 answerable words gives no quiz.
+- `quiz_ui.py` is standalone (`python -m chinesepop.quiz_ui [deck_id]`) — a
+  focus-wanting window, fine because the user is testing, not gaming. Pool picker
+  (All decks / current deck via `scheduler.last_deck()` or argv) → question →
+  results, three screens swapped on one root.
+- **Sizing gotcha**: the screens differ a lot in height (question ≈ 2× the pool),
+  so it re-fits per screen with `_fit()` — `fit_window` only resizes, never
+  repositions, so the window grows/shrinks in place without jumping. The Next
+  button is packed disabled up front so answering doesn't add a row and jump the
+  window mid-question.
 
 ## Authoring & import
 

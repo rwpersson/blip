@@ -154,6 +154,9 @@ class Panel:
         # --- app actions ---
         row4 = tk.Frame(bar, bg=theme.BG)
         row4.pack(fill="x", padx=P, pady=(2, P))
+        self._btn(row4, "🧠 Test Mode", self.a["quiz"],
+                  tip="Quiz yourself: pick the right reading + meaning"
+                  ).pack(side="left", padx=2)
         self._btn(row4, "⚙  Settings", self.a["settings"],
                   tip="Timing, sound, appearance, hotkeys"
                   ).pack(side="left", padx=2)

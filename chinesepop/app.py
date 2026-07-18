@@ -70,7 +70,7 @@ class App:
             "mute": self.toggle_mute, "quit": self.quit,
             "select_deck": self.select_deck,
             "settings": self.open_settings, "editor": self.open_editor,
-            "catalog": self.open_catalog,
+            "catalog": self.open_catalog, "quiz": self.open_quiz,
         })
         self.card = Card(self.root, settings)
         self.flash = Flash(self.root, settings)
@@ -294,6 +294,12 @@ class App:
         """Browse and install creator decks — its own focus-hungry process."""
         from .catalog_ui import open_catalog
         open_catalog()
+
+    def open_quiz(self):
+        """Test Mode — its own focus-hungry process. Pass the current deck so
+        'Current deck' in the pool picker means the one being studied."""
+        from .quiz_ui import open_quiz
+        open_quiz(self.decks[self.deck_index]["id"])
 
     def rate_current(self, got):
         if not self.current:
