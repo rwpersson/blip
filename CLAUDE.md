@@ -152,8 +152,13 @@ Active self-testing to complement the passive overlay: a word, four
   pool gives 3-option questions; <2 answerable words gives no quiz.
 - `quiz_ui.py` is standalone (`python -m chinesepop.quiz_ui [deck_id]`) — a
   focus-wanting window, fine because the user is testing, not gaming. Pool picker
-  (All decks / current deck via `scheduler.last_deck()` or argv) → question →
-  results, three screens swapped on one root.
+  (All decks / current deck via `scheduler.last_deck()` or argv; a **question-count
+  spinbox** persisted as `quiz_length`) → question → results, three screens swapped
+  on one root.
+- **Audio on reveal**: answering plays the term's pronunciation once (`_play_word`
+  → `player.play_file` on a daemon thread). Clips are keyed by voice, so the target
+  word carries its deck's voice (`quiz.tag_deck` tags `_voice`, `Question.word`
+  holds the source word); a missing clip is a silent no-op.
 - **Sizing gotcha**: the screens differ a lot in height (question ≈ 2× the pool),
   so it re-fits per screen with `_fit()` — `fit_window` only resizes, never
   repositions, so the window grows/shrinks in place without jumping. The Next

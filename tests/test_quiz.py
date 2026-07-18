@@ -83,7 +83,23 @@ def test_seed_is_deterministic():
 
 
 def test_tag_deck_does_not_mutate_the_source():
-    deck = {"name": "Wk", "words": [_w("甲", "jiǎ", "first")]}
+    deck = {"name": "Wk", "voice": "some-voice", "words": [_w("甲", "jiǎ", "first")]}
     tagged = quiz.tag_deck(deck)
     assert tagged[0]["_deck"] == "Wk"
+    assert tagged[0]["_voice"] == "some-voice"    # for locating audio
     assert "_deck" not in deck["words"][0]        # original untouched
+    assert "_voice" not in deck["words"][0]
+
+
+def test_question_carries_its_source_word_for_audio():
+    """Test Mode plays the term on reveal, so each Question must reference the
+    word it was built from (with the deck's voice tag)."""
+    deck = {"name": "Wk", "voice": None,
+            "words": [_w("甲", "jiǎ", "first"), _w("乙", "yǐ", "second"),
+                      _w("丙", "bǐng", "third")]}
+    qs = quiz.build_quiz(quiz.tag_deck(deck), seed=1)
+    assert qs
+    for q in qs:
+        assert q.word is not None
+        assert quiz.decks_mod.word_term(q.word) == q.term
+        assert "_voice" in q.word

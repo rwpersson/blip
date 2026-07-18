@@ -13,6 +13,7 @@ Three screens on one root, swapped by clearing a container frame:
 All quiz construction is in quiz.py (pure, tested); this is the shell.
 """
 import sys
+import threading
 import tkinter as tk
 from tkinter import font as tkfont
 from tkinter import ttk
@@ -21,6 +22,7 @@ from . import decks as decks_mod
 from . import paths, quiz as quiz_mod, scheduler as sched_mod
 from . import settings as settings_mod
 from . import win32
+from .audio import clips, player
 from .logging_setup import get, setup
 
 log = get("quiz_ui")
@@ -37,6 +39,7 @@ class QuizWindow:
         self.answered = False
 
         self.root = tk.Tk()
+        self.count_var = tk.IntVar(value=int(self.s.get("quiz_length", 20)))
         self.root.title("Chinese Pop — Test Mode")
         self.body = ttk.Frame(self.root, padding=16)
         self.body.pack(fill="both", expand=True)
@@ -71,7 +74,15 @@ class QuizWindow:
         ttk.Label(self.body, foreground="#666", wraplength=440, justify="left",
                   text="You'll see a word and pick its reading and meaning from "
                        "four choices. Choose a pool to test yourself on:").pack(
-            anchor="w", pady=(4, 14))
+            anchor="w", pady=(4, 12))
+
+        countrow = ttk.Frame(self.body)
+        countrow.pack(fill="x", pady=(0, 12))
+        ttk.Label(countrow, text="Number of questions:").pack(side="left")
+        ttk.Spinbox(countrow, from_=5, to=200, increment=5, width=6,
+                    textvariable=self.count_var).pack(side="left", padx=8)
+        ttk.Label(countrow, foreground="#999",
+                  text="(capped at the pool size)").pack(side="left")
 
         all_words = [w for d in self.decks for w in quiz_mod.tag_deck(d)]
         n_all = len(quiz_mod.answerable(all_words))
@@ -91,9 +102,8 @@ class QuizWindow:
                 anchor="w", pady=4)
 
         ttk.Label(self.body, foreground="#888", wraplength=440, justify="left",
-                  text="A test is up to 20 questions. Swears are censored, and "
-                       "hidden entirely if you've turned them off in Settings.").pack(
-            anchor="w", pady=(14, 0))
+                  text="Swears are censored, and hidden entirely if you've turned "
+                       "them off in Settings.").pack(anchor="w", pady=(14, 0))
         ttk.Button(self.body, text="Close", command=self.root.destroy).pack(
             side="bottom", anchor="e", pady=(10, 0))
         self._fit()
@@ -101,7 +111,13 @@ class QuizWindow:
     # ---------- screen 2: quiz ----------
     def _start(self, words):
         self._last_pool = words          # remembered for "Test again"
-        self.questions = quiz_mod.build_quiz(words, seed=None)
+        try:
+            length = max(1, int(self.count_var.get()))
+        except (tk.TclError, ValueError):
+            length = quiz_mod.DEFAULT_LENGTH        # blank/garbage spinbox
+        self.s.set("quiz_length", length)           # remember for next time
+        self.s.save()
+        self.questions = quiz_mod.build_quiz(words, length=length, seed=None)
         if not self.questions:
             self._clear()
             ttk.Label(self.body, text="Not enough cards to build a test.",
@@ -174,6 +190,24 @@ class QuizWindow:
         last = self.idx == len(self.questions) - 1
         self.next_btn.configure(state="normal",
                                 text="See results  ▶" if last else "Next  ▶")
+        self._play_word(q)               # hear it, right or wrong
+
+    def _play_word(self, q):
+        """Play the term's pronunciation once, off the UI thread. Clips are keyed
+        by voice, so pass the source deck's voice; a missing clip (never generated,
+        offline) is a silent no-op."""
+        word = q.word
+        if not word:
+            return
+        try:
+            deck = {"voice": word.get("_voice")}
+            path = clips.paths_for(word, self.s, deck, paths.audio_dir()).get(clips.WORD)
+        except Exception:
+            log.exception("could not resolve audio for %s", q.term)
+            return
+        if path and path.exists():
+            threading.Thread(target=player.play_file, args=(path,),
+                             daemon=True).start()
 
     def _next(self):
         if self.idx < len(self.questions) - 1:

@@ -21,6 +21,7 @@ class Question:
     options: list                   # list of (reading, meaning) pairs
     answer: int                     # index into options of the correct pair
     deck: str = ""                  # deck name, if known (for a small subtitle)
+    word: dict = field(default=None, repr=False)   # source word, to play its audio
 
     @property
     def correct(self):
@@ -62,7 +63,7 @@ def _make_question(target, pool, n_options, rng):
     rng.shuffle(options)
     return Question(term=decks_mod.word_term(target), options=options,
                     answer=options.index(correct),
-                    deck=target.get("_deck", ""))
+                    deck=target.get("_deck", ""), word=target)
 
 
 def build_quiz(words, length=DEFAULT_LENGTH, n_options=DEFAULT_OPTIONS, seed=None):
@@ -88,8 +89,9 @@ def build_quiz(words, length=DEFAULT_LENGTH, n_options=DEFAULT_OPTIONS, seed=Non
 
 
 def tag_deck(deck):
-    """Return a deck's words, each shallow-tagged with the deck name so a quiz
-    over several decks can show where a card came from. Never mutates the loaded
-    words — a filter/edit elsewhere must not see a stray `_deck` key."""
-    name = deck.get("name", "")
-    return [{**w, "_deck": name} for w in deck.get("words", [])]
+    """Return a deck's words, each shallow-tagged with the deck name (for a small
+    subtitle) and the deck's voice (so Test Mode can locate the audio — clips are
+    keyed by voice). Never mutates the loaded words — a filter/edit elsewhere must
+    not see a stray `_deck`/`_voice` key."""
+    name, voice = deck.get("name", ""), deck.get("voice")
+    return [{**w, "_deck": name, "_voice": voice} for w in deck.get("words", [])]
