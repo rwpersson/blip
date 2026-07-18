@@ -1,0 +1,566 @@
+{
+  "schema": 1,
+  "name": "Week 3",
+  "language": "zh-CN",
+  "voice": null,
+  "words": [
+    {
+      "id": "302",
+      "term": "弊端",
+      "reading": "bì duān",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "a drawback; malpractice",
+      "note": "制度弊端 = the flaws baked into a system."
+    },
+    {
+      "id": "303",
+      "term": "隐瞒",
+      "reading": "yǐn mán",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to conceal; cover up",
+      "note": "隐瞒真相 = hide the truth. Deliberate concealment, not mere silence."
+    },
+    {
+      "id": "304",
+      "term": "揣测",
+      "reading": "chuǎi cè",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to conjecture; second-guess",
+      "note": "妄加揣测 = to speculate baselessly."
+    },
+    {
+      "id": "305",
+      "term": "铺垫",
+      "reading": "pū diàn",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "groundwork; foreshadowing",
+      "note": "做铺垫 = lay the groundwork. In stories: setup for a later payoff."
+    },
+    {
+      "id": "306",
+      "term": "渊源",
+      "reading": "yuān yuán",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "origin; deep roots",
+      "note": "历史渊源 = deep historical origins."
+    },
+    {
+      "id": "307",
+      "term": "蓄意",
+      "reading": "xù yì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "deliberate; premeditated",
+      "note": "蓄意破坏 = wilful sabotage. Always negative."
+    },
+    {
+      "id": "308",
+      "term": "侥幸",
+      "reading": "jiǎo xìng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "by sheer luck; a fluke",
+      "note": "侥幸心理 = the 'I'll probably get away with it' mindset."
+    },
+    {
+      "id": "309",
+      "term": "拙劣",
+      "reading": "zhuō liè",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "clumsy; inept; shoddy",
+      "note": "拙劣的借口 = a pathetic excuse."
+    },
+    {
+      "id": "310",
+      "term": "恰当",
+      "reading": "qià dàng",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "appropriate; apt",
+      "note": "用词恰当 = well-chosen wording."
+    },
+    {
+      "id": "311",
+      "term": "妥当",
+      "reading": "tuǒ dàng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "proper; settled; squared away",
+      "note": "安排妥当 = all properly arranged."
+    },
+    {
+      "id": "312",
+      "term": "磋商",
+      "reading": "cuō shāng",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "to consult; negotiate",
+      "note": "双方磋商 = the two sides are in talks. Formal/diplomatic."
+    },
+    {
+      "id": "313",
+      "term": "呈现",
+      "reading": "chéng xiàn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to present; take on (an appearance)",
+      "note": "呈现出新的面貌 = takes on a whole new look."
+    },
+    {
+      "id": "314",
+      "term": "凸显",
+      "reading": "tū xiǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to highlight; stand out sharply",
+      "note": "凸显优势 = make the advantage stand out."
+    },
+    {
+      "id": "315",
+      "term": "折射",
+      "reading": "zhé shè",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to refract; reflect indirectly",
+      "note": "折射出社会问题 = indirectly mirrors deeper social issues."
+    },
+    {
+      "id": "316",
+      "term": "剖析",
+      "reading": "pōu xī",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "to dissect; analyze deeply",
+      "note": "深入剖析 = take it apart and examine it thoroughly."
+    },
+    {
+      "id": "317",
+      "term": "界定",
+      "reading": "jiè dìng",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to define; delimit",
+      "note": "界定范围 = pin down the scope."
+    },
+    {
+      "id": "318",
+      "term": "沦为",
+      "reading": "lún wéi",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to be reduced to (something worse)",
+      "note": "沦为笑柄 = to become a laughingstock. Always a fall."
+    },
+    {
+      "id": "319",
+      "term": "彰显",
+      "reading": "zhāng xiǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to manifest; showcase",
+      "note": "彰显实力 = put one's strength on full display."
+    },
+    {
+      "id": "320",
+      "term": "兼容",
+      "reading": "jiān róng",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "compatible; to accommodate both",
+      "note": "兼容并包 = inclusive of all. Also tech 'compatible'."
+    },
+    {
+      "id": "321",
+      "term": "造诣",
+      "reading": "zào yì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "attainments; mastery (in a field)",
+      "note": "造诣很深 = deeply accomplished. For art/scholarship."
+    },
+    {
+      "id": "322",
+      "term": "潜规则",
+      "reading": "qián guī zé",
+      "tones": "2-1-2",
+      "cat": "slang",
+      "meaning": "unspoken rules; the shady real rules",
+      "note": "行业潜规则 = the dirty open secret of how an industry really works."
+    },
+    {
+      "id": "323",
+      "term": "爆冷",
+      "reading": "bào lěng",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "an upset; a shock result",
+      "note": "爆冷门 = the underdog wins. Sports/competition staple."
+    },
+    {
+      "id": "324",
+      "term": "打脸",
+      "reading": "dǎ liǎn",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "to be proven wrong; egg on your face",
+      "note": "被打脸了 = reality slapped me. Said what wouldn't happen — then it did."
+    },
+    {
+      "id": "325",
+      "term": "反转",
+      "reading": "fǎn zhuǎn",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "a plot twist; a reversal",
+      "note": "剧情反转 = the story flips. Common in news/drama takes."
+    },
+    {
+      "id": "326",
+      "term": "割韭菜",
+      "reading": "gē jiǔ cài",
+      "tones": "1-3-4",
+      "cat": "slang",
+      "meaning": "to fleece the suckers",
+      "note": "'Cutting chives' — they grow back, so you harvest naive investors/customers again and again."
+    },
+    {
+      "id": "327",
+      "term": "躺枪",
+      "reading": "tǎng qiāng",
+      "tones": "3-1",
+      "cat": "slang",
+      "meaning": "to catch a stray; hit by crossfire",
+      "note": "我又躺枪了 = I got dragged in for nothing. From 躺着也中枪."
+    },
+    {
+      "id": "328",
+      "term": "人设",
+      "reading": "rén shè",
+      "tones": "2-4",
+      "cat": "slang",
+      "meaning": "a public persona; character image",
+      "note": "人设崩塌 = the persona collapses when the truth comes out."
+    },
+    {
+      "id": "329",
+      "term": "恰饭",
+      "reading": "qià fàn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "to take sponsorship; gotta eat",
+      "note": "恰饭视频 = a sponsored video. Half-apologetic 'a creator's gotta eat'."
+    },
+    {
+      "id": "330",
+      "term": "上岸",
+      "reading": "shàng àn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "to make it; land the job/pass the exam",
+      "note": "考研上岸 = passed the grad exam. Literally 'reached the shore'."
+    },
+    {
+      "id": "331",
+      "term": "双标",
+      "reading": "shuāng biāo",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "a double standard",
+      "note": "你这是双标 = you're applying two different rules."
+    },
+    {
+      "id": "332",
+      "term": "杠精",
+      "reading": "gàng jīng",
+      "tones": "4-1",
+      "cat": "slang",
+      "meaning": "a contrarian troll; argue-for-argument's-sake type",
+      "note": "抬杠 = to bicker; 杠精 is the person who does it professionally."
+    },
+    {
+      "id": "333",
+      "term": "键盘侠",
+      "reading": "jiàn pán xiá",
+      "tones": "4-2-2",
+      "cat": "slang",
+      "meaning": "a keyboard warrior",
+      "note": "Brave and righteous online, invisible in real life."
+    },
+    {
+      "id": "334",
+      "term": "柠檬精",
+      "reading": "níng méng jīng",
+      "tones": "2-2-1",
+      "cat": "slang",
+      "meaning": "a jealous person; sour-grapes type",
+      "note": "我柠檬了 = I'm so jealous. 'Lemon spirit' — sour with envy."
+    },
+    {
+      "id": "335",
+      "term": "舔狗",
+      "reading": "tiǎn gǒu",
+      "tones": "3-3",
+      "cat": "slang",
+      "meaning": "a simp; a boot-licker",
+      "note": "Crude and mocking: someone who grovels for affection and gets nothing back."
+    },
+    {
+      "id": "336",
+      "term": "海王",
+      "reading": "hǎi wáng",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "a player juggling many romantic options",
+      "note": "'Aquaman' — he keeps a whole sea of fish on the line."
+    },
+    {
+      "id": "337",
+      "term": "绿茶",
+      "reading": "lǜ chá",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "a sweet-seeming manipulator",
+      "note": "Innocent on the surface, calculating underneath. Usually aimed at women — loaded/sexist."
+    },
+    {
+      "id": "338",
+      "term": "冤种",
+      "reading": "yuān zhǒng",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "a sucker; a poor sap",
+      "note": "大冤种 = the world's biggest chump. Self-deprecating and affectionate."
+    },
+    {
+      "id": "339",
+      "term": "泪目",
+      "reading": "lèi mù",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "teary-eyed; moved to tears",
+      "note": "泪目了 = I'm welling up. Common in comments on touching clips."
+    },
+    {
+      "id": "340",
+      "term": "心态崩了",
+      "reading": "xīn tài bēng le",
+      "tones": "1-4-1-·",
+      "cat": "slang",
+      "meaning": "I've lost it; totally tilted",
+      "note": "Your mental game collapsed — gaming, exams, anything."
+    },
+    {
+      "id": "341",
+      "term": "求生欲",
+      "reading": "qiú shēng yù",
+      "tones": "2-1-4",
+      "cat": "slang",
+      "meaning": "'survival instinct' — a save-your-skin save",
+      "note": "求生欲很强 = quick save! Saying exactly the right thing to avoid trouble (esp. with a partner)."
+    },
+    {
+      "id": "342",
+      "term": "妈的",
+      "reading": "mā de",
+      "tones": "1-·",
+      "cat": "swear",
+      "meaning": "damn it",
+      "note": "Everyday curse; 他妈的 is the stronger, more aggressive version."
+    },
+    {
+      "id": "343",
+      "term": "混账",
+      "reading": "hùn zhàng",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "scoundrel; damn (you)",
+      "note": "混账话 = outrageous talk. Slightly old-fashioned, still cutting."
+    },
+    {
+      "id": "344",
+      "term": "畜生",
+      "reading": "chù sheng",
+      "tones": "4-·",
+      "cat": "swear",
+      "meaning": "beast; brute (of a person)",
+      "note": "A savage insult — calling someone subhuman. Very harsh."
+    },
+    {
+      "id": "345",
+      "term": "猪头",
+      "reading": "zhū tóu",
+      "tones": "1-2",
+      "cat": "swear",
+      "meaning": "dummy; pighead",
+      "note": "Mild and often playful/affectionate between friends or couples."
+    },
+    {
+      "id": "346",
+      "term": "二逼",
+      "reading": "èr bī",
+      "tones": "4-1",
+      "cat": "swear",
+      "meaning": "dumbass (vulgar)",
+      "note": "二 (dumb) + the crude 逼. Rude; cousin of 傻逼."
+    },
+    {
+      "id": "347",
+      "term": "傻叉",
+      "reading": "shǎ chā",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "idiot (censor-dodging 傻逼)",
+      "note": "Written to slip past filters; still clearly an insult."
+    },
+    {
+      "id": "348",
+      "term": "见鬼",
+      "reading": "jiàn guǐ",
+      "tones": "4-3",
+      "cat": "swear",
+      "meaning": "damn it!; what the hell",
+      "note": "'See a ghost.' Mild exclamation of frustration."
+    },
+    {
+      "id": "349",
+      "term": "该死",
+      "reading": "gāi sǐ",
+      "tones": "1-3",
+      "cat": "swear",
+      "meaning": "damn!; blast it",
+      "note": "该死的 = damned/blasted (as a modifier). Fairly mild."
+    },
+    {
+      "id": "350",
+      "term": "有病",
+      "reading": "yǒu bìng",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "you're sick / out of your mind",
+      "note": "你有病啊 = what's wrong with you?! Rude; cf. 神经病."
+    },
+    {
+      "id": "351",
+      "term": "不要脸",
+      "reading": "bú yào liǎn",
+      "tones": "2-4-3",
+      "cat": "swear",
+      "meaning": "shameless!; no shame",
+      "note": "真不要脸 = utterly shameless. A serious accusation in Chinese culture."
+    },
+    {
+      "id": "352",
+      "term": "缺德",
+      "reading": "quē dé",
+      "tones": "1-2",
+      "cat": "swear",
+      "meaning": "rotten; immoral; low",
+      "note": "缺德玩意 = a rotten piece of work. Accuses you of having no morals."
+    },
+    {
+      "id": "353",
+      "term": "一针见血",
+      "reading": "yī zhēn jiàn xuè",
+      "tones": "1-1-4-4",
+      "cat": "idiom",
+      "meaning": "to hit the nail on the head",
+      "note": "'One needle draws blood' — a remark that cuts straight to the point."
+    },
+    {
+      "id": "354",
+      "term": "醍醐灌顶",
+      "reading": "tí hú guàn dǐng",
+      "tones": "2-2-4-3",
+      "cat": "idiom",
+      "meaning": "a sudden flash of enlightenment",
+      "note": "Like having wisdom poured over your head — everything clicks at once."
+    },
+    {
+      "id": "355",
+      "term": "顺其自然",
+      "reading": "shùn qí zì rán",
+      "tones": "4-2-4-2",
+      "cat": "idiom",
+      "meaning": "to let nature take its course",
+      "note": "Stop forcing it; let things unfold. Cousin of 佛系."
+    },
+    {
+      "id": "356",
+      "term": "无济于事",
+      "reading": "wú jì yú shì",
+      "tones": "2-4-2-4",
+      "cat": "idiom",
+      "meaning": "of no help at all",
+      "note": "后悔也无济于事 = regretting it won't fix anything."
+    },
+    {
+      "id": "357",
+      "term": "力不从心",
+      "reading": "lì bù cóng xīn",
+      "tones": "4-4-2-1",
+      "cat": "idiom",
+      "meaning": "willing but unable",
+      "note": "The spirit is ready but the strength isn't there."
+    },
+    {
+      "id": "358",
+      "term": "三思而行",
+      "reading": "sān sī ér xíng",
+      "tones": "1-1-2-2",
+      "cat": "idiom",
+      "meaning": "think thrice before you act",
+      "note": "Look before you leap."
+    },
+    {
+      "id": "359",
+      "term": "抬",
+      "reading": "tái",
+      "tones": "2",
+      "cat": "gaming",
+      "meaning": "to carry (lift) a teammate",
+      "note": "抬不动了 = I can't carry them anymore. Cf. 带 / 躺赢."
+    },
+    {
+      "id": "360",
+      "term": "混子",
+      "reading": "hùn zi",
+      "tones": "4-·",
+      "cat": "gaming",
+      "meaning": "a slacker; dead weight",
+      "note": "A player who coasts and contributes nothing."
+    },
+    {
+      "id": "361",
+      "term": "排位",
+      "reading": "pái wèi",
+      "tones": "2-4",
+      "cat": "gaming",
+      "meaning": "ranked queue",
+      "note": "打排位 = grind ranked. Cf. 上分."
+    },
+    {
+      "id": "362",
+      "term": "秒杀",
+      "reading": "miǎo shā",
+      "tones": "3-1",
+      "cat": "gaming",
+      "meaning": "to insta-kill; one-shot",
+      "note": "被秒杀 = deleted instantly. Also a 'flash sale' in shopping."
+    },
+    {
+      "id": "363",
+      "term": "复活",
+      "reading": "fù huó",
+      "tones": "4-2",
+      "cat": "gaming",
+      "meaning": "to respawn; revive",
+      "note": "复活时间 = respawn timer."
+    }
+  ]
+}

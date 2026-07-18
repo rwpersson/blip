@@ -5,19 +5,19 @@ Generate the spoken audio for every word in every deck.
     python generate_audio.py --force    # rebuild everything (after a voice change)
     python generate_audio.py --prune    # also delete clips nothing references
 
-Clips are content-addressed (see chinesepop/audio/clips.py), so this only ever
+Clips are content-addressed (see blip/audio/clips.py), so this only ever
 synthesizes speech that doesn't already exist — identical words across decks share
 a file, and changing a voice re-keys just the affected clips rather than the lot.
 
-This is a thin CLI over chinesepop.audio.tts — the voices, the profanity filter
+This is a thin CLI over blip.audio.tts — the voices, the profanity filter
 and the clip layout all live in the package, so there's one source of truth.
 """
 import sys
 
-from chinesepop import decks as decks_mod
-from chinesepop import paths, settings as settings_mod
-from chinesepop.audio import tts
-from chinesepop.logging_setup import get, setup
+from blip import decks as decks_mod
+from blip import paths, settings as settings_mod
+from blip.audio import tts
+from blip.logging_setup import get, setup
 
 
 def main():

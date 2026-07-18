@@ -1,0 +1,2070 @@
+{
+  "schema": 1,
+  "name": "1st Week",
+  "language": "zh-CN",
+  "voice": null,
+  "words": [
+    {
+      "id": "01",
+      "term": "牛逼",
+      "reading": "niú bī",
+      "tones": "2-1",
+      "cat": "slang",
+      "meaning": "awesome; badass; killer",
+      "note": "Extremely common way to say 'impressive/badass', but literally crude, so it's a bit vulgar. The clean versions are 牛 or 牛的. Often typed as NB or 牛B.",
+      "alt": "NB / 牛B"
+    },
+    {
+      "id": "02",
+      "term": "躺平",
+      "reading": "tǎng píng",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "to lie flat; opt out of the rat race",
+      "note": "A quiet protest against overwork culture — doing the bare minimum instead of hustling. Not lazy so much as 'refusing to play the game'."
+    },
+    {
+      "id": "03",
+      "term": "内卷",
+      "reading": "nèi juǎn",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "involution; pointless over-competition",
+      "note": "When everyone works harder and harder for the same reward — a rat race with no real winner. Often shortened to 卷: 太卷了 = 'it's so cutthroat'.",
+      "alt": "卷"
+    },
+    {
+      "id": "04",
+      "term": "摆烂",
+      "reading": "bǎi làn",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "to let it rot; stop trying on purpose",
+      "note": "More active than 躺平 — deliberately doing a bad job because you've given up. 'I'm just gonna let it all rot.'"
+    },
+    {
+      "id": "05",
+      "term": "摸鱼",
+      "reading": "mō yú",
+      "tones": "1-2",
+      "cat": "slang",
+      "meaning": "to slack off (at work/school)",
+      "note": "Literally 'touch fish'. Goofing off or scrolling your phone while pretending to work. From the proverb 浑水摸鱼 (fish in troubled waters)."
+    },
+    {
+      "id": "06",
+      "term": "打工人",
+      "reading": "dǎ gōng rén",
+      "tones": "3-1-2",
+      "cat": "slang",
+      "meaning": "wage slave; working stiff",
+      "note": "A self-deprecating badge of pride for ordinary employees grinding through the day. Greeting: 早安，打工人 = 'Morning, fellow wage slave.'"
+    },
+    {
+      "id": "07",
+      "term": "永远的神",
+      "reading": "yǒng yuǎn de shén",
+      "tones": "3-3-·-2",
+      "cat": "slang",
+      "meaning": "the GOAT; forever legendary",
+      "note": "Usually typed as the acronym yyds. Hype for anything you adore — a player, a song, a dish. Equivalent to calling something 'the GOAT'.",
+      "alt": "yyds",
+      "say": "永远的神"
+    },
+    {
+      "id": "08",
+      "term": "破防",
+      "reading": "pò fáng",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "emotionally shattered; hit right in the feels",
+      "note": "Originally a gaming term (your armor/defense broke). Now: something moved you deeply or wrecked you emotionally — good or bad."
+    },
+    {
+      "id": "09",
+      "term": "绝绝子",
+      "reading": "jué jué zǐ",
+      "tones": "2-2-·",
+      "cat": "slang",
+      "meaning": "absolutely amazing (or amazingly awful)",
+      "note": "Peak influencer gushing. Usually 'incredible!', but can be sarcastic for incredibly bad. Overused enough that some find it cringe."
+    },
+    {
+      "id": "10",
+      "term": "栓Q",
+      "reading": "shuān Q",
+      "tones": "1-·",
+      "cat": "slang",
+      "meaning": "ugh / 'thank you' (sarcastic, exasperated)",
+      "note": "From a viral clip of someone mispronouncing 'thank you'. Expresses being speechless, done, or fed up — rarely sincere gratitude.",
+      "say": "栓Q"
+    },
+    {
+      "id": "11",
+      "term": "社死",
+      "reading": "shè sǐ",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "social death; utter mortification",
+      "note": "Short for 社会性死亡. That cringe so intense you want to vanish on the spot. 'I could have died of embarrassment.'",
+      "alt": "社会性死亡"
+    },
+    {
+      "id": "12",
+      "term": "尴尬",
+      "reading": "gān gà",
+      "tones": "1-4",
+      "cat": "common",
+      "meaning": "awkward; embarrassing",
+      "note": "Everyday word for cringe/awkward vibes. 好尴尬 = 'so awkward'. Also spawns the prefix 尬- (see 尬聊, 尬舞)."
+    },
+    {
+      "id": "13",
+      "term": "吃瓜",
+      "reading": "chī guā",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "to watch drama as a bystander",
+      "note": "'Eating melon' = enjoying gossip/scandal without being involved. 吃瓜群众 = 'the melon-eating masses', i.e. the peanut gallery.",
+      "alt": "吃瓜群众"
+    },
+    {
+      "id": "14",
+      "term": "凡尔赛",
+      "reading": "fán ěr sài",
+      "tones": "2-3-4",
+      "cat": "slang",
+      "meaning": "humblebragging",
+      "note": "'Versailles' (as in the palace). Flexing wealth or success disguised as a complaint: '唉，钱太多不知道怎么花' — 'ugh, so much money, no idea how to spend it.'"
+    },
+    {
+      "id": "15",
+      "term": "佛系",
+      "reading": "fó xì",
+      "tones": "2-4",
+      "cat": "slang",
+      "meaning": "chill; indifferent; go-with-the-flow",
+      "note": "'Buddha-style'. Not caring about winning or outcomes — zen to the point of apathy. 佛系玩家 = a player who just vibes."
+    },
+    {
+      "id": "16",
+      "term": "白嫖",
+      "reading": "bái piáo",
+      "tones": "2-2",
+      "cat": "slang",
+      "meaning": "to freeload; get for free",
+      "note": "Enjoying content, effort, or a game without paying or giving anything back. 白嫖党 = 'the freeloaders'. Mildly shameless."
+    },
+    {
+      "id": "17",
+      "term": "画饼",
+      "reading": "huà bǐng",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "to make empty promises",
+      "note": "'Drawing a pancake' you can't eat. Classic move of bosses dangling raises or promotions that never materialize. Pie-in-the-sky talk."
+    },
+    {
+      "id": "18",
+      "term": "卷王",
+      "reading": "juǎn wáng",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "the ultimate try-hard",
+      "note": "The person who out-hustles everyone and wrecks the curve for the rest of you. The 'king' of 内卷."
+    },
+    {
+      "id": "19",
+      "term": "真香",
+      "reading": "zhēn xiāng",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "actually great (after swearing you'd never)",
+      "note": "The meme for eating your words. You said 'never', then you loved it. The 真香定律 = 'the law of true fragrance' — everyone caves eventually."
+    },
+    {
+      "id": "20",
+      "term": "上头",
+      "reading": "shàng tóu",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "to be hooked; go to your head",
+      "note": "Obsessed with something — a game, a song, a crush. Also literally: booze 'going to your head'. 这游戏太上头了 = 'this game is so addictive'."
+    },
+    {
+      "id": "21",
+      "term": "拿捏",
+      "reading": "ná niē",
+      "tones": "2-1",
+      "cat": "slang",
+      "meaning": "to have it totally handled; nail it",
+      "note": "To control something perfectly or read someone completely. 拿捏了 = 'nailed it' / 'got them wrapped around my finger'."
+    },
+    {
+      "id": "22",
+      "term": "大佬",
+      "reading": "dà lǎo",
+      "tones": "4-3",
+      "cat": "gaming",
+      "meaning": "big shot; expert; pro",
+      "note": "Half-joking, half-respectful term for someone highly skilled. In games it's the carry/pro. 求带，大佬! = 'carry me, please, master!'"
+    },
+    {
+      "id": "23",
+      "term": "菜",
+      "reading": "cài",
+      "tones": "4",
+      "cat": "gaming",
+      "meaning": "bad at something; a noob",
+      "note": "Gamer staple. 你好菜 = 'you're trash'. 菜鸟 = a newbie/rookie. The opposite of 大佬.",
+      "alt": "菜鸟"
+    },
+    {
+      "id": "24",
+      "term": "坑",
+      "reading": "kēng",
+      "tones": "1",
+      "cat": "gaming",
+      "meaning": "to screw over a teammate; a liability",
+      "note": "In games: a teammate who drags you down, or the act of sabotaging your own team. 别坑我 = 'don't throw the game for me'."
+    },
+    {
+      "id": "25",
+      "term": "送",
+      "reading": "sòng",
+      "tones": "4",
+      "cat": "gaming",
+      "meaning": "to feed; hand the enemy free kills",
+      "note": "MOBA slang: dying pointlessly and 'gifting' the enemy an advantage. 别送了! = 'stop feeding!'"
+    },
+    {
+      "id": "26",
+      "term": "上分",
+      "reading": "shàng fēn",
+      "tones": "4-1",
+      "cat": "gaming",
+      "meaning": "to climb the ranked ladder",
+      "note": "Grinding to raise your rank/rating. The opposite is 掉分 (drop rank). 带我上分 = 'carry me up the ranks'."
+    },
+    {
+      "id": "27",
+      "term": "开黑",
+      "reading": "kāi hēi",
+      "tones": "1-1",
+      "cat": "gaming",
+      "meaning": "to squad up on voice chat",
+      "note": "Playing as a premade party, usually talking on voice. 晚上开黑? = 'wanna squad up tonight?'"
+    },
+    {
+      "id": "28",
+      "term": "躺赢",
+      "reading": "tǎng yíng",
+      "tones": "3-2",
+      "cat": "gaming",
+      "meaning": "to win effortlessly; get carried",
+      "note": "'Lying-down victory' — your team carries you to the win while you do almost nothing. Guilt-free freeloading (see 白嫖)."
+    },
+    {
+      "id": "29",
+      "term": "带",
+      "reading": "dài",
+      "tones": "4",
+      "cat": "gaming",
+      "meaning": "to carry (weaker teammates)",
+      "note": "A strong player 'leading/carrying' the others. 带带我 = 'carry me'. Closely tied to 大佬 and 上分."
+    },
+    {
+      "id": "30",
+      "term": "开挂",
+      "reading": "kāi guà",
+      "tones": "1-4",
+      "cat": "gaming",
+      "meaning": "to cheat/hack; be superhumanly good",
+      "note": "Literally 'switch on cheats'. Also a compliment when someone plays so well it looks fake: 他像开了挂 = 'he's playing like he's hacking'."
+    },
+    {
+      "id": "31",
+      "term": "秀",
+      "reading": "xiù",
+      "tones": "4",
+      "cat": "gaming",
+      "meaning": "to show off; a flashy play",
+      "note": "From English 'show'. 秀操作 = showing off slick moves/mechanics. Can be admiring or a sarcastic 'okay, show-off'."
+    },
+    {
+      "id": "32",
+      "term": "666",
+      "reading": "liù liù liù",
+      "tones": "4-4-4",
+      "cat": "gaming",
+      "meaning": "awesome; well played; pro",
+      "note": "溜 (smooth/slick) sounds like 6. Spamming 666 in chat means 'nice!' / 'so pro!'. The more sixes, the more hype.",
+      "say": "六六六"
+    },
+    {
+      "id": "33",
+      "term": "芭比Q",
+      "reading": "bā bǐ Q",
+      "tones": "1-3-·",
+      "cat": "slang",
+      "meaning": "we're done for; it's over; we're cooked",
+      "note": "'Barbecue' = 完蛋了 (burnt to a crisp). A playful, cartoonish way to say a situation is hopeless. 芭比Q了! = 'welp, we're toast!'",
+      "say": "芭比Q了"
+    },
+    {
+      "id": "34",
+      "term": "加油",
+      "reading": "jiā yóu",
+      "tones": "1-2",
+      "cat": "common",
+      "meaning": "go! keep it up! you got this!",
+      "note": "Literally 'add oil/fuel'. The all-purpose cheer of encouragement, for exams, matches, life. Warm and everywhere."
+    },
+    {
+      "id": "35",
+      "term": "厉害",
+      "reading": "lì hai",
+      "tones": "4-·",
+      "cat": "common",
+      "meaning": "impressive; formidable; fierce",
+      "note": "Everyday admiration — skilled, powerful, or intense. 你太厉害了! = 'you're amazing!'. Can also mean severe (病得厉害 = badly ill)."
+    },
+    {
+      "id": "36",
+      "term": "放鸽子",
+      "reading": "fàng gē zi",
+      "tones": "4-1-·",
+      "cat": "slang",
+      "meaning": "to stand someone up; flake on plans",
+      "note": "'To release pigeons'. Bailing at the last minute. 鸽 by itself has become a verb: 我被鸽了 = 'I got stood up'.",
+      "alt": "鸽"
+    },
+    {
+      "id": "37",
+      "term": "尊嘟假嘟",
+      "reading": "zūn dū jiǎ dū",
+      "tones": "1-·-3-·",
+      "cat": "slang",
+      "meaning": "for real?? or fake??",
+      "note": "Baby-talk mangling of 真的假的 ('really or not?'). Deliberately cutesy, cartoon-voice disbelief. Peak 2020s soft-cutesy internet-speak.",
+      "say": "尊嘟假嘟"
+    },
+    {
+      "id": "38",
+      "term": "emo",
+      "reading": "i mo",
+      "tones": "—",
+      "cat": "slang",
+      "meaning": "feeling down; in your feelings",
+      "note": "Borrowed straight from English 'emo'. Used as a verb: 我emo了 = 'I'm feeling low/moody tonight'. Usually a passing blue mood.",
+      "say": "emo"
+    },
+    {
+      "id": "39",
+      "term": "香",
+      "reading": "xiāng",
+      "tones": "1",
+      "cat": "slang",
+      "meaning": "great; worth it; a steal",
+      "note": "Beyond 'fragrant' — a 值了/爽 vibe of satisfaction or value. 这个价格真香 = 'what a steal'. See also 真香."
+    },
+    {
+      "id": "40",
+      "term": "秒",
+      "reading": "miǎo",
+      "tones": "3",
+      "cat": "slang",
+      "meaning": "to do something instantly",
+      "note": "'Second' used as a verb. 秒了 = crushed it instantly / insta-killed. 秒回 = reply the second you message. 秒懂 = get it immediately."
+    },
+    {
+      "id": "41",
+      "term": "磨叽",
+      "reading": "mó ji",
+      "tones": "2-·",
+      "cat": "slang",
+      "meaning": "to dawdle; be sluggish and indecisive",
+      "note": "Northern colloquial. 别磨叽了 = 'quit dragging your feet'. About slowness and dithering, not laziness."
+    },
+    {
+      "id": "42",
+      "term": "靠谱",
+      "reading": "kào pǔ",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "reliable; legit; dependable",
+      "note": "Trustworthy and sensible. 他很靠谱 = 'he's solid'. The opposite, 不靠谱, means flaky/unreliable/sketchy."
+    },
+    {
+      "id": "43",
+      "term": "给力",
+      "reading": "gěi lì",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "awesome; really delivers; comes through",
+      "note": "Something that performs and lives up to the hype. 这装备太给力了 = 'this gear is so clutch'. Opposite: 不给力 (weak/disappointing)."
+    },
+    {
+      "id": "44",
+      "term": "土",
+      "reading": "tǔ",
+      "tones": "3",
+      "cat": "slang",
+      "meaning": "tacky; corny; uncool",
+      "note": "Literally 'dirt/earthy' → unfashionable, cringe-old-school. 有点土 = 'kinda tacky'. 土味情话 = cheesy pickup lines.",
+      "alt": "土味"
+    },
+    {
+      "id": "45",
+      "term": "香饽饽",
+      "reading": "xiāng bō bo",
+      "tones": "1-1-·",
+      "cat": "slang",
+      "meaning": "a hot commodity; much sought-after",
+      "note": "Someone or something everyone wants. 你现在是香饽饽 = 'you're in hot demand right now'. Originally a tasty steamed bun."
+    },
+    {
+      "id": "46",
+      "term": "蚌埠住了",
+      "reading": "bèng bù zhù le",
+      "tones": "4-4-4-·",
+      "cat": "slang",
+      "meaning": "I can't hold it in (laughing/crying)",
+      "note": "A pun on 绷不住了 ('can't keep a straight face') using the city name 蚌埠. Means you're losing it — cracking up or welling up.",
+      "say": "蚌埠住了"
+    },
+    {
+      "id": "47",
+      "term": "妈耶",
+      "reading": "mā yē",
+      "tones": "1-·",
+      "cat": "slang",
+      "meaning": "OMG!; whoa!",
+      "note": "A surprised exclamation, like 'mamma mia!'. Cutesy, a little dramatic. 妈耶，吓死我了 = 'omg, you scared me to death'."
+    },
+    {
+      "id": "48",
+      "term": "社恐",
+      "reading": "shè kǒng",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "socially anxious",
+      "note": "Short for 社交恐惧 (social phobia). 我社恐 = 'I have social anxiety'. The upbeat opposite is 社牛 — a fearless social butterfly.",
+      "alt": "社牛"
+    },
+    {
+      "id": "49",
+      "term": "秀儿",
+      "reading": "xiù ér",
+      "tones": "4-·",
+      "cat": "slang",
+      "meaning": "clever clogs; show-off (teasing)",
+      "note": "Calling someone 秀儿 means 'wow, look at this smart aleck' — admiring or gently mocking a flashy/clever move. From 秀 (to show off).",
+      "say": "秀儿"
+    },
+    {
+      "id": "50",
+      "term": "嗑CP",
+      "reading": "kè CP",
+      "tones": "4-·",
+      "cat": "slang",
+      "meaning": "to ship a couple; obsess over a pairing",
+      "note": "CP = 'couple/coupling'. 嗑 (originally 'to crack seeds') = to devour a ship obsessively. 我嗑这对! = 'I ship these two so hard!'",
+      "say": "嗑CP"
+    },
+    {
+      "id": "51",
+      "term": "随便",
+      "reading": "suí biàn",
+      "tones": "2-4",
+      "cat": "common",
+      "meaning": "whatever; up to you; casual",
+      "note": "'Anything's fine' — but watch the tone: a flat, clipped 随便 can secretly mean 'I'm annoyed, figure it out yourself'."
+    },
+    {
+      "id": "52",
+      "term": "麻烦",
+      "reading": "má fan",
+      "tones": "2-·",
+      "cat": "common",
+      "meaning": "troublesome; a hassle; to bother",
+      "note": "麻烦你了 = 'sorry to trouble you / thanks for the help'. 太麻烦 = 'what a pain'. Both a noun-feeling and a polite verb."
+    },
+    {
+      "id": "53",
+      "term": "靠",
+      "reading": "kào",
+      "tones": "4",
+      "cat": "slang",
+      "meaning": "damn!; ugh! (mild curse)",
+      "note": "A mild exclamation of frustration or surprise — softer, semi-polite stand-in for stronger curses. 靠，又输了 = 'damn, lost again'."
+    },
+    {
+      "id": "54",
+      "term": "爽",
+      "reading": "shuǎng",
+      "tones": "3",
+      "cat": "slang",
+      "meaning": "satisfying; refreshing; feels great",
+      "note": "That deeply satisfying feeling — a cold drink on a hot day, a clutch win. 太爽了! = 'so satisfying!'. 不爽 = displeased/annoyed."
+    },
+    {
+      "id": "55",
+      "term": "尬",
+      "reading": "gà",
+      "tones": "4",
+      "cat": "slang",
+      "meaning": "cringe; awkward (prefix)",
+      "note": "Clipped from 尴尬. Now a productive prefix: 尬聊 = painfully awkward small talk, 尬舞 = cringe-worthy dancing, 尬住 = frozen in awkwardness.",
+      "alt": "尬聊 / 尬舞"
+    },
+    {
+      "id": "56",
+      "term": "逐渐",
+      "reading": "zhú jiàn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "gradually; step by step",
+      "note": "Written register; 慢慢 is the everyday spoken version."
+    },
+    {
+      "id": "57",
+      "term": "显然",
+      "reading": "xiǎn rán",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "obviously; evidently",
+      "note": "Often opens a clause: 显然，这行不通."
+    },
+    {
+      "id": "58",
+      "term": "承认",
+      "reading": "chéng rèn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to admit; acknowledge",
+      "note": "承认错误 = admit a mistake; 承认现实 = face reality."
+    },
+    {
+      "id": "59",
+      "term": "忽视",
+      "reading": "hū shì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to ignore; overlook",
+      "note": "不容忽视 = not to be overlooked."
+    },
+    {
+      "id": "60",
+      "term": "培养",
+      "reading": "péi yǎng",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "to cultivate; foster; train",
+      "note": "培养兴趣 / 培养人才."
+    },
+    {
+      "id": "61",
+      "term": "具备",
+      "reading": "jù bèi",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to possess (qualities/conditions)",
+      "note": "Formal: 具备条件 = meet the requirements."
+    },
+    {
+      "id": "62",
+      "term": "促进",
+      "reading": "cù jìn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to promote; advance",
+      "note": "促进发展 / 促进交流."
+    },
+    {
+      "id": "63",
+      "term": "弥补",
+      "reading": "mí bǔ",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "to make up for; compensate",
+      "note": "弥补损失 / 弥补不足."
+    },
+    {
+      "id": "64",
+      "term": "遭遇",
+      "reading": "zāo yù",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to encounter (sth bad); an ordeal",
+      "note": "Both verb and noun; usually negative: 遭遇困难."
+    },
+    {
+      "id": "65",
+      "term": "频繁",
+      "reading": "pín fán",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "frequent",
+      "note": "Written; 频繁发生 = happen repeatedly."
+    },
+    {
+      "id": "66",
+      "term": "迫切",
+      "reading": "pò qiè",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "urgent; pressing",
+      "note": "迫切需要 = urgently need."
+    },
+    {
+      "id": "67",
+      "term": "严峻",
+      "reading": "yán jùn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "severe; grim (situation)",
+      "note": "形势严峻 = the situation is grim."
+    },
+    {
+      "id": "68",
+      "term": "缓解",
+      "reading": "huǎn jiě",
+      "tones": "3-3",
+      "cat": "hsk",
+      "meaning": "to ease; alleviate",
+      "note": "缓解压力 / 缓解矛盾."
+    },
+    {
+      "id": "69",
+      "term": "抵达",
+      "reading": "dǐ dá",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to arrive at",
+      "note": "News/formal register for 到达."
+    },
+    {
+      "id": "70",
+      "term": "卓越",
+      "reading": "zhuó yuè",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "outstanding; excellent",
+      "note": "卓越的贡献 = outstanding contribution."
+    },
+    {
+      "id": "71",
+      "term": "崭新",
+      "reading": "zhǎn xīn",
+      "tones": "3-1",
+      "cat": "hsk",
+      "meaning": "brand-new",
+      "note": "崭新的面貌 = a whole new look."
+    },
+    {
+      "id": "72",
+      "term": "循环",
+      "reading": "xún huán",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to circulate; a cycle",
+      "note": "恶性循环 = vicious cycle."
+    },
+    {
+      "id": "73",
+      "term": "阐述",
+      "reading": "chǎn shù",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to expound; elaborate",
+      "note": "阐述观点 = lay out one's views."
+    },
+    {
+      "id": "74",
+      "term": "揭示",
+      "reading": "jiē shì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to reveal; disclose",
+      "note": "揭示真相 / 揭示规律."
+    },
+    {
+      "id": "75",
+      "term": "权衡",
+      "reading": "quán héng",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to weigh (options)",
+      "note": "权衡利弊 = weigh the pros and cons."
+    },
+    {
+      "id": "76",
+      "term": "制约",
+      "reading": "zhì yuē",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "to restrict; condition",
+      "note": "相互制约 = mutually constrain."
+    },
+    {
+      "id": "77",
+      "term": "剥夺",
+      "reading": "bō duó",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "to deprive; strip of",
+      "note": "剥夺权利 = strip of rights."
+    },
+    {
+      "id": "78",
+      "term": "遏制",
+      "reading": "è zhì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to contain; curb",
+      "note": "遏制蔓延 = curb the spread."
+    },
+    {
+      "id": "79",
+      "term": "兼顾",
+      "reading": "jiān gù",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to attend to both; balance",
+      "note": "兼顾工作和家庭."
+    },
+    {
+      "id": "80",
+      "term": "罕见",
+      "reading": "hǎn jiàn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "rare; seldom seen",
+      "note": "罕见的现象 = a rare phenomenon."
+    },
+    {
+      "id": "81",
+      "term": "显著",
+      "reading": "xiǎn zhù",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "marked; notable",
+      "note": "显著提高 = improve markedly."
+    },
+    {
+      "id": "82",
+      "term": "昂贵",
+      "reading": "áng guì",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "expensive; costly",
+      "note": "Written form of 贵."
+    },
+    {
+      "id": "83",
+      "term": "奢侈",
+      "reading": "shē chǐ",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "luxurious; extravagant",
+      "note": "奢侈品 = luxury goods."
+    },
+    {
+      "id": "84",
+      "term": "朴素",
+      "reading": "pǔ sù",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "simple; plain; unadorned",
+      "note": "朴素的生活 = a simple life."
+    },
+    {
+      "id": "85",
+      "term": "精致",
+      "reading": "jīng zhì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "exquisite; delicate",
+      "note": "精致的甜点 = a dainty dessert."
+    },
+    {
+      "id": "86",
+      "term": "粗糙",
+      "reading": "cū cāo",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "rough; coarse; crude",
+      "note": "做工粗糙 = shoddily made."
+    },
+    {
+      "id": "87",
+      "term": "敏锐",
+      "reading": "mǐn ruì",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "sharp; keen (perception)",
+      "note": "敏锐的洞察力 = keen insight."
+    },
+    {
+      "id": "88",
+      "term": "迟钝",
+      "reading": "chí dùn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "slow; dull (reaction)",
+      "note": "反应迟钝 = slow to react."
+    },
+    {
+      "id": "89",
+      "term": "谨慎",
+      "reading": "jǐn shèn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "cautious; prudent",
+      "note": "谨慎行事 = act with care."
+    },
+    {
+      "id": "90",
+      "term": "鲁莽",
+      "reading": "lǔ mǎng",
+      "tones": "3-3",
+      "cat": "hsk",
+      "meaning": "rash; reckless",
+      "note": "鲁莽的决定 = a reckless decision."
+    },
+    {
+      "id": "91",
+      "term": "果断",
+      "reading": "guǒ duàn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "decisive; resolute",
+      "note": "果断处理 = deal with decisively."
+    },
+    {
+      "id": "92",
+      "term": "犹豫",
+      "reading": "yóu yù",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to hesitate; hesitant",
+      "note": "犹豫不决 = unable to decide."
+    },
+    {
+      "id": "93",
+      "term": "固执",
+      "reading": "gù zhí",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "stubborn; obstinate",
+      "note": "固执己见 = cling to one's own view."
+    },
+    {
+      "id": "94",
+      "term": "灵活",
+      "reading": "líng huó",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "flexible; nimble",
+      "note": "灵活运用 = apply flexibly."
+    },
+    {
+      "id": "95",
+      "term": "娴熟",
+      "reading": "xián shú",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "skilled; proficient",
+      "note": "技术娴熟 = highly skilled."
+    },
+    {
+      "id": "96",
+      "term": "笨拙",
+      "reading": "bèn zhuō",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "clumsy; awkward",
+      "note": "笨拙的动作 = clumsy movements."
+    },
+    {
+      "id": "97",
+      "term": "沉着",
+      "reading": "chén zhuó",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "composed; cool-headed",
+      "note": "沉着冷静 = calm and collected."
+    },
+    {
+      "id": "98",
+      "term": "焦虑",
+      "reading": "jiāo lǜ",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "anxious; anxiety",
+      "note": "焦虑不安 = restless with worry."
+    },
+    {
+      "id": "99",
+      "term": "沮丧",
+      "reading": "jǔ sàng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "dejected; downcast",
+      "note": "感到沮丧 = feel disheartened."
+    },
+    {
+      "id": "100",
+      "term": "欣慰",
+      "reading": "xīn wèi",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "gratified; glad and relieved",
+      "note": "感到欣慰 = be gladdened."
+    },
+    {
+      "id": "101",
+      "term": "惭愧",
+      "reading": "cán kuì",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "ashamed",
+      "note": "深感惭愧 = feel deeply ashamed."
+    },
+    {
+      "id": "102",
+      "term": "疲惫",
+      "reading": "pí bèi",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "exhausted; weary",
+      "note": "疲惫不堪 = utterly worn out."
+    },
+    {
+      "id": "103",
+      "term": "惆怅",
+      "reading": "chóu chàng",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "melancholy; wistful",
+      "note": "Literary; a gentle sadness."
+    },
+    {
+      "id": "104",
+      "term": "豁达",
+      "reading": "huò dá",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "open-minded; magnanimous",
+      "note": "心胸豁达 = broad-minded."
+    },
+    {
+      "id": "105",
+      "term": "狭隘",
+      "reading": "xiá ài",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "narrow; narrow-minded",
+      "note": "狭隘的观念 = a narrow outlook."
+    },
+    {
+      "id": "106",
+      "term": "宽容",
+      "reading": "kuān róng",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "tolerant; lenient",
+      "note": "宽容待人 = be forgiving toward others."
+    },
+    {
+      "id": "107",
+      "term": "苛刻",
+      "reading": "kē kè",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "harsh; demanding",
+      "note": "条件苛刻 = harsh terms."
+    },
+    {
+      "id": "108",
+      "term": "慷慨",
+      "reading": "kāng kǎi",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "generous",
+      "note": "慷慨解囊 = give generously."
+    },
+    {
+      "id": "109",
+      "term": "吝啬",
+      "reading": "lìn sè",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "stingy; miserly",
+      "note": "吝啬鬼 = a miser."
+    },
+    {
+      "id": "110",
+      "term": "谦逊",
+      "reading": "qiān xùn",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "modest; humble",
+      "note": "Written form of 谦虚."
+    },
+    {
+      "id": "111",
+      "term": "傲慢",
+      "reading": "ào màn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "arrogant; haughty",
+      "note": "傲慢无礼 = arrogant and rude."
+    },
+    {
+      "id": "112",
+      "term": "崇高",
+      "reading": "chóng gāo",
+      "tones": "2-1",
+      "cat": "hsk",
+      "meaning": "lofty; noble",
+      "note": "崇高的理想 = a noble ideal."
+    },
+    {
+      "id": "113",
+      "term": "庸俗",
+      "reading": "yōng sú",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "vulgar; philistine",
+      "note": "庸俗的趣味 = low taste."
+    },
+    {
+      "id": "114",
+      "term": "隆重",
+      "reading": "lóng zhòng",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "grand; solemn (ceremony)",
+      "note": "隆重举行 = held with great ceremony."
+    },
+    {
+      "id": "115",
+      "term": "简洁",
+      "reading": "jiǎn jié",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "concise; succinct",
+      "note": "语言简洁 = terse, clean language."
+    },
+    {
+      "id": "116",
+      "term": "冗长",
+      "reading": "rǒng cháng",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "tediously long; verbose",
+      "note": "冗长的会议 = a dragging meeting."
+    },
+    {
+      "id": "117",
+      "term": "晦涩",
+      "reading": "huì sè",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "obscure; abstruse",
+      "note": "晦涩难懂 = hard to make sense of."
+    },
+    {
+      "id": "118",
+      "term": "贴切",
+      "reading": "tiē qiè",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "apt; fitting",
+      "note": "比喻贴切 = an apt metaphor."
+    },
+    {
+      "id": "119",
+      "term": "牵强",
+      "reading": "qiān qiǎng",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "far-fetched; forced",
+      "note": "牵强附会 = a strained interpretation."
+    },
+    {
+      "id": "120",
+      "term": "严谨",
+      "reading": "yán jǐn",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "rigorous; precise",
+      "note": "治学严谨 = rigorous scholarship."
+    },
+    {
+      "id": "121",
+      "term": "疏忽",
+      "reading": "shū hū",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "to neglect; an oversight",
+      "note": "一时疏忽 = a momentary lapse."
+    },
+    {
+      "id": "122",
+      "term": "敷衍",
+      "reading": "fū yǎn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to do perfunctorily; fob off",
+      "note": "敷衍了事 = go through the motions."
+    },
+    {
+      "id": "123",
+      "term": "拖延",
+      "reading": "tuō yán",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "to delay; procrastinate",
+      "note": "拖延时间 = stall for time."
+    },
+    {
+      "id": "124",
+      "term": "徘徊",
+      "reading": "pái huái",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to pace; hover; waver",
+      "note": "徘徊不前 = hesitate to move on."
+    },
+    {
+      "id": "125",
+      "term": "崛起",
+      "reading": "jué qǐ",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "to rise (abruptly)",
+      "note": "迅速崛起 = rise rapidly."
+    },
+    {
+      "id": "126",
+      "term": "衰落",
+      "reading": "shuāi luò",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to decline; wane",
+      "note": "逐渐衰落 = fall into decline."
+    },
+    {
+      "id": "127",
+      "term": "繁荣",
+      "reading": "fán róng",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "prosperous; flourishing",
+      "note": "经济繁荣 = a booming economy."
+    },
+    {
+      "id": "128",
+      "term": "萧条",
+      "reading": "xiāo tiáo",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "bleak; (economic) depression",
+      "note": "经济萧条 = a downturn."
+    },
+    {
+      "id": "129",
+      "term": "匮乏",
+      "reading": "kuì fá",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "scarce; deficient",
+      "note": "物资匮乏 = short of supplies."
+    },
+    {
+      "id": "130",
+      "term": "充沛",
+      "reading": "chōng pèi",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "abundant; plentiful",
+      "note": "精力充沛 = full of energy."
+    },
+    {
+      "id": "131",
+      "term": "泛滥",
+      "reading": "fàn làn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to flood; be rampant",
+      "note": "泛滥成灾 = spread out of control."
+    },
+    {
+      "id": "132",
+      "term": "蔓延",
+      "reading": "màn yán",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to spread; creep",
+      "note": "疫情蔓延 = the outbreak spreads."
+    },
+    {
+      "id": "133",
+      "term": "渗透",
+      "reading": "shèn tòu",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to permeate; infiltrate",
+      "note": "文化渗透 = cultural infiltration."
+    },
+    {
+      "id": "134",
+      "term": "妥协",
+      "reading": "tuǒ xié",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to compromise",
+      "note": "做出妥协 = make a concession."
+    },
+    {
+      "id": "135",
+      "term": "抉择",
+      "reading": "jué zé",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to make a (weighty) choice",
+      "note": "艰难的抉择 = a hard choice."
+    },
+    {
+      "id": "136",
+      "term": "履行",
+      "reading": "lǚ xíng",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to fulfill (a duty/contract)",
+      "note": "履行义务 = carry out an obligation."
+    },
+    {
+      "id": "137",
+      "term": "贯彻",
+      "reading": "guàn chè",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to implement; carry through",
+      "note": "贯彻政策 = put a policy into effect."
+    },
+    {
+      "id": "138",
+      "term": "部署",
+      "reading": "bù shǔ",
+      "tones": "4-3",
+      "cat": "hsk",
+      "meaning": "to deploy; arrange",
+      "note": "战略部署 = strategic deployment."
+    },
+    {
+      "id": "139",
+      "term": "协调",
+      "reading": "xié tiáo",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to coordinate; harmonious",
+      "note": "协调各方 = coordinate all sides."
+    },
+    {
+      "id": "140",
+      "term": "衔接",
+      "reading": "xián jiē",
+      "tones": "2-1",
+      "cat": "hsk",
+      "meaning": "to link up; connect",
+      "note": "无缝衔接 = seamless transition."
+    },
+    {
+      "id": "141",
+      "term": "完善",
+      "reading": "wán shàn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to perfect; well-rounded",
+      "note": "完善制度 = refine the system."
+    },
+    {
+      "id": "142",
+      "term": "优化",
+      "reading": "yōu huà",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to optimize",
+      "note": "优化结构 = optimize the structure."
+    },
+    {
+      "id": "143",
+      "term": "巩固",
+      "reading": "gǒng gù",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to consolidate; strengthen",
+      "note": "巩固基础 = shore up the foundations."
+    },
+    {
+      "id": "144",
+      "term": "削弱",
+      "reading": "xuē ruò",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to weaken",
+      "note": "削弱实力 = sap one's strength."
+    },
+    {
+      "id": "145",
+      "term": "强化",
+      "reading": "qiáng huà",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to strengthen; intensify",
+      "note": "强化训练 = intensive training."
+    },
+    {
+      "id": "146",
+      "term": "演变",
+      "reading": "yǎn biàn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to evolve; develop into",
+      "note": "逐步演变 = evolve step by step."
+    },
+    {
+      "id": "147",
+      "term": "转型",
+      "reading": "zhuǎn xíng",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to transform (esp. economy)",
+      "note": "产业转型 = industrial upgrading."
+    },
+    {
+      "id": "148",
+      "term": "反思",
+      "reading": "fǎn sī",
+      "tones": "3-1",
+      "cat": "hsk",
+      "meaning": "to reflect on; introspect",
+      "note": "深刻反思 = reflect deeply."
+    },
+    {
+      "id": "149",
+      "term": "借鉴",
+      "reading": "jiè jiàn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to draw on; learn from",
+      "note": "借鉴经验 = learn from others' experience."
+    },
+    {
+      "id": "150",
+      "term": "秉持",
+      "reading": "bǐng chí",
+      "tones": "3-2",
+      "cat": "hsk",
+      "meaning": "to uphold; hold to",
+      "note": "秉持理念 = stay true to a principle."
+    },
+    {
+      "id": "151",
+      "term": "恪守",
+      "reading": "kè shǒu",
+      "tones": "4-3",
+      "cat": "hsk",
+      "meaning": "to strictly abide by",
+      "note": "恪守承诺 = keep one's word faithfully."
+    },
+    {
+      "id": "152",
+      "term": "违背",
+      "reading": "wéi bèi",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to violate; go against",
+      "note": "违背原则 = betray a principle."
+    },
+    {
+      "id": "153",
+      "term": "契合",
+      "reading": "qì hé",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to fit; match well",
+      "note": "高度契合 = a close fit."
+    },
+    {
+      "id": "154",
+      "term": "涵盖",
+      "reading": "hán gài",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to cover; encompass",
+      "note": "涵盖范围 = the scope covered."
+    },
+    {
+      "id": "155",
+      "term": "渲染",
+      "reading": "xuàn rǎn",
+      "tones": "4-3",
+      "cat": "hsk",
+      "meaning": "to play up; render",
+      "note": "渲染气氛 = build up the mood/hype."
+    },
+    {
+      "id": "156",
+      "term": "蕴含",
+      "reading": "yùn hán",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to contain; embody",
+      "note": "蕴含深意 = carry a deeper meaning."
+    },
+    {
+      "id": "157",
+      "term": "潜移默化",
+      "reading": "qián yí mò huà",
+      "tones": "2-2-4-4",
+      "cat": "idiom",
+      "meaning": "to influence imperceptibly",
+      "note": "Gradual, unnoticed shaping of someone over time."
+    },
+    {
+      "id": "158",
+      "term": "名副其实",
+      "reading": "míng fù qí shí",
+      "tones": "2-4-2-2",
+      "cat": "idiom",
+      "meaning": "to live up to one's name",
+      "note": "名副其实的专家 = an expert worthy of the title."
+    },
+    {
+      "id": "159",
+      "term": "一如既往",
+      "reading": "yī rú jì wǎng",
+      "tones": "1-2-4-3",
+      "cat": "idiom",
+      "meaning": "as always; consistently",
+      "note": "一如既往地支持 = support as steadfastly as ever."
+    },
+    {
+      "id": "160",
+      "term": "半途而废",
+      "reading": "bàn tú ér fèi",
+      "tones": "4-2-2-4",
+      "cat": "idiom",
+      "meaning": "to give up halfway",
+      "note": "Quitting before finishing what you started."
+    },
+    {
+      "id": "161",
+      "term": "全力以赴",
+      "reading": "quán lì yǐ fù",
+      "tones": "2-4-3-4",
+      "cat": "idiom",
+      "meaning": "to go all out",
+      "note": "Throw everything you have at it."
+    },
+    {
+      "id": "162",
+      "term": "锦上添花",
+      "reading": "jǐn shàng tiān huā",
+      "tones": "3-4-1-1",
+      "cat": "idiom",
+      "meaning": "icing on the cake",
+      "note": "Making something already good even better."
+    },
+    {
+      "id": "163",
+      "term": "雪中送炭",
+      "reading": "xuě zhōng sòng tàn",
+      "tones": "3-1-4-4",
+      "cat": "idiom",
+      "meaning": "help in a time of need",
+      "note": "Literally 'sending coal in the snow' — timely aid."
+    },
+    {
+      "id": "164",
+      "term": "画蛇添足",
+      "reading": "huà shé tiān zú",
+      "tones": "4-2-1-2",
+      "cat": "idiom",
+      "meaning": "to overdo it; ruin by excess",
+      "note": "'Draw legs on a snake' — a needless, spoiling addition."
+    },
+    {
+      "id": "165",
+      "term": "亡羊补牢",
+      "reading": "wáng yáng bǔ láo",
+      "tones": "2-2-3-2",
+      "cat": "idiom",
+      "meaning": "better late than never",
+      "note": "Mend the pen after losing sheep — fix it before more harm."
+    },
+    {
+      "id": "166",
+      "term": "一丝不苟",
+      "reading": "yī sī bù gǒu",
+      "tones": "1-1-4-3",
+      "cat": "idiom",
+      "meaning": "meticulous; scrupulous",
+      "note": "Not the slightest carelessness."
+    },
+    {
+      "id": "167",
+      "term": "脚踏实地",
+      "reading": "jiǎo tà shí dì",
+      "tones": "3-4-2-4",
+      "cat": "idiom",
+      "meaning": "down-to-earth; grounded",
+      "note": "Steady, practical, no shortcuts."
+    },
+    {
+      "id": "168",
+      "term": "眼高手低",
+      "reading": "yǎn gāo shǒu dī",
+      "tones": "3-1-3-1",
+      "cat": "idiom",
+      "meaning": "high aims, low ability",
+      "note": "Ambitions that outstrip one's actual skill."
+    },
+    {
+      "id": "169",
+      "term": "精益求精",
+      "reading": "jīng yì qiú jīng",
+      "tones": "1-4-2-1",
+      "cat": "idiom",
+      "meaning": "to strive for ever better",
+      "note": "Never settling, always refining."
+    },
+    {
+      "id": "170",
+      "term": "得不偿失",
+      "reading": "dé bù cháng shī",
+      "tones": "2-4-2-1",
+      "cat": "idiom",
+      "meaning": "the loss outweighs the gain",
+      "note": "Not worth it — the cost exceeds the benefit."
+    },
+    {
+      "id": "171",
+      "term": "恍然大悟",
+      "reading": "huǎng rán dà wù",
+      "tones": "3-2-4-4",
+      "cat": "idiom",
+      "meaning": "to suddenly realize",
+      "note": "The moment it all clicks."
+    },
+    {
+      "id": "172",
+      "term": "家喻户晓",
+      "reading": "jiā yù hù xiǎo",
+      "tones": "1-4-4-3",
+      "cat": "idiom",
+      "meaning": "a household name",
+      "note": "Known to every family."
+    },
+    {
+      "id": "173",
+      "term": "层出不穷",
+      "reading": "céng chū bù qióng",
+      "tones": "2-1-4-2",
+      "cat": "idiom",
+      "meaning": "to emerge endlessly",
+      "note": "New cases/versions keep appearing."
+    },
+    {
+      "id": "174",
+      "term": "千方百计",
+      "reading": "qiān fāng bǎi jì",
+      "tones": "1-1-3-4",
+      "cat": "idiom",
+      "meaning": "by every possible means",
+      "note": "Trying everything to reach a goal."
+    },
+    {
+      "id": "175",
+      "term": "迫在眉睫",
+      "reading": "pò zài méi jié",
+      "tones": "4-4-2-2",
+      "cat": "idiom",
+      "meaning": "imminent; extremely urgent",
+      "note": "Right before your eyes — no time to lose."
+    },
+    {
+      "id": "176",
+      "term": "络绎不绝",
+      "reading": "luò yì bù jué",
+      "tones": "4-4-4-2",
+      "cat": "idiom",
+      "meaning": "an unending stream (of people)",
+      "note": "Visitors/traffic coming without pause."
+    },
+    {
+      "id": "177",
+      "term": "拿下",
+      "reading": "ná xià",
+      "tones": "2-4",
+      "cat": "slang",
+      "meaning": "to nail it; secure; win over",
+      "note": "拿下了 = sealed the deal / got it done."
+    },
+    {
+      "id": "178",
+      "term": "拉胯",
+      "reading": "lā kuǎ",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "to flop; underperform",
+      "note": "太拉胯了 = totally dropped the ball."
+    },
+    {
+      "id": "179",
+      "term": "塌房",
+      "reading": "tā fáng",
+      "tones": "1-2",
+      "cat": "slang",
+      "meaning": "(idol) scandal; fall from grace",
+      "note": "'The house collapsed' — your fave got exposed."
+    },
+    {
+      "id": "180",
+      "term": "出圈",
+      "reading": "chū quān",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "to go viral beyond one's niche",
+      "note": "Breaking out of a fanbase into the mainstream."
+    },
+    {
+      "id": "181",
+      "term": "顶流",
+      "reading": "dǐng liú",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "top-tier celebrity",
+      "note": "顶级流量 — the biggest-draw stars."
+    },
+    {
+      "id": "182",
+      "term": "麻了",
+      "reading": "má le",
+      "tones": "2-·",
+      "cat": "slang",
+      "meaning": "I'm numb / dead inside",
+      "note": "我麻了 = so much cringe/shock I've gone numb."
+    },
+    {
+      "id": "183",
+      "term": "笑死",
+      "reading": "xiào sǐ",
+      "tones": "4-3",
+      "cat": "slang",
+      "meaning": "dying of laughter; lol",
+      "note": "笑死我了 = I'm dead 😂."
+    },
+    {
+      "id": "184",
+      "term": "无语",
+      "reading": "wú yǔ",
+      "tones": "2-3",
+      "cat": "slang",
+      "meaning": "speechless; I can't even",
+      "note": "真的无语 = honestly no words."
+    },
+    {
+      "id": "185",
+      "term": "服了",
+      "reading": "fú le",
+      "tones": "2-·",
+      "cat": "slang",
+      "meaning": "you win / I give up (exasperated)",
+      "note": "我服了 = I'm defeated — or grudgingly impressed."
+    },
+    {
+      "id": "186",
+      "term": "内味",
+      "reading": "nèi wèi",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "that authentic vibe/flavor",
+      "note": "就是这个内味儿 = 'that's the exact vibe'.",
+      "alt": "内味儿",
+      "say": "内味儿"
+    },
+    {
+      "id": "187",
+      "term": "泰裤辣",
+      "reading": "tài kù là",
+      "tones": "4-4-·",
+      "cat": "slang",
+      "meaning": "so cool!",
+      "note": "Phonetic meme spelling of 太酷啦.",
+      "say": "太酷啦"
+    },
+    {
+      "id": "188",
+      "term": "立flag",
+      "reading": "lì flag",
+      "tones": "4",
+      "cat": "slang",
+      "meaning": "to jinx it by declaring out loud",
+      "note": "立了个flag = tempting fate; the 'flag' then falls (fails).",
+      "say": "立个flag"
+    },
+    {
+      "id": "189",
+      "term": "整活",
+      "reading": "zhěng huó",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "to pull a stunt; mess around",
+      "note": "NE slang: 整点活儿 = do something fun/wild.",
+      "say": "整活"
+    },
+    {
+      "id": "190",
+      "term": "唠嗑",
+      "reading": "lào kè",
+      "tones": "2-·",
+      "cat": "slang",
+      "meaning": "to chat; shoot the breeze",
+      "note": "NE dialect: 唠会儿嗑 = have a natter."
+    },
+    {
+      "id": "191",
+      "term": "显摆",
+      "reading": "xiǎn bai",
+      "tones": "3-·",
+      "cat": "slang",
+      "meaning": "to show off; flaunt",
+      "note": "显摆什么 = quit flaunting it."
+    },
+    {
+      "id": "192",
+      "term": "忽悠",
+      "reading": "hū you",
+      "tones": "1-·",
+      "cat": "slang",
+      "meaning": "to fool; hoodwink; sweet-talk",
+      "note": "NE slang: 别忽悠我 = don't con me."
+    },
+    {
+      "id": "193",
+      "term": "抠门",
+      "reading": "kōu mén",
+      "tones": "1-2",
+      "cat": "slang",
+      "meaning": "stingy; a cheapskate",
+      "note": "Colloquial for 吝啬."
+    },
+    {
+      "id": "194",
+      "term": "怂",
+      "reading": "sǒng",
+      "tones": "3",
+      "cat": "slang",
+      "meaning": "chicken; wimpy; to chicken out",
+      "note": "你怂了 = you wimped out."
+    },
+    {
+      "id": "195",
+      "term": "二",
+      "reading": "èr",
+      "tones": "4",
+      "cat": "slang",
+      "meaning": "dumb; silly; a goofball",
+      "note": "你好二 = you're such a goof; 二货 = a doofus.",
+      "alt": "二货"
+    },
+    {
+      "id": "196",
+      "term": "傻逼",
+      "reading": "shǎ bī",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "idiot; dumbass (vulgar)",
+      "note": "Strong, crude insult (lit. very rude). Often typed SB. Very offensive.",
+      "alt": "SB"
+    },
+    {
+      "id": "197",
+      "term": "卧槽",
+      "reading": "wò cáo",
+      "tones": "4-2",
+      "cat": "swear",
+      "meaning": "holy sh*t; wtf",
+      "note": "Euphemism for 我操. All-purpose shock; 我靠 is the milder version."
+    },
+    {
+      "id": "198",
+      "term": "他妈的",
+      "reading": "tā mā de",
+      "tones": "1-1-·",
+      "cat": "swear",
+      "meaning": "damn; f***ing (intensifier)",
+      "note": "Common strong curse; also just 妈的. Used for anger or as an intensifier.",
+      "alt": "TMD"
+    },
+    {
+      "id": "199",
+      "term": "滚",
+      "reading": "gǔn",
+      "tones": "3",
+      "cat": "swear",
+      "meaning": "get lost; f*** off",
+      "note": "滚开 / 滚蛋 — a harsh 'go away'."
+    },
+    {
+      "id": "200",
+      "term": "混蛋",
+      "reading": "hún dàn",
+      "tones": "2-4",
+      "cat": "swear",
+      "meaning": "bastard; scoundrel",
+      "note": "王八蛋 is stronger."
+    },
+    {
+      "id": "201",
+      "term": "白痴",
+      "reading": "bái chī",
+      "tones": "2-1",
+      "cat": "swear",
+      "meaning": "idiot; moron",
+      "note": "Literally 'idiocy'; a common insult."
+    },
+    {
+      "id": "202",
+      "term": "废物",
+      "reading": "fèi wù",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "useless trash (of a person)",
+      "note": "'Waste of space' — a cutting insult."
+    },
+    {
+      "id": "203",
+      "term": "神经病",
+      "reading": "shén jīng bìng",
+      "tones": "2-1-4",
+      "cat": "swear",
+      "meaning": "psycho; nuts",
+      "note": "Lit. mental illness; used as 'you're crazy'. Rude."
+    },
+    {
+      "id": "204",
+      "term": "变态",
+      "reading": "biàn tài",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "pervert; perverted; twisted",
+      "note": "Also 'abnormal': 变态难 = insanely hard (slang)."
+    },
+    {
+      "id": "205",
+      "term": "恶心",
+      "reading": "ě xīn",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "disgusting; nauseating",
+      "note": "你真恶心 = you're gross; also literally 'nauseous'."
+    },
+    {
+      "id": "206",
+      "term": "贱",
+      "reading": "jiàn",
+      "tones": "4",
+      "cat": "swear",
+      "meaning": "cheap; contemptible (insult)",
+      "note": "犯贱 = to act contemptibly. Harsh aimed at a person."
+    },
+    {
+      "id": "207",
+      "term": "装逼",
+      "reading": "zhuāng bī",
+      "tones": "1-1",
+      "cat": "swear",
+      "meaning": "to show off pretentiously (vulgar)",
+      "note": "Being a poser; 装 for short. Crude.",
+      "alt": "装"
+    },
+    {
+      "id": "208",
+      "term": "扯淡",
+      "reading": "chě dàn",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "to talk nonsense; bullsh*t",
+      "note": "别扯淡 = quit talking crap."
+    },
+    {
+      "id": "209",
+      "term": "放屁",
+      "reading": "fàng pì",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "nonsense; 'that's bull' (lit. to fart)",
+      "note": "放屁! = 'bullsh*t!'; 屁话 = crap talk."
+    },
+    {
+      "id": "210",
+      "term": "坑爹",
+      "reading": "kēng diē",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "a rip-off; what a scam",
+      "note": "太坑爹了 = so misleading/ripoff. Playfully vulgar."
+    },
+    {
+      "id": "211",
+      "term": "蛋疼",
+      "reading": "dàn téng",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "pointless; annoying; bored (vulgar)",
+      "note": "Lit. 'balls ache' — idle frustration or a dumb hassle."
+    },
+    {
+      "id": "212",
+      "term": "补刀",
+      "reading": "bǔ dāo",
+      "tones": "3-1",
+      "cat": "gaming",
+      "meaning": "to last-hit (for the kill/gold)",
+      "note": "MOBA farming: land the killing blow on a minion."
+    },
+    {
+      "id": "213",
+      "term": "团战",
+      "reading": "tuán zhàn",
+      "tones": "2-4",
+      "cat": "gaming",
+      "meaning": "a teamfight",
+      "note": "团战一波 = commit to a full 5v5 clash."
+    },
+    {
+      "id": "214",
+      "term": "大招",
+      "reading": "dà zhāo",
+      "tones": "4-1",
+      "cat": "gaming",
+      "meaning": "ultimate ability",
+      "note": "放大招 = pop your ult."
+    },
+    {
+      "id": "215",
+      "term": "越塔",
+      "reading": "yuè tǎ",
+      "tones": "4-3",
+      "cat": "gaming",
+      "meaning": "to dive under the enemy tower",
+      "note": "A risky tower dive for a kill."
+    },
+    {
+      "id": "216",
+      "term": "反野",
+      "reading": "fǎn yě",
+      "tones": "3-3",
+      "cat": "gaming",
+      "meaning": "to invade the enemy jungle",
+      "note": "Steal the opponent's jungle camps."
+    },
+    {
+      "id": "217",
+      "term": "五杀",
+      "reading": "wǔ shā",
+      "tones": "3-1",
+      "cat": "gaming",
+      "meaning": "pentakill",
+      "note": "五连杀 — solo-killing all five enemies."
+    },
+    {
+      "id": "218",
+      "term": "挂机",
+      "reading": "guà jī",
+      "tones": "4-1",
+      "cat": "gaming",
+      "meaning": "to AFK; idle",
+      "note": "别挂机 = don't go AFK."
+    },
+    {
+      "id": "219",
+      "term": "掉线",
+      "reading": "diào xiàn",
+      "tones": "4-4",
+      "cat": "gaming",
+      "meaning": "to disconnect; drop",
+      "note": "我掉线了 = I got dropped."
+    },
+    {
+      "id": "220",
+      "term": "卡",
+      "reading": "kǎ",
+      "tones": "3",
+      "cat": "gaming",
+      "meaning": "to lag; stutter; stuck",
+      "note": "好卡 = so laggy; also 'jammed/stuck'."
+    },
+    {
+      "id": "221",
+      "term": "苟",
+      "reading": "gǒu",
+      "tones": "3",
+      "cat": "gaming",
+      "meaning": "to play safe; turtle; survive",
+      "note": "苟住 = keep your head down and outlast."
+    },
+    {
+      "id": "222",
+      "term": "莽",
+      "reading": "mǎng",
+      "tones": "3",
+      "cat": "gaming",
+      "meaning": "to charge in recklessly",
+      "note": "一波莽 = send it; opposite of 苟."
+    },
+    {
+      "id": "223",
+      "term": "演",
+      "reading": "yǎn",
+      "tones": "3",
+      "cat": "gaming",
+      "meaning": "to bait; fake weakness",
+      "note": "演一波 = pretend to be weak, then strike."
+    },
+    {
+      "id": "224",
+      "term": "收割",
+      "reading": "shōu gē",
+      "tones": "1-1",
+      "cat": "gaming",
+      "meaning": "to clean up kills; mop up",
+      "note": "收割战场 = reap kills once fights are won."
+    },
+    {
+      "id": "225",
+      "term": "甩锅",
+      "reading": "shuǎi guō",
+      "tones": "3-1",
+      "cat": "gaming",
+      "meaning": "to shift blame; scapegoat",
+      "note": "别甩锅给我 = don't pin it on me."
+    },
+    {
+      "id": "226",
+      "term": "背锅",
+      "reading": "bēi guō",
+      "tones": "1-1",
+      "cat": "gaming",
+      "meaning": "to take the blame (unfairly)",
+      "note": "我不背锅 = I'm not the scapegoat."
+    }
+  ]
+}

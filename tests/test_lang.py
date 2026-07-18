@@ -1,7 +1,7 @@
 """Reading/tone auto-fill — the thing that makes authoring a card bearable."""
 import pytest
 
-from chinesepop import lang
+from blip import lang
 
 pypinyin = pytest.importorskip("pypinyin")
 

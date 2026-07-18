@@ -17,7 +17,7 @@ import json
 import sys
 from pathlib import Path
 
-from chinesepop import decks as decks_mod
+from blip import decks as decks_mod
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")

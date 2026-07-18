@@ -1,6 +1,6 @@
 """Test Mode — a multiple-choice quiz window.
 
-Standalone, like the editor/settings/catalog (`python -m chinesepop.quiz_ui
+Standalone, like the editor/settings/catalog (`python -m blip.quiz_ui
 [deck_id]`). Unlike the overlay it *wants* focus — that's the point: the user is
 testing themselves, not gaming — so it's an ordinary ttk window in its own
 process, and doesn't touch the no-activate invariants.
@@ -40,7 +40,7 @@ class QuizWindow:
 
         self.root = tk.Tk()
         self.count_var = tk.IntVar(value=int(self.s.get("quiz_length", 20)))
-        self.root.title("Chinese Pop — Test Mode")
+        self.root.title("Blip — Test Mode")
         self.body = ttk.Frame(self.root, padding=16)
         self.body.pack(fill="both", expand=True)
 
@@ -251,7 +251,7 @@ def open_quiz(current_deck_id=None):
     """Launch Test Mode as its own process (it wants focus; the overlay must not
     give it up). Passes the current deck so 'Current deck' is meaningful."""
     import subprocess
-    args = [sys.executable, "-m", "chinesepop.quiz_ui"]
+    args = [sys.executable, "-m", "blip.quiz_ui"]
     if current_deck_id:
         args.append(str(current_deck_id))
     try:

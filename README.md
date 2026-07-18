@@ -1,4 +1,4 @@
-# Chinese Pop 🀄
+# Blip 💬
 
 A tiny always-on-top flashcard that pops up in the corner of your screen every
 minute while you game. Each pop shows a random Chinese word or slang term with:

@@ -1,7 +1,7 @@
 """Deck loading + validation. Third-party decks WILL be malformed."""
 import json
 
-from chinesepop import decks as d
+from blip import decks as d
 
 
 def _deck(words, deck_id="t"):

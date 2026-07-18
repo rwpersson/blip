@@ -27,7 +27,7 @@ Nothing here is glamorous; everything after it is harder without it.
 
 `pop.py` had reached 1230 lines doing Win32 interop, audio, scheduling and four
 windows at once — every new feature risked the focus/click-through invariants.
-Split into `chinesepop/` (see CLAUDE.md for the layout).
+Split into `blip/` (see CLAUDE.md for the layout).
 
 - ☑ Package split; behaviour in `app.py`, all ctypes isolated in `win32.py`
 - ☑ Replace bare `except: pass` with real logging (`logs/`, `%APPDATA%` once frozen)
@@ -50,7 +50,7 @@ brings ids from a foreign system entirely. Do this before anyone has decks in th
 
 - ☑ Settings file (JSON) replacing the module constants
 - ☑ Deck validation with human-readable errors — third-party decks *will* be malformed
-- ☑ `paths.py` routes user data to `%APPDATA%\ChinesePop\` once frozen
+- ☑ `paths.py` routes user data to `%APPDATA%\Blip\` once frozen
   (dev stays in-tree). Still to verify under a real installed build.
 - ☑ **Content-addressed audio** (`audio/clips.py`) — clips keyed by
   `hash(text + voice + rate)`. ids no longer decide filenames, so authored/imported
@@ -104,7 +104,7 @@ promise that justified Piper in the first place.
 
 Everything a stranger needs that you don't, because you edit the source.
 
-- ☑ **Settings window** — `python -m chinesepop.settings_ui`, also a ⚙ button on the
+- ☑ **Settings window** — `python -m blip.settings_ui`, also a ⚙ button on the
   panel. Spec-driven (`SPEC` in settings_ui.py): 39 settings across 8 tabs, so adding
   one is a single line. Launches as its own process — it needs focus, the overlay
   must never take it.
@@ -146,7 +146,7 @@ Note: authoring a card needs network for its first synthesis (edge-tts, Phase 3)
 Acceptable — it's one short request per new card, and playback is cached forever.
 
 **Authoring**
-- ☑ **Deck editor** — standalone `python -m chinesepop.editor`: decks | cards | form,
+- ☑ **Deck editor** — standalone `python -m blip.editor`: decks | cards | form,
   filter, create/delete decks + cards, export. Logic lives in `editor/controller.py`
   (no Tk) so it's testable; the window is dumb.
 - ☑ **Audio on save** — one card, on a worker thread with status feedback; free when
@@ -172,7 +172,7 @@ Acceptable — it's one short request per new card, and playback is cached forev
     otherwise the imported deck fails validation
 - ☑ **Export** a deck (JSON + Excel-safe CSV) — trivial, since audio isn't bundled
 - ☑ Import wizard: file → mapping (pre-guessed) → live preview → target deck
-- ☑ Import a shared Chinese Pop deck (`.json`) — sharing is just the JSON
+- ☑ Import a shared Blip deck (`.json`) — sharing is just the JSON
 - ☐ Import from a URL/file drop; a shared-deck index is a stretch goal
 
 **Creator-deck catalog** ☑ DONE

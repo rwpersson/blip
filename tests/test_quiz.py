@@ -1,5 +1,5 @@
 """Test Mode quiz builder — the logic, deterministic via seed."""
-from chinesepop import quiz
+from blip import quiz
 
 
 def _w(term, reading, meaning, cat="common", wid=None):

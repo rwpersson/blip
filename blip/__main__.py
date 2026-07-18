@@ -1,4 +1,4 @@
-"""Entry point:  python -m chinesepop"""
+"""Entry point:  python -m blip"""
 import sys
 
 from . import decks as decks_mod
@@ -60,8 +60,8 @@ def main(argv=None):
         log.info("Generated %s/%s audio clips.", ok, total)
 
     words = sum(len(d["words"]) for d in decks)
-    log.info("Chinese Pop %s — %s deck(s), %s words, every %ss.",
-             __import__("chinesepop").__version__, len(decks), words,
+    log.info("Blip %s — %s deck(s), %s words, every %ss.",
+             __import__("blip").__version__, len(decks), words,
              s.interval_seconds)
     hk = s.hotkeys
     log.info("%s show/hide panel · %s silent%s",

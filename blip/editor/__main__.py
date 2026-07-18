@@ -1,4 +1,4 @@
-"""Entry point:  python -m chinesepop.editor"""
+"""Entry point:  python -m blip.editor"""
 import sys
 
 from .. import paths, settings as settings_mod, win32

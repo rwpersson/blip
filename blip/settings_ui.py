@@ -1,6 +1,6 @@
 """Settings window — the change that makes this a product rather than a script.
 
-Standalone (`python -m chinesepop.settings_ui`) and launchable from the overlay
+Standalone (`python -m blip.settings_ui`) and launchable from the overlay
 panel and the editor. Standalone for the same reason the editor is: it's an
 ordinary window that wants focus, and the overlay's windows must never take it.
 
@@ -109,8 +109,8 @@ class SettingsWindow:
         self.deck_vars = {}
         self.owns_root = parent is None
         self.root = tk.Tk() if self.owns_root else tk.Toplevel(parent)
-        self.root.title("Chinese Pop — Settings")
-        self.status = tk.StringVar(value="Changes apply next time Chinese Pop starts")
+        self.root.title("Blip — Settings")
+        self.status = tk.StringVar(value="Changes apply next time Blip starts")
         self._monitors = win32.monitors()
         self._build()
         # never hard-code: DPI scaling makes a hand-picked size clip (see fit_window)
@@ -269,14 +269,14 @@ class SettingsWindow:
         if self.on_saved:
             self.on_saved(self.s)
         messagebox.showinfo(
-            "Saved", "Settings saved.\n\nRestart Chinese Pop for them to take effect.",
+            "Saved", "Settings saved.\n\nRestart Blip for them to take effect.",
             parent=self.root)
         self._close()
 
     def _welcome(self):
         """Re-open the first-run welcome. Its own process — one Tk root each."""
         try:
-            subprocess.Popen([sys.executable, "-m", "chinesepop.firstrun"],
+            subprocess.Popen([sys.executable, "-m", "blip.firstrun"],
                              cwd=str(paths.APP_DIR))
         except Exception:
             log.exception("could not open the welcome window")
@@ -307,7 +307,7 @@ def open_settings():
     keep that contradiction from ever biting.
     """
     try:
-        subprocess.Popen([sys.executable, "-m", "chinesepop.settings_ui"],
+        subprocess.Popen([sys.executable, "-m", "blip.settings_ui"],
                          cwd=str(paths.APP_DIR))
         return True
     except Exception:

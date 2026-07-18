@@ -1,0 +1,683 @@
+{
+  "schema": 1,
+  "name": "Week 2",
+  "language": "zh-CN",
+  "voice": null,
+  "words": [
+    {
+      "id": "227",
+      "term": "潜力",
+      "reading": "qián lì",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "potential; latent capacity",
+      "note": "挖掘潜力 = tap into potential; 潜力股 = a dark-horse / promising bet."
+    },
+    {
+      "id": "228",
+      "term": "巅峰",
+      "reading": "diān fēng",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "peak; pinnacle",
+      "note": "事业巅峰 = the height of one's career. Loftier than 顶峰."
+    },
+    {
+      "id": "229",
+      "term": "瓶颈",
+      "reading": "píng jǐng",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "bottleneck",
+      "note": "遇到瓶颈 = hit a wall/plateau. Literally the neck of a bottle."
+    },
+    {
+      "id": "230",
+      "term": "里程碑",
+      "reading": "lǐ chéng bēi",
+      "tones": "3-2-1",
+      "cat": "hsk",
+      "meaning": "milestone",
+      "note": "具有里程碑意义 = a landmark moment."
+    },
+    {
+      "id": "231",
+      "term": "门槛",
+      "reading": "mén kǎn",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "threshold; barrier to entry",
+      "note": "门槛高 = a high bar to get in. Literally a doorsill."
+    },
+    {
+      "id": "232",
+      "term": "刚需",
+      "reading": "gāng xū",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "an essential need; a must-have",
+      "note": "买房是刚需 = housing is a rigid necessity. Short for 刚性需求."
+    },
+    {
+      "id": "233",
+      "term": "复盘",
+      "reading": "fù pán",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "to review / do a post-mortem",
+      "note": "复盘一下 = let's break down what happened. From replaying a chess game."
+    },
+    {
+      "id": "234",
+      "term": "迭代",
+      "reading": "dié dài",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to iterate; iteration",
+      "note": "快速迭代 = iterate fast. Tech/product buzzword now used everywhere."
+    },
+    {
+      "id": "235",
+      "term": "赋能",
+      "reading": "fù néng",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to empower; enable",
+      "note": "赋能团队 = empower the team. Corporate buzzword (a bit jargony)."
+    },
+    {
+      "id": "236",
+      "term": "对齐",
+      "reading": "duì qí",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to align; get on the same page",
+      "note": "对齐一下目标 = let's align on goals. Office-speak borrowed from 'align'."
+    },
+    {
+      "id": "237",
+      "term": "沉淀",
+      "reading": "chén diàn",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "to settle; accumulate (experience)",
+      "note": "沉淀经验 = let experience build up. Literally sediment settling."
+    },
+    {
+      "id": "238",
+      "term": "红利",
+      "reading": "hóng lì",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "dividend; bonus; windfall",
+      "note": "时代红利 = the tailwind/windfall of the era."
+    },
+    {
+      "id": "239",
+      "term": "内耗",
+      "reading": "nèi hào",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "internal friction; self-draining overthinking",
+      "note": "精神内耗 = exhausting yourself with rumination. Very 2020s."
+    },
+    {
+      "id": "240",
+      "term": "抓手",
+      "reading": "zhuā shǒu",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "a lever; an actionable handle",
+      "note": "找抓手 = find a concrete point to act on. Peak corporate buzzword."
+    },
+    {
+      "id": "241",
+      "term": "显眼包",
+      "reading": "xiǎn yǎn bāo",
+      "tones": "3-3-1",
+      "cat": "slang",
+      "meaning": "an attention-hogging goofball",
+      "note": "Affectionate 2023 slang for the one who can't help showing off / being extra."
+    },
+    {
+      "id": "242",
+      "term": "搭子",
+      "reading": "dā zi",
+      "tones": "1-·",
+      "cat": "slang",
+      "meaning": "an activity buddy",
+      "note": "饭搭子 = meal buddy, 游戏搭子 = gaming buddy. A pal for one specific thing, not a deep friend."
+    },
+    {
+      "id": "243",
+      "term": "嘴替",
+      "reading": "zuǐ tì",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "someone who says exactly what you're thinking",
+      "note": "你真是我的嘴替 = you're my mouthpiece — said them the words I couldn't."
+    },
+    {
+      "id": "244",
+      "term": "抽象",
+      "reading": "chōu xiàng",
+      "tones": "1-4",
+      "cat": "slang",
+      "meaning": "absurd; surreal (internet humor)",
+      "note": "玩抽象 = doing ironic, nonsensical, chaotic-humor bits. Beyond the textbook 'abstract'."
+    },
+    {
+      "id": "245",
+      "term": "意难平",
+      "reading": "yì nán píng",
+      "tones": "4-2-2",
+      "cat": "slang",
+      "meaning": "an unresolved regret you can't let go of",
+      "note": "Often about a story ending or a lost chance that still stings. Fandom-flavored."
+    },
+    {
+      "id": "246",
+      "term": "白月光",
+      "reading": "bái yuè guāng",
+      "tones": "2-4-1",
+      "cat": "slang",
+      "meaning": "an idealized lost love; 'the one that got away'",
+      "note": "心里的白月光 = the pure, untouchable love you never forget. From a Zhang Ailing image."
+    },
+    {
+      "id": "247",
+      "term": "电子榨菜",
+      "reading": "diàn zǐ zhà cài",
+      "tones": "4-3-4-4",
+      "cat": "slang",
+      "meaning": "a show you play in the background while eating",
+      "note": "'Digital pickle' — the comfort video that makes a solo meal go down easier."
+    },
+    {
+      "id": "248",
+      "term": "遥遥领先",
+      "reading": "yáo yáo lǐng xiān",
+      "tones": "2-2-3-1",
+      "cat": "slang",
+      "meaning": "way out in front; leagues ahead",
+      "note": "A meme catchphrase (from a Huawei launch) now used sincerely or sarcastically for 'miles ahead'."
+    },
+    {
+      "id": "249",
+      "term": "芜湖",
+      "reading": "wú hú",
+      "tones": "2-2",
+      "cat": "slang",
+      "meaning": "woohoo! (an excited yell)",
+      "note": "芜湖起飞 = 'woohoo, takeoff!' — hype/celebration. It's the city Wuhu used for the sound."
+    },
+    {
+      "id": "250",
+      "term": "集美",
+      "reading": "jí měi",
+      "tones": "2-3",
+      "cat": "slang",
+      "meaning": "besties (girls); sis",
+      "note": "Playful, cutesy respelling of 姐妹. 集美们 = 'ladies / my girls'."
+    },
+    {
+      "id": "251",
+      "term": "郁闷",
+      "reading": "yù mèn",
+      "tones": "4-4",
+      "cat": "common",
+      "meaning": "gloomy; down; frustrated",
+      "note": "好郁闷 = feeling low/stifled. A common everyday mood word."
+    },
+    {
+      "id": "252",
+      "term": "委屈",
+      "reading": "wěi qu",
+      "tones": "3-·",
+      "cat": "common",
+      "meaning": "to feel wronged; hard done by",
+      "note": "受委屈了 = you've been treated unfairly. 委屈巴巴 = looking pitifully wronged."
+    },
+    {
+      "id": "253",
+      "term": "心疼",
+      "reading": "xīn téng",
+      "tones": "1-2",
+      "cat": "common",
+      "meaning": "to ache with love/pity; feel for someone",
+      "note": "我心疼你 = it hurts me to see you like this. Also 'to begrudge' spending: 心疼钱."
+    },
+    {
+      "id": "254",
+      "term": "循序渐进",
+      "reading": "xún xù jiàn jìn",
+      "tones": "2-4-4-4",
+      "cat": "idiom",
+      "meaning": "step by step; in due order",
+      "note": "学习要循序渐进 = progress gradually, don't rush the stages."
+    },
+    {
+      "id": "255",
+      "term": "水到渠成",
+      "reading": "shuǐ dào qú chéng",
+      "tones": "3-4-2-2",
+      "cat": "idiom",
+      "meaning": "success comes naturally when the time is right",
+      "note": "'When the water arrives, a channel forms.' Don't force it."
+    },
+    {
+      "id": "256",
+      "term": "厚积薄发",
+      "reading": "hòu jī bó fā",
+      "tones": "4-1-2-1",
+      "cat": "idiom",
+      "meaning": "build up slowly, then break out",
+      "note": "Years of quiet accumulation paying off in a sudden burst."
+    },
+    {
+      "id": "257",
+      "term": "琢磨",
+      "reading": "zuó mo",
+      "tones": "2-·",
+      "cat": "hsk",
+      "meaning": "to ponder; mull over",
+      "note": "琢磨这个问题 = turn a problem over in your mind. (In the sense of carving/study it's zhuó mó.)"
+    },
+    {
+      "id": "258",
+      "term": "斟酌",
+      "reading": "zhēn zhuó",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "to weigh carefully; deliberate",
+      "note": "斟酌措辞 = choose your wording with care."
+    },
+    {
+      "id": "259",
+      "term": "契机",
+      "reading": "qì jī",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "a turning point; opportune moment",
+      "note": "重要契机 = a pivotal opportunity."
+    },
+    {
+      "id": "260",
+      "term": "症结",
+      "reading": "zhēng jié",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "the crux (of a problem)",
+      "note": "问题的症结 = the heart of the issue. Note 症 is read zhēng here."
+    },
+    {
+      "id": "261",
+      "term": "隐患",
+      "reading": "yǐn huàn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "a hidden danger; latent hazard",
+      "note": "安全隐患 = a safety risk waiting to happen."
+    },
+    {
+      "id": "262",
+      "term": "瑕疵",
+      "reading": "xiá cī",
+      "tones": "2-1",
+      "cat": "hsk",
+      "meaning": "a flaw; blemish",
+      "note": "略有瑕疵 = a minor imperfection."
+    },
+    {
+      "id": "263",
+      "term": "雏形",
+      "reading": "chú xíng",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "embryonic form; a prototype",
+      "note": "初具雏形 = starting to take shape."
+    },
+    {
+      "id": "264",
+      "term": "蓝图",
+      "reading": "lán tú",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "a blueprint; grand plan",
+      "note": "宏伟蓝图 = a grand vision for the future."
+    },
+    {
+      "id": "265",
+      "term": "底蕴",
+      "reading": "dǐ yùn",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "deep foundation; inner substance",
+      "note": "文化底蕴 = deep cultural heritage/depth."
+    },
+    {
+      "id": "266",
+      "term": "分歧",
+      "reading": "fēn qí",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "divergence; a disagreement",
+      "note": "存在分歧 = there's a difference of opinion."
+    },
+    {
+      "id": "267",
+      "term": "隔阂",
+      "reading": "gé hé",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "estrangement; a rift",
+      "note": "消除隔阂 = clear up the misunderstanding between people."
+    },
+    {
+      "id": "268",
+      "term": "默契",
+      "reading": "mò qì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "tacit understanding; chemistry",
+      "note": "很有默契 = totally in sync without needing words."
+    },
+    {
+      "id": "269",
+      "term": "氛围",
+      "reading": "fēn wéi",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "atmosphere; vibe",
+      "note": "营造氛围 = set the mood. Note 氛 is fēn (1st tone)."
+    },
+    {
+      "id": "270",
+      "term": "洒脱",
+      "reading": "sǎ tuō",
+      "tones": "3-1",
+      "cat": "hsk",
+      "meaning": "free and easy; carefree",
+      "note": "活得洒脱 = living unbothered and free-spirited."
+    },
+    {
+      "id": "271",
+      "term": "坦率",
+      "reading": "tǎn shuài",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "frank; candid",
+      "note": "为人坦率 = straightforward and open by nature."
+    },
+    {
+      "id": "272",
+      "term": "拘谨",
+      "reading": "jū jǐn",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "reserved; overcautious",
+      "note": "有点拘谨 = a bit stiff/uptight in company."
+    },
+    {
+      "id": "273",
+      "term": "严苛",
+      "reading": "yán kē",
+      "tones": "2-1",
+      "cat": "hsk",
+      "meaning": "harsh; stringent",
+      "note": "要求严苛 = demanding, exacting standards."
+    },
+    {
+      "id": "274",
+      "term": "犀利",
+      "reading": "xī lì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "sharp; incisive",
+      "note": "言辞犀利 = biting, cutting words."
+    },
+    {
+      "id": "275",
+      "term": "笃定",
+      "reading": "dǔ dìng",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "certain; calm and assured",
+      "note": "神情笃定 = composed and sure of oneself."
+    },
+    {
+      "id": "276",
+      "term": "通透",
+      "reading": "tōng tòu",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "clear; thorough; insightful",
+      "note": "想得通透 = seeing something through with total clarity."
+    },
+    {
+      "id": "277",
+      "term": "拉满",
+      "reading": "lā mǎn",
+      "tones": "1-3",
+      "cat": "slang",
+      "meaning": "maxed out; cranked to the max",
+      "note": "气氛拉满 = the hype is maxed out; 情绪价值拉满."
+    },
+    {
+      "id": "278",
+      "term": "绝了",
+      "reading": "jué le",
+      "tones": "2-·",
+      "cat": "slang",
+      "meaning": "killer; amazing (or 'we're done for')",
+      "note": "这也太绝了 = that's insanely good — or, sarcastically, insanely bad."
+    },
+    {
+      "id": "279",
+      "term": "咕咕",
+      "reading": "gū gū",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "to flake; bail on plans",
+      "note": "咕咕了 = flaked again. The 'coo' of a pigeon (see 放鸽子)."
+    },
+    {
+      "id": "280",
+      "term": "支棱",
+      "reading": "zhī leng",
+      "tones": "1-·",
+      "cat": "slang",
+      "meaning": "to perk up; get it together",
+      "note": "支棱起来! = pull yourself together / step it up! Northeastern flavor."
+    },
+    {
+      "id": "281",
+      "term": "硬控",
+      "reading": "yìng kòng",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "to completely captivate; 'hard-control'",
+      "note": "被这个视频硬控三秒 = this clip totally froze me for 3 seconds. From gaming CC (crowd control)."
+    },
+    {
+      "id": "282",
+      "term": "班味",
+      "reading": "bān wèi",
+      "tones": "1-4",
+      "cat": "slang",
+      "meaning": "the burnt-out 'office' vibe",
+      "note": "身上有班味了 = the 9-to-5 grind has visibly worn you down."
+    },
+    {
+      "id": "283",
+      "term": "蹭",
+      "reading": "cèng",
+      "tones": "4",
+      "cat": "slang",
+      "meaning": "to mooch; freeload off",
+      "note": "蹭饭 = mooch a meal, 蹭热度 = ride someone's viral moment for clout."
+    },
+    {
+      "id": "284",
+      "term": "翻车",
+      "reading": "fān chē",
+      "tones": "1-1",
+      "cat": "slang",
+      "meaning": "to backfire; flop publicly",
+      "note": "翻车了 = it blew up in their face. Literally 'the car flipped'."
+    },
+    {
+      "id": "285",
+      "term": "名场面",
+      "reading": "míng chǎng miàn",
+      "tones": "2-3-4",
+      "cat": "slang",
+      "meaning": "an iconic scene/moment",
+      "note": "封神名场面 = a legendary, endlessly-replayed moment."
+    },
+    {
+      "id": "286",
+      "term": "下头",
+      "reading": "xià tóu",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "a turn-off; a buzzkill",
+      "note": "好下头 = such a mood-killer. The opposite of 上头 (hooked)."
+    },
+    {
+      "id": "287",
+      "term": "摆拍",
+      "reading": "bǎi pāi",
+      "tones": "3-1",
+      "cat": "slang",
+      "meaning": "a staged, posed photo",
+      "note": "一看就是摆拍 = obviously staged, not candid."
+    },
+    {
+      "id": "288",
+      "term": "社牛",
+      "reading": "shè niú",
+      "tones": "4-2",
+      "cat": "slang",
+      "meaning": "a social butterfly; fearlessly outgoing",
+      "note": "The upbeat opposite of 社恐 (socially anxious)."
+    },
+    {
+      "id": "289",
+      "term": "嘴硬",
+      "reading": "zuǐ yìng",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "won't admit it; stubborn in words",
+      "note": "嘴硬心软 = talks tough but is soft-hearted."
+    },
+    {
+      "id": "290",
+      "term": "破罐破摔",
+      "reading": "pò guàn pò shuāi",
+      "tones": "4-4-4-1",
+      "cat": "slang",
+      "meaning": "to give up and self-sabotage",
+      "note": "'A cracked jar — just smash it.' Once it's going bad, wreck it completely. Cf. 摆烂."
+    },
+    {
+      "id": "291",
+      "term": "我靠",
+      "reading": "wǒ kào",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "damn!; whoa!",
+      "note": "Mild exclamation of shock — the polite stand-in for 我操."
+    },
+    {
+      "id": "292",
+      "term": "狗屁",
+      "reading": "gǒu pì",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "utter bullshit; nonsense",
+      "note": "狗屁不通 = complete gibberish. Literally 'dog fart'."
+    },
+    {
+      "id": "293",
+      "term": "屁话",
+      "reading": "pì huà",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "crap talk; nonsense",
+      "note": "少说屁话 = cut the crap."
+    },
+    {
+      "id": "294",
+      "term": "傻子",
+      "reading": "shǎ zi",
+      "tones": "3-·",
+      "cat": "swear",
+      "meaning": "idiot; fool",
+      "note": "你个傻子 = you fool. Common, moderately rude."
+    },
+    {
+      "id": "295",
+      "term": "蠢货",
+      "reading": "chǔn huò",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "moron; dolt",
+      "note": "A contemptuous 'idiot' — harsher than 傻子."
+    },
+    {
+      "id": "296",
+      "term": "王八蛋",
+      "reading": "wáng bā dàn",
+      "tones": "2-1-4",
+      "cat": "swear",
+      "meaning": "bastard; son of a bitch",
+      "note": "A strong insult — stronger than 混蛋."
+    },
+    {
+      "id": "297",
+      "term": "滚蛋",
+      "reading": "gǔn dàn",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "get lost!; piss off!",
+      "note": "More forceful than plain 滚."
+    },
+    {
+      "id": "298",
+      "term": "垃圾",
+      "reading": "lā jī",
+      "tones": "1-1",
+      "cat": "swear",
+      "meaning": "trash; garbage (as an insult)",
+      "note": "你真垃圾 = you're absolute trash. Also literally 'garbage' (Taiwan: lè sè)."
+    },
+    {
+      "id": "299",
+      "term": "贱人",
+      "reading": "jiàn rén",
+      "tones": "4-2",
+      "cat": "swear",
+      "meaning": "a despicable person; 'bitch'",
+      "note": "Strong, demeaning insult (see 贱)."
+    },
+    {
+      "id": "300",
+      "term": "智障",
+      "reading": "zhì zhàng",
+      "tones": "4-4",
+      "cat": "swear",
+      "meaning": "moron (offensive)",
+      "note": "Literally 'intellectually disabled' — an ableist slur used as 'idiot'. Very rude."
+    },
+    {
+      "id": "301",
+      "term": "我操",
+      "reading": "wǒ cāo",
+      "tones": "3-1",
+      "cat": "swear",
+      "meaning": "f***! (strong)",
+      "note": "The real thing behind the euphemism 卧槽. Very vulgar — use with caution."
+    }
+  ]
+}

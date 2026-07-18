@@ -1,7 +1,7 @@
 """Browse and install the creator decks — a standalone window.
 
 Like the editor and settings, this is its OWN process (`python -m
-chinesepop.catalog_ui`): it's an ordinary ttk window that wants focus, the exact
+blip.catalog_ui`): it's an ordinary ttk window that wants focus, the exact
 opposite of the overlay's no-activate invariants. Keeping it out of the overlay's
 process means it can't regress them.
 
@@ -31,7 +31,7 @@ class CatalogWindow:
         self.on_installed = on_installed
         self.owns_root = parent is None
         self.root = tk.Tk() if self.owns_root else tk.Toplevel(parent)
-        self.root.title("Chinese Pop — Creator Decks")
+        self.root.title("Blip — Creator Decks")
         self.status = tk.StringVar(value="")
         self.busy = False
         self._rows = {}                 # deck id -> {button, status label}
@@ -197,7 +197,7 @@ class CatalogWindow:
             # The running overlay loaded its decks at startup and won't hot-reload,
             # so be honest rather than imply an instant switch.
             self.status.set(f"Installed {len(done)} deck(s) — they'll be in your "
-                            "rotation next time Chinese Pop starts.")
+                            "rotation next time Blip starts.")
         if done and self.on_installed:
             self.on_installed(done)
 
@@ -240,7 +240,7 @@ def open_catalog():
     the overlay's windows must stay no-activate, so never a Toplevel of it)."""
     import subprocess
     try:
-        subprocess.Popen([sys.executable, "-m", "chinesepop.catalog_ui"],
+        subprocess.Popen([sys.executable, "-m", "blip.catalog_ui"],
                          cwd=str(paths.APP_DIR))
         return True
     except Exception:

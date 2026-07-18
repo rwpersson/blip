@@ -20,10 +20,10 @@ Safe to re-run: it only touches what still looks un-migrated.
 import json
 import sys
 
-from chinesepop import decks as decks_mod
-from chinesepop import paths, settings as settings_mod
-from chinesepop.audio import clips
-from chinesepop.logging_setup import get, setup
+from blip import decks as decks_mod
+from blip import paths, settings as settings_mod
+from blip.audio import clips
+from blip.logging_setup import get, setup
 
 log = get("migrate")
 

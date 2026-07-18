@@ -1,0 +1,509 @@
+{
+  "schema": 1,
+  "name": "Week 5",
+  "language": "zh-CN",
+  "voice": null,
+  "words": [
+    {
+      "id": "421",
+      "term": "憧憬",
+      "reading": "chōng jǐng",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "to yearn for; look forward to",
+      "note": "对未来的憧憬 = one's hopes for the future. Warmer and dreamier than plain 期待."
+    },
+    {
+      "id": "422",
+      "term": "崎岖",
+      "reading": "qí qū",
+      "tones": "2-1",
+      "cat": "hsk",
+      "meaning": "rugged; rough (road or path)",
+      "note": "崎岖的山路 = a rough mountain trail. Also figurative: 道路崎岖 = a hard road ahead."
+    },
+    {
+      "id": "423",
+      "term": "蓬勃",
+      "reading": "péng bó",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "vigorous; flourishing",
+      "note": "蓬勃发展 = to boom/thrive; 生机蓬勃 = brimming with life."
+    },
+    {
+      "id": "424",
+      "term": "沧桑",
+      "reading": "cāng sāng",
+      "tones": "1-1",
+      "cat": "hsk",
+      "meaning": "the weathering of life; vicissitudes",
+      "note": "饱经沧桑 = to have been through a lot. From 沧海桑田 (seas turning to fields)."
+    },
+    {
+      "id": "425",
+      "term": "缔造",
+      "reading": "dì zào",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "to found; forge (something great)",
+      "note": "缔造传奇 = to create a legend. Grand, formal — for empires, records, eras."
+    },
+    {
+      "id": "426",
+      "term": "迸发",
+      "reading": "bèng fā",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "to burst forth; erupt",
+      "note": "灵感迸发 = a burst of inspiration; 迸发出活力 = to brim over with energy."
+    },
+    {
+      "id": "427",
+      "term": "斡旋",
+      "reading": "wò xuán",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "to mediate; broker",
+      "note": "从中斡旋 = to mediate between parties. Diplomatic register."
+    },
+    {
+      "id": "428",
+      "term": "缜密",
+      "reading": "zhěn mì",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "meticulous; carefully reasoned",
+      "note": "思维缜密 = a rigorous, watertight mind. 缜密的计划 = an airtight plan."
+    },
+    {
+      "id": "429",
+      "term": "端倪",
+      "reading": "duān ní",
+      "tones": "1-2",
+      "cat": "hsk",
+      "meaning": "a clue; the first signs",
+      "note": "初见端倪 = the first hints are showing; 看出端倪 = to spot a lead."
+    },
+    {
+      "id": "430",
+      "term": "枢纽",
+      "reading": "shū niǔ",
+      "tones": "1-3",
+      "cat": "hsk",
+      "meaning": "hub; nexus; linchpin",
+      "note": "交通枢纽 = a transport hub. The point everything else connects through."
+    },
+    {
+      "id": "431",
+      "term": "涵养",
+      "reading": "hán yǎng",
+      "tones": "2-3",
+      "cat": "hsk",
+      "meaning": "poise; self-restraint",
+      "note": "有涵养 = composed and gracious under pressure. Also: to conserve (水源涵养)."
+    },
+    {
+      "id": "432",
+      "term": "昭示",
+      "reading": "zhāo shì",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to make clear; herald",
+      "note": "昭示着未来 = points the way to what's coming. Formal, often written."
+    },
+    {
+      "id": "433",
+      "term": "缄默",
+      "reading": "jiān mò",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "reticent; tight-lipped",
+      "note": "保持缄默 = to keep silent. More literary than 沉默."
+    },
+    {
+      "id": "434",
+      "term": "睿智",
+      "reading": "ruì zhì",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "wise; sagacious",
+      "note": "睿智的判断 = a shrewd, far-seeing call. A compliment for deep wisdom."
+    },
+    {
+      "id": "435",
+      "term": "匠心",
+      "reading": "jiàng xīn",
+      "tones": "4-1",
+      "cat": "hsk",
+      "meaning": "ingenuity; craftsmanship",
+      "note": "匠心独运 = uniquely inventive; 独具匠心 = one of a kind by design."
+    },
+    {
+      "id": "436",
+      "term": "挫折",
+      "reading": "cuò zhé",
+      "tones": "4-2",
+      "cat": "hsk",
+      "meaning": "setback; frustration",
+      "note": "遭受挫折 = to hit a setback; 经得起挫折 = able to take knocks."
+    },
+    {
+      "id": "437",
+      "term": "恬静",
+      "reading": "tián jìng",
+      "tones": "2-4",
+      "cat": "hsk",
+      "meaning": "tranquil; serene",
+      "note": "恬静的乡村 = a peaceful countryside. A calm, unhurried stillness."
+    },
+    {
+      "id": "438",
+      "term": "夙愿",
+      "reading": "sù yuàn",
+      "tones": "4-4",
+      "cat": "hsk",
+      "meaning": "a long-cherished wish",
+      "note": "了却夙愿 = to fulfill a lifelong dream. 夙 = long-standing."
+    },
+    {
+      "id": "439",
+      "term": "好家伙",
+      "reading": "hǎo jiā huo",
+      "tones": "3-1-·",
+      "cat": "slang",
+      "meaning": "whoa; good grief",
+      "note": "A crosstalk-flavored exclamation, now everywhere online. 好家伙,这也行? = 'whoa, that actually worked?' Surprise, awe, or mock-outrage.",
+      "say": "好家伙"
+    },
+    {
+      "id": "440",
+      "term": "松弛感",
+      "reading": "sōng chí gǎn",
+      "tones": "1-2-3",
+      "cat": "slang",
+      "meaning": "an effortless, unbothered vibe",
+      "note": "满满的松弛感 = totally at ease, nothing forced. The aspirational 2020s aesthetic of looking relaxed and unhurried."
+    },
+    {
+      "id": "441",
+      "term": "情绪价值",
+      "reading": "qíng xù jià zhí",
+      "tones": "2-4-4-2",
+      "cat": "slang",
+      "meaning": "emotional payoff/support",
+      "note": "提供情绪价值 = to make someone feel good. The buzzword for what people now say they want from partners, friends, even brands."
+    },
+    {
+      "id": "442",
+      "term": "特种兵",
+      "reading": "tè zhòng bīng",
+      "tones": "4-4-1",
+      "cat": "slang",
+      "meaning": "whirlwind budget-travel mode",
+      "note": "特种兵式旅游 = cramming a dozen sights into a weekend on no sleep and no money, military-style. From 'special forces'."
+    },
+    {
+      "id": "443",
+      "term": "双向奔赴",
+      "reading": "shuāng xiàng bēn fù",
+      "tones": "1-4-1-4",
+      "cat": "slang",
+      "meaning": "mutual effort; meeting halfway",
+      "note": "爱是双向奔赴 = love is both people running toward each other. Beloved on relationship posts; also for friendships and teamwork."
+    },
+    {
+      "id": "444",
+      "term": "词穷",
+      "reading": "cí qióng",
+      "tones": "2-2",
+      "cat": "slang",
+      "meaning": "at a loss for words",
+      "note": "突然词穷 = mind suddenly blank. Also the 2023 buzz-complaint that short-video brain has left people unable to find words."
+    },
+    {
+      "id": "445",
+      "term": "阴阳怪气",
+      "reading": "yīn yáng guài qì",
+      "tones": "1-2-4-4",
+      "cat": "slang",
+      "meaning": "snide; passive-aggressive",
+      "note": "别阴阳我 = quit being snide with me. 阴阳 alone is now a verb for saying one thing and meaning the sarcastic opposite.",
+      "alt": "阴阳"
+    },
+    {
+      "id": "446",
+      "term": "逆天",
+      "reading": "nì tiān",
+      "tones": "4-1",
+      "cat": "slang",
+      "meaning": "outrageous; unreal (good or bad)",
+      "note": "这操作太逆天了 = that move was absolutely insane. Can praise or condemn — context decides. Literally 'defying heaven'."
+    },
+    {
+      "id": "447",
+      "term": "慕了",
+      "reading": "mù le",
+      "tones": "4-·",
+      "cat": "slang",
+      "meaning": "so jealous; I'm envious",
+      "note": "羡慕 clipped down to one syllable + 了. 慕了慕了 = 'ugh, I'm so jealous', usually happy-jealous.",
+      "say": "慕了"
+    },
+    {
+      "id": "448",
+      "term": "秒回",
+      "reading": "miǎo huí",
+      "tones": "3-2",
+      "cat": "slang",
+      "meaning": "to reply instantly",
+      "note": "他秒回我 = he texted back in a heartbeat. The flattering opposite of being left on read."
+    },
+    {
+      "id": "449",
+      "term": "下饭",
+      "reading": "xià fàn",
+      "tones": "4-4",
+      "cat": "slang",
+      "meaning": "fun to watch while eating; entertainingly bad",
+      "note": "Literally 'goes with rice'. 下饭视频 = something you put on over a meal. Of a player: 下饭操作 = play so bad it's entertaining."
+    },
+    {
+      "id": "450",
+      "term": "顶配",
+      "reading": "dǐng pèi",
+      "tones": "3-4",
+      "cat": "slang",
+      "meaning": "top-spec; the deluxe version",
+      "note": "人生顶配 = living your best, maxed-out life. From 顶配 phone/car trims."
+    },
+    {
+      "id": "451",
+      "term": "已读不回",
+      "reading": "yǐ dú bù huí",
+      "tones": "3-2-4-2",
+      "cat": "slang",
+      "meaning": "to leave someone on read",
+      "note": "被已读不回 = got seen and ignored. The dreaded receipt-then-silence."
+    },
+    {
+      "id": "452",
+      "term": "主播",
+      "reading": "zhǔ bō",
+      "tones": "3-1",
+      "cat": "slang",
+      "meaning": "streamer; livestream host",
+      "note": "家人们, 主播真的哭了 = 'folks, your streamer is literally crying'. The core word of livestream culture."
+    },
+    {
+      "id": "453",
+      "term": "家人们",
+      "reading": "jiā rén men",
+      "tones": "1-2-·",
+      "cat": "slang",
+      "meaning": "folks; y'all (livestream address)",
+      "note": "How streamers address viewers: 家人们谁懂啊 = 'folks, does anyone feel me?'. Warm, in-group, faintly ironic off-stream.",
+      "say": "家人们"
+    },
+    {
+      "id": "454",
+      "term": "操你妈",
+      "reading": "cào nǐ mā",
+      "tones": "4-3-1",
+      "cat": "swear",
+      "meaning": "f*** your mother (very strong)",
+      "note": "About the harshest common curse. 操 is the vulgar verb; also written 草/艹 to dodge filters. Deeply offensive — never casual.",
+      "alt": "草你妈"
+    },
+    {
+      "id": "455",
+      "term": "老子",
+      "reading": "lǎo zi",
+      "tones": "3-·",
+      "cat": "swear",
+      "meaning": "'your daddy' (arrogant, crude self-reference)",
+      "note": "老子不干了 = 'I, your father, quit'. Puffed-up, aggressive 'I' — rude to the listener. (Different word, 老子 lǎo dān, means the philosopher Laozi.)"
+    },
+    {
+      "id": "456",
+      "term": "婊子",
+      "reading": "biǎo zi",
+      "tones": "3-·",
+      "cat": "swear",
+      "meaning": "bitch (vulgar)",
+      "note": "A crude insult for a woman. Also softened/reclaimed jokingly as 小婊砸 among friends, but the base word is offensive."
+    },
+    {
+      "id": "457",
+      "term": "狗东西",
+      "reading": "gǒu dōng xi",
+      "tones": "3-1-·",
+      "cat": "swear",
+      "meaning": "you dog; bastard",
+      "note": "狗 (dog) + 东西 (thing) = a contemptible person. 你这个狗东西 = 'you rotten dog'. Can be mock-affectionate between close friends."
+    },
+    {
+      "id": "458",
+      "term": "去死",
+      "reading": "qù sǐ",
+      "tones": "4-3",
+      "cat": "swear",
+      "meaning": "drop dead; go to hell",
+      "note": "你去死吧 = 'just die'. Also a flustered, half-joking 去死啦 when teasing. Tone decides how serious it lands."
+    },
+    {
+      "id": "459",
+      "term": "沙雕",
+      "reading": "shā diāo",
+      "tones": "1-1",
+      "cat": "swear",
+      "meaning": "dumbass; silly (mild, jokey)",
+      "note": "A homophone laundering of 傻屌, now so mild it's affectionate: 沙雕网友 = 'goofball netizens'. The tame end of the swear scale."
+    },
+    {
+      "id": "460",
+      "term": "你妹",
+      "reading": "nǐ mèi",
+      "tones": "3-4",
+      "cat": "swear",
+      "meaning": "the hell; screw that (filter-dodge)",
+      "note": "去你妹的 = 'to hell with that'. A milder stand-in for cruder 你妈 curses; irritated but rarely truly vicious."
+    },
+    {
+      "id": "461",
+      "term": "屌",
+      "reading": "diǎo",
+      "tones": "3",
+      "cat": "swear",
+      "meaning": "dick; also 'badass' (vulgar)",
+      "note": "Crude for the male organ, but 屌爆了 / 很屌 = 'freaking awesome'. The polite homophone 吊 is used to soften it in writing."
+    },
+    {
+      "id": "462",
+      "term": "滚犊子",
+      "reading": "gǔn dú zi",
+      "tones": "3-2-·",
+      "cat": "swear",
+      "meaning": "get the hell out (NE dialect)",
+      "note": "Northeastern flavor of 滚. 一边滚犊子去 = 'buzz off'. Coarse but often more blustery than hateful."
+    },
+    {
+      "id": "463",
+      "term": "有毛病",
+      "reading": "yǒu máo bìng",
+      "tones": "3-2-4",
+      "cat": "swear",
+      "meaning": "what's your problem; screw off",
+      "note": "你有毛病吧 = 'is something wrong with you?'. 毛病 = a defect/fault; as an insult it questions someone's sanity. Rude but everyday."
+    },
+    {
+      "id": "464",
+      "term": "画龙点睛",
+      "reading": "huà lóng diǎn jīng",
+      "tones": "4-2-3-1",
+      "cat": "idiom",
+      "meaning": "the finishing touch that brings it to life",
+      "note": "'Dotting the dragon's eyes.' The small final stroke that makes the whole thing come alive."
+    },
+    {
+      "id": "465",
+      "term": "破釜沉舟",
+      "reading": "pò fǔ chén zhōu",
+      "tones": "4-3-2-1",
+      "cat": "idiom",
+      "meaning": "burn your boats; no retreat",
+      "note": "'Smash the pots, sink the boats.' Commit totally with no way back — from a general who stranded his own army to force victory."
+    },
+    {
+      "id": "466",
+      "term": "塞翁失马",
+      "reading": "sài wēng shī mǎ",
+      "tones": "4-1-1-3",
+      "cat": "idiom",
+      "meaning": "a blessing in disguise",
+      "note": "'The old man lost his horse.' Full form 塞翁失马,焉知非福 — misfortune may turn out lucky, so don't judge too soon."
+    },
+    {
+      "id": "467",
+      "term": "事半功倍",
+      "reading": "shì bàn gōng bèi",
+      "tones": "4-4-1-4",
+      "cat": "idiom",
+      "meaning": "twice the result for half the effort",
+      "note": "The efficiency dream: less work, more payoff. Its opposite is 事倍功半."
+    },
+    {
+      "id": "468",
+      "term": "雷厉风行",
+      "reading": "léi lì fēng xíng",
+      "tones": "2-4-1-2",
+      "cat": "idiom",
+      "meaning": "swift and decisive",
+      "note": "'Fierce as thunder, fast as wind.' Acting resolutely and without dithering."
+    },
+    {
+      "id": "469",
+      "term": "井井有条",
+      "reading": "jǐng jǐng yǒu tiáo",
+      "tones": "3-3-3-2",
+      "cat": "idiom",
+      "meaning": "orderly; neatly organized",
+      "note": "把一切安排得井井有条 = to arrange everything in perfect order. Not a hair out of place."
+    },
+    {
+      "id": "470",
+      "term": "团灭",
+      "reading": "tuán miè",
+      "tones": "2-4",
+      "cat": "gaming",
+      "meaning": "a team wipe; ace",
+      "note": "被团灭 = the whole team got wiped; 打出团灭 = ace the enemy. The swing moment of a teamfight."
+    },
+    {
+      "id": "471",
+      "term": "送人头",
+      "reading": "sòng rén tóu",
+      "tones": "4-2-2",
+      "cat": "gaming",
+      "meaning": "to feed; hand over free kills",
+      "note": "别送人头了 = stop feeding. Dying pointlessly and gifting the enemy gold/XP. Short form: 送.",
+      "alt": "送"
+    },
+    {
+      "id": "472",
+      "term": "抱大腿",
+      "reading": "bào dà tuǐ",
+      "tones": "4-4-3",
+      "cat": "gaming",
+      "meaning": "to ride a strong teammate's coattails",
+      "note": "抱大腿 = cling to the 'big leg' (the carry) and let them win it for you. Also used in life for latching onto a powerful ally."
+    },
+    {
+      "id": "473",
+      "term": "手感",
+      "reading": "shǒu gǎn",
+      "tones": "3-3",
+      "cat": "gaming",
+      "meaning": "the feel; being in form",
+      "note": "手感火热 = on fire, hitting everything; 手感冰凉 = ice-cold, can't land a thing. Also the physical feel of a keyboard/controller."
+    },
+    {
+      "id": "474",
+      "term": "走位",
+      "reading": "zǒu wèi",
+      "tones": "3-4",
+      "cat": "gaming",
+      "meaning": "movement; footwork",
+      "note": "走位风骚 = slick, unpredictable movement (dodging skillshots). 走位飘逸 = elusive positioning."
+    },
+    {
+      "id": "475",
+      "term": "残血",
+      "reading": "cán xuè",
+      "tones": "2-4",
+      "cat": "gaming",
+      "meaning": "low HP; one hit from dying",
+      "note": "残血逃跑 = limping away on a sliver of health; 残血反杀 = clutch a kill while nearly dead."
+    }
+  ]
+}

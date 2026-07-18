@@ -1,8 +1,8 @@
 """Editor logic — no Tk. Everything here is what the window delegates to."""
 import pytest
 
-from chinesepop import decks as d
-from chinesepop.editor.controller import EditorController
+from blip import decks as d
+from blip.editor.controller import EditorController
 
 
 @pytest.fixture
@@ -10,7 +10,7 @@ def ctl(settings, tmp_path, monkeypatch):
     # user decks are written to user_dir()/decks, so that's where we must read from
     monkeypatch.setattr(d.paths, "user_dir", lambda: tmp_path)
     monkeypatch.setattr(d.paths, "decks_dirs", lambda: [tmp_path / "decks"])
-    monkeypatch.setattr("chinesepop.audio.clips.paths.audio_dir",
+    monkeypatch.setattr("blip.audio.clips.paths.audio_dir",
                         lambda: tmp_path / "audio")
     return EditorController(settings)
 
@@ -110,7 +110,7 @@ def test_import_words_skips_ones_already_in_the_deck(ctl):
 
 
 def test_card_audio_ready_reflects_disk(ctl, tmp_path):
-    from chinesepop.audio import clips
+    from blip.audio import clips
     deck = ctl.create_deck("Test")
     w = ctl.save_card(deck, {"term": "牛逼", "meaning": "awesome"})
     assert ctl.card_audio_ready(w, deck) is False

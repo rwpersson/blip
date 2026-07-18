@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from chinesepop import decks as d
+from blip import decks as d
 
 
 @pytest.fixture

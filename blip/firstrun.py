@@ -38,7 +38,7 @@ class WelcomeWindow:
         self.clips_needed = clips_needed
         self.start = True
         self.root = tk.Tk()
-        self.root.title("Welcome to Chinese Pop")
+        self.root.title("Welcome to Blip")
         self._build()
         # Size to content rather than guessing: at 125% scaling this window needs
         # ~583px, and the hard-coded 440 cut the buttons off entirely.
@@ -58,7 +58,7 @@ class WelcomeWindow:
         ttk.Button(bar, text="Get more decks…",
                    command=self._catalog).pack(side="left")
 
-        ttk.Label(self.root, text="🀄  Chinese Pop",
+        ttk.Label(self.root, text="💬  Blip",
                   font=("", 16, "bold")).pack(anchor="w", padx=18, pady=(16, 2))
         ttk.Label(self.root, wraplength=470, justify="left",
                   text="A flashcard pops up in the corner while you game, says the "
@@ -128,7 +128,7 @@ class WelcomeWindow:
     def _settings(self):
         self._collect()
         try:
-            subprocess.Popen([sys.executable, "-m", "chinesepop.settings_ui"],
+            subprocess.Popen([sys.executable, "-m", "blip.settings_ui"],
                              cwd=str(paths.APP_DIR))
         except Exception:
             log.exception("could not open settings")

@@ -14,7 +14,7 @@ import sys
 
 from . import paths
 
-LOG_NAME = "chinesepop"
+LOG_NAME = "blip"
 
 
 def _force_utf8_console():
@@ -37,7 +37,7 @@ def setup(level=logging.INFO, console=True):
     try:
         paths.log_dir().mkdir(parents=True, exist_ok=True)
         fh = logging.handlers.RotatingFileHandler(
-            paths.log_dir() / "chinesepop.log", maxBytes=512_000, backupCount=2,
+            paths.log_dir() / "blip.log", maxBytes=512_000, backupCount=2,
             encoding="utf-8")
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(logging.Formatter(

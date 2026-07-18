@@ -107,7 +107,7 @@ class ImportWizard(tk.Toplevel):
             parent=self, title="Import cards",
             filetypes=[("All supported", "*.csv *.tsv *.txt *.apkg *.json"),
                        ("Spreadsheet", "*.csv *.tsv *.txt"),
-                       ("Anki deck", "*.apkg"), ("Chinese Pop deck", "*.json")])
+                       ("Anki deck", "*.apkg"), ("Blip deck", "*.json")])
         if not path:
             if not self.result:
                 self.destroy()
@@ -236,4 +236,4 @@ def _parse_our_json(path):
                      "note": w.get("note", ""), "cat": w.get("cat", "")})
     return common.ImportResult(["term", "reading", "tones", "meaning", "note", "cat"],
                                rows, Path(path).name,
-                               [f"{len(rows)} card(s) from a Chinese Pop deck"])
+                               [f"{len(rows)} card(s) from a Blip deck"])

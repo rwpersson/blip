@@ -31,7 +31,7 @@ class EditorWindow:
         self.word = None            # None => the form is a new card
 
         self.root = tk.Tk()
-        self.root.title("Chinese Pop — Deck Editor")
+        self.root.title("Blip — Deck Editor")
         self.vars = {k: tk.StringVar() for k, _ in FIELDS}
         self.status = tk.StringVar(value="Ready")
         self._build()
