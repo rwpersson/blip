@@ -8,10 +8,12 @@ work.
 Layout notes, all of which were bugs in the first version:
   * grouped by *job* — playback, toggles, app — instead of nine identical buttons
     in one row, where the primary action looked the same as the destructive one;
-  * Play is the only filled button: one primary action, everything else recedes;
+  * Play is the only filled button: one primary action, everything else recedes,
+    and it sits full-width on its own row so it reads as *the* action;
+  * every row's buttons FILL the width evenly (`_fill_row`, grid + `uniform`) —
+    left-packed buttons left ~250px of dead space on the right of every row;
   * every button has a WORD. "📝" cannot tell anyone it means "make your own
-    flashcards";
-  * Replay and Sound no longer share the 🔊 glyph;
+    flashcards", and the transport controls say Skip/Replay/Stop, not bare glyphs;
   * Quit lives in the title bar, away from the controls you actually press.
 
 This owns widgets only; the app owns behaviour and passes callbacks in.
@@ -118,48 +120,46 @@ class Panel:
 
         self._rule(bar)
 
-        # --- playback: Play is filled, the rest are quiet ---
-        row = tk.Frame(bar, bg=theme.BG)
-        row.pack(fill="x", padx=P, pady=(P, 2))
-        self.play_btn = self._btn(row, "▶  Play", self.a["play"], primary=True,
+        # Buttons FILL their row (evenly) instead of clustering on the left with
+        # dead space to the right — the row is as wide as the hint line, so a
+        # couple of left-packed buttons left ~250px empty. Each row spreads its
+        # buttons edge to edge; the icon buttons get words while they're at it.
+
+        # --- play: the one primary action, full width and prominent ---
+        prow = tk.Frame(bar, bg=theme.BG)
+        prow.pack(fill="x", padx=P, pady=(P, 2))
+        self.play_btn = self._btn(prow, "▶  Play", self.a["play"], primary=True,
                                   tip="Start / pause the cards")
-        self.play_btn.pack(side="left", padx=2)
-        self._btn(row, "⏭", self.a["next"], tip="Skip to the next word"
-                  ).pack(side="left", padx=2)
-        self._btn(row, "🔁", self.a["replay"], tip="Say this word again"
-                  ).pack(side="left", padx=2)
-        self._btn(row, "⏹", self.a["stop"], tip="Stop and hide the card"
-                  ).pack(side="left", padx=2)
+        self.play_btn.pack(fill="x", expand=True, padx=2)
+
+        # --- transport: three equal buttons across the row ---
+        self._fill_row((
+            ("⏭  Skip",   self.a["next"],   "Skip to the next word"),
+            ("🔁  Replay", self.a["replay"], "Say this word again"),
+            ("⏹  Stop",   self.a["stop"],   "Stop and hide the card"),
+        ), bar, P)
 
         # --- toggles ---
-        row2 = tk.Frame(bar, bg=theme.BG)
-        row2.pack(fill="x", padx=P, pady=2)
-        self.annoy_btn = self._btn(row2, "😈 Annoy", self.a["annoy"],
-                                   tip="Flash words big across the screen")
-        self.annoy_btn.pack(side="left", padx=2)
-        self.mute_btn = self._btn(row2, "🔊 Sound", self.a["mute"],
-                                  tip="Mute everything")
-        self.mute_btn.pack(side="left", padx=2)
+        self.annoy_btn, self.mute_btn = self._fill_row((
+            ("😈 Annoy", self.a["annoy"], "Flash words big across the screen"),
+            ("🔊 Sound", self.a["mute"],  "Mute everything"),
+        ), bar, P)
 
         # --- deck sources: get curated decks, or author your own ---
-        row3 = tk.Frame(bar, bg=theme.BG)
-        row3.pack(fill="x", padx=P, pady=(2, 2))
-        self._btn(row3, "📚 Get decks", self.a["catalog"],
-                  tip="Browse and install the creator decks (HSK, slang, gaming…)"
-                  ).pack(side="left", padx=2)
-        self._btn(row3, "✏  Make cards", self.a["editor"],
-                  tip="Create your own cards, or import a deck (Anki, CSV)"
-                  ).pack(side="left", padx=2)
+        self._fill_row((
+            ("📚 Get decks", self.a["catalog"],
+             "Browse and install the creator decks (HSK, slang, gaming…)"),
+            ("✏  Make cards", self.a["editor"],
+             "Create your own cards, or import a deck (Anki, CSV)"),
+        ), bar, P)
 
         # --- app actions ---
-        row4 = tk.Frame(bar, bg=theme.BG)
-        row4.pack(fill="x", padx=P, pady=(2, P))
-        self._btn(row4, "🧠 Test Mode", self.a["quiz"],
-                  tip="Quiz yourself: pick the right reading + meaning"
-                  ).pack(side="left", padx=2)
-        self._btn(row4, "⚙  Settings", self.a["settings"],
-                  tip="Timing, sound, appearance, hotkeys"
-                  ).pack(side="left", padx=2)
+        self._fill_row((
+            ("🧠 Test Mode", self.a["quiz"],
+             "Quiz yourself: pick the right reading + meaning"),
+            ("⚙  Settings", self.a["settings"],
+             "Timing, sound, appearance, hotkeys"),
+        ), bar, P, pady=(2, P))
 
         self._rule(bar)
         hk = settings.hotkeys
@@ -182,6 +182,20 @@ class Panel:
 
     def _rule(self, parent):
         tk.Frame(parent, bg=theme.BORDER, height=1).pack(fill="x", padx=theme.PAD)
+
+    def _fill_row(self, specs, parent, pad, pady=2):
+        """A row of equal-width buttons spanning the full width — grid with a
+        `uniform` group so every column is the same size (pack+expand would size
+        each to its text, leaving them subtly ragged). No dead space on the right."""
+        row = tk.Frame(parent, bg=theme.BG)
+        row.pack(fill="x", padx=pad, pady=pady)
+        made = []
+        for col, (text, cmd, tip) in enumerate(specs):
+            b = self._btn(row, text, cmd, tip=tip)
+            b.grid(row=0, column=col, sticky="ew", padx=2)
+            row.columnconfigure(col, weight=1, uniform="btn")
+            made.append(b)
+        return made
 
     def _deck_row(self, parent, i):
         row = tk.Frame(parent, bg=theme.BG, cursor="hand2")
