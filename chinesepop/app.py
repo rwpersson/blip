@@ -297,7 +297,14 @@ class App:
 
     def open_quiz(self):
         """Test Mode — its own focus-hungry process. Pass the current deck so
-        'Current deck' in the pool picker means the one being studied."""
+        'Current deck' in the pool picker means the one being studied.
+
+        Pause the overlay first: the user is switching their attention to the
+        quiz, so pops shouldn't keep firing behind it, and a word mid-readout
+        should go quiet. They resume with Play when they're done."""
+        self.pause()                 # stop scheduling new pops (no-op if not running)
+        player.cancel()              # silence a word being read right now
+        self.hide_card()             # clear any card still on screen
         from .quiz_ui import open_quiz
         open_quiz(self.decks[self.deck_index]["id"])
 

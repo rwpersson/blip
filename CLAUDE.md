@@ -159,6 +159,11 @@ Active self-testing to complement the passive overlay: a word, four
   → `player.play_file` on a daemon thread). Clips are keyed by voice, so the target
   word carries its deck's voice (`quiz.tag_deck` tags `_voice`, `Question.word`
   holds the source word); a missing clip is a silent no-op.
+- **Opening it pauses the overlay** (`app.open_quiz`): `pause()` + `player.cancel()`
+  + `hide_card()`, so pops stop and a word mid-readout goes quiet without the user
+  pausing by hand. Resume is manual (Play). `player.cancel()` (vs `stop()`) bumps
+  `_play_token` so the play_word thread bails between clips instead of marching on
+  to the tones/meaning. Guarded by `test_opening_test_mode_pauses_the_overlay`.
 - **Sizing gotcha**: the screens differ a lot in height (question ≈ 2× the pool),
   so it re-fits per screen with `_fit()` — `fit_window` only resizes, never
   repositions, so the window grows/shrinks in place without jumping. The Next
