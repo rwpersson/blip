@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "name": "Starter",
+  "language": "zh-CN",
+  "voice": null,
+  "words": [
+    {
+      "id": "s01",
+      "term": "你好",
+      "reading": "nǐ hǎo",
+      "tones": "3-3",
+      "cat": "common",
+      "meaning": "hello",
+      "note": "The everyday greeting. 您好 (nín hǎo) is the polite form."
+    },
+    {
+      "id": "s02",
+      "term": "谢谢",
+      "reading": "xiè xie",
+      "tones": "4-·",
+      "cat": "common",
+      "meaning": "thank you",
+      "note": "多谢 / 谢啦 are casual variants. Reply with 不客气 = you're welcome."
+    },
+    {
+      "id": "s03",
+      "term": "再见",
+      "reading": "zài jiàn",
+      "tones": "4-4",
+      "cat": "common",
+      "meaning": "goodbye",
+      "note": "Literally 'see (you) again'. Casual: 拜拜 (bái bái, from English bye-bye)."
+    },
+    {
+      "id": "s04",
+      "term": "朋友",
+      "reading": "péng you",
+      "tones": "2-·",
+      "cat": "common",
+      "meaning": "friend",
+      "note": "好朋友 = good friend; 交朋友 = to make friends."
+    },
+    {
+      "id": "s05",
+      "term": "喜欢",
+      "reading": "xǐ huan",
+      "tones": "3-·",
+      "cat": "common",
+      "meaning": "to like",
+      "note": "我喜欢 = I like it. Stronger: 爱 (ài, to love)."
+    },
+    {
+      "id": "s06",
+      "term": "学习",
+      "reading": "xué xí",
+      "tones": "2-2",
+      "cat": "hsk",
+      "meaning": "to study; to learn",
+      "note": "学习中文 = to study Chinese. As a noun too: 好好学习 = study hard."
+    },
+    {
+      "id": "s07",
+      "term": "吃饭",
+      "reading": "chī fàn",
+      "tones": "1-4",
+      "cat": "common",
+      "meaning": "to eat (a meal)",
+      "note": "吃饭了吗? = 'have you eaten?', a warm everyday hello in itself."
+    },
+    {
+      "id": "s08",
+      "term": "时间",
+      "reading": "shí jiān",
+      "tones": "2-1",
+      "cat": "common",
+      "meaning": "time",
+      "note": "没时间 = no time; 什么时间 = what time. 时候 (shí hou) is 'moment/when'."
+    },
+    {
+      "id": "s09",
+      "term": "今天",
+      "reading": "jīn tiān",
+      "tones": "1-1",
+      "cat": "common",
+      "meaning": "today",
+      "note": "明天 = tomorrow; 昨天 = yesterday. All share 天 (day)."
+    },
+    {
+      "id": "s10",
+      "term": "高兴",
+      "reading": "gāo xìng",
+      "tones": "1-4",
+      "cat": "common",
+      "meaning": "happy; glad",
+      "note": "很高兴认识你 = nice to meet you (lit. very happy to know you)."
+    },
+    {
+      "id": "s11",
+      "term": "中国",
+      "reading": "zhōng guó",
+      "tones": "1-2",
+      "cat": "common",
+      "meaning": "China",
+      "note": "中文 = the Chinese language; 中国人 = a Chinese person."
+    },
+    {
+      "id": "s12",
+      "term": "工作",
+      "reading": "gōng zuò",
+      "tones": "1-4",
+      "cat": "common",
+      "meaning": "work; job",
+      "note": "找工作 = to job-hunt; 上班 (shàng bān) = to go to work."
+    },
+    {
+      "id": "s13",
+      "term": "现在",
+      "reading": "xiàn zài",
+      "tones": "4-4",
+      "cat": "common",
+      "meaning": "now",
+      "note": "现在几点? = what time is it now? 现在 = at this moment."
+    },
+    {
+      "id": "s14",
+      "term": "知道",
+      "reading": "zhī dào",
+      "tones": "1-4",
+      "cat": "common",
+      "meaning": "to know (a fact)",
+      "note": "我不知道 = I don't know. For knowing a person, use 认识 (rèn shi)."
+    },
+    {
+      "id": "s15",
+      "term": "觉得",
+      "reading": "jué de",
+      "tones": "2-·",
+      "cat": "common",
+      "meaning": "to feel; to think",
+      "note": "我觉得 = I think/feel that... The everyday way to give an opinion."
+    },
+    {
+      "id": "s16",
+      "term": "漂亮",
+      "reading": "piào liang",
+      "tones": "4-·",
+      "cat": "common",
+      "meaning": "pretty; beautiful",
+      "note": "好漂亮! = so pretty! Used for people, scenery, or a slick move."
+    },
+    {
+      "id": "s17",
+      "term": "重要",
+      "reading": "zhòng yào",
+      "tones": "4-4",
+      "cat": "common",
+      "meaning": "important",
+      "note": "很重要 = very important; 最重要的是 = the most important thing is..."
+    },
+    {
+      "id": "s18",
+      "term": "帮助",
+      "reading": "bāng zhù",
+      "tones": "1-4",
+      "cat": "hsk",
+      "meaning": "to help; help",
+      "note": "谢谢你的帮助 = thanks for your help. Casual verb: 帮 (bāng)."
+    },
+    {
+      "id": "s19",
+      "term": "努力",
+      "reading": "nǔ lì",
+      "tones": "3-4",
+      "cat": "hsk",
+      "meaning": "to work hard; make an effort",
+      "note": "努力工作 = to work hard; 加油,努力! = come on, give it your all!"
+    },
+    {
+      "id": "s20",
+      "term": "开心",
+      "reading": "kāi xīn",
+      "tones": "1-1",
+      "cat": "common",
+      "meaning": "happy; cheerful",
+      "note": "玩得开心! = have fun! Lighter and more upbeat than 高兴."
+    }
+  ]
+}
