@@ -45,6 +45,10 @@ class _Tooltip:
                  highlightthickness=1, highlightbackground=theme.BORDER).pack()
         self.tip.geometry(f"+{x}+{y}")
         win32.show_no_activate(self.tip)
+        # The panel is WS_EX_TOPMOST too; showing the tooltip doesn't raise it
+        # within that band, so it renders *behind* the panel. Re-insert it at the
+        # top of the topmost band — without activating it (that's the whole point).
+        win32.raise_without_focus(self.tip)
 
     def _hide(self, _e=None):
         if self.tip:
@@ -82,9 +86,8 @@ class Panel:
         quit_btn.bind("<Button-1>", lambda e: self.a["quit"]())
         quit_btn.bind("<Enter>", lambda e: quit_btn.configure(fg=theme.STATUS_STOP))
         quit_btn.bind("<Leave>", lambda e: quit_btn.configure(fg=theme.SUB))
-        # No tooltip: ✕ is the universal close glyph, and a panel tooltip would
-        # render *behind* the panel anyway — both are WS_EX_TOPMOST, but the
-        # tooltip is shown without being raised within that band, so it loses.
+        # No tooltip: ✕ is the universal close glyph and needs no label. (Other
+        # buttons keep theirs; _Tooltip now raises above the panel — see _show.)
         self.status_lbl = tk.Label(top, text="", bg=theme.BG, fg=theme.SUB,
                                    font=(f, 8))
         self.status_lbl.pack(side="right", padx=(0, P))

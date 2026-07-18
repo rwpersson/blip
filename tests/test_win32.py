@@ -37,6 +37,15 @@ u.SetForegroundWindow.argtypes = [wintypes.HWND]
 u.GetWindowThreadProcessId.argtypes = [wintypes.HWND,
                                        ctypes.POINTER(wintypes.DWORD)]
 u.GetWindowThreadProcessId.restype = wintypes.DWORD
+u.GetAncestor.argtypes = [wintypes.HWND, ctypes.c_uint]
+u.GetAncestor.restype = wintypes.HWND
+_GA_ROOT = 2
+
+
+def _root_window(hwnd):
+    """The top-level window WindowFromPoint's hit belongs to. WindowFromPoint
+    returns the innermost child (a Label), so compare roots, not raw handles."""
+    return u.GetAncestor(hwnd, _GA_ROOT)
 
 
 WORDS = [
@@ -216,6 +225,32 @@ def test_tooltips_do_not_steal_focus(app):
     finally:
         tip._hide()
     assert tip.tip is None
+
+
+def test_panel_tooltip_renders_above_the_panel(app):
+    """The tooltip and the panel are both WS_EX_TOPMOST; showing the tooltip
+    doesn't raise it within that band, so it drew *behind* the panel — invisible.
+    _show() re-raises it. Prove it actually wins the z-fight over the panel."""
+    from chinesepop.ui.panel import _Tooltip
+    app.panel.show(app.rect)
+    pump(app, 0.2)
+    tip = _Tooltip(app.panel.play_btn, "Start / pause the cards", app.panel.f)
+    tip._show()
+    pump(app, 0.3)
+    try:
+        tip.tip.update_idletasks()
+        # a point at the tooltip's centre, which overlaps the panel body below
+        # the (mid-panel) Play button
+        tx = tip.tip.winfo_rootx() + tip.tip.winfo_width() // 2
+        ty = tip.tip.winfo_rooty() + tip.tip.winfo_height() // 2
+        hit = _root_window(u.WindowFromPoint(wintypes.POINT(tx, ty)))
+        assert hit != _root_window(win32.hwnd_of(app.root)), \
+            "the tooltip is hidden behind the panel"
+        assert hit == _root_window(win32.hwnd_of(tip.tip)), \
+            "something else is over the tooltip"
+    finally:
+        tip._hide()
+        app.panel.hide()
 
 
 def test_every_panel_button_has_a_word(app):

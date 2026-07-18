@@ -216,7 +216,11 @@ These each cost real debugging. Verify them after touching windowing/audio.
    obvious three.** Panel tooltips are windows too, created over the game on
    hover, so `_Tooltip._show()` calls `prevent_focus_steal()` + `show_no_activate()`
    like everything else (`test_tooltips_do_not_steal_focus`). Any new window =
-   the same two calls.
+   the same two calls. It *also* calls `raise_without_focus()`: everything here is
+   `WS_EX_TOPMOST`, and `show_no_activate()` doesn't raise within that band — so a
+   tooltip shown over the (topmost) panel renders **behind** it, invisibly. Raise
+   it, without activating. `test_panel_tooltip_renders_above_the_panel` guards this
+   (and fails if the raise is removed — verified by mutation, not assumed).
 2. **Never `deiconify()`.** Show with `ShowWindow(SW_SHOWNOACTIVATE)`; hide with
    `SW_HIDE`. Tk's own map/unmap can activate the window.
 3. **Click-through** = `WS_EX_TRANSPARENT` (+ layered). The card and flash are
