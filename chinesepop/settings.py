@@ -77,6 +77,7 @@ DEFAULTS = {
     # --- panel / hotkeys ---
     "panel_hint_seconds": 4,
     "panel_max_deck_rows": 8,     # taller deck lists scroll instead of growing
+    "quiz_length": 20,            # Test Mode: questions per test (capped at pool)
     "recall_hotkeys": True,
     "hotkeys": {
         "panel": "ctrl+alt+c",

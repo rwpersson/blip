@@ -212,6 +212,33 @@ def test_card_is_placed_on_the_target_monitor(app, words):
     assert abs(x - (mx + (mw - w) // 2)) <= 1, "card isn't centered on it"
 
 
+def test_opening_test_mode_pauses_the_overlay(app, monkeypatch):
+    """Clicking Test Mode should pause the pops and silence a word being read,
+    so the user doesn't have to pause manually first."""
+    import chinesepop.quiz_ui as quiz_ui
+    from chinesepop.app import PAUSED, RUNNING
+    from chinesepop.audio import player
+
+    launched = {}
+    monkeypatch.setattr(quiz_ui, "open_quiz",
+                        lambda deck_id=None: launched.__setitem__("deck", deck_id))
+    prev = app.state
+    try:
+        app.play()
+        pump(app, 0.2)
+        assert app.state == RUNNING
+        tok = player._play_token
+        app.open_quiz()
+        pump(app, 0.1)
+        assert app.state == PAUSED, "Test Mode didn't pause the overlay"
+        assert player._play_token > tok, "in-flight audio wasn't cancelled"
+        assert launched.get("deck") is not None, "the quiz launcher wasn't called"
+        assert not u.IsWindowVisible(win32.hwnd_of(app.card.text))
+    finally:
+        app.stop()
+        app.state = prev
+
+
 def test_tooltips_do_not_steal_focus(app):
     """Tooltips are new windows that appear over the game — every window this app
     creates has to obey the no-activate rule, not just the obvious three."""
