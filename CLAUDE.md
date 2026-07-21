@@ -227,7 +227,18 @@ read-only, so `save()` writes to `user_dir()/decks`, and `load_all()` lets a use
   (`FLASH_NEW_UNTIL`), study-first (first exposure shows the answer; recall-delay
   only from the 2nd), and recall hotkeys.
 - **Hotkeys** (global, work while a game has focus): `Ctrl+Alt+C` panel,
-  `Ctrl+Alt+M` silent, `Ctrl+Alt+J` knew it, `Ctrl+Alt+K` didn't.
+  `Ctrl+Alt+M` silent, `Ctrl+Alt+F` fast, `Ctrl+Alt+J` knew it, `Ctrl+Alt+K` didn't.
+- **Fast mode** (`⚡`, `app.toggle_fast` / panel / `Ctrl+Alt+F`): denser pace for
+  covering more distinct words per hour (7h at 25s ≈ 106 new words, gated by the
+  ~9-exposure graduation). It (a) pops on `fast_interval_seconds` (8) instead of
+  `interval_seconds`, and (b) speaks **only the word**, at `fast_rate` (+40%). The
+  speed-up is a faster edge-tts **rate**, not sped-up playback — edge-tts changes
+  tempo while keeping pitch, so the tones survive (resampling would raise pitch and
+  wreck them). The fast word is a **separate content-addressed clip** (keyed by
+  rate), so `clips.specs_for` emits a `WORD_FAST` spec only when `fast_mode` is on;
+  enabling fast kicks a background `tts.generate_async` top-up, and a pop plays the
+  normal-rate word until its fast clip lands (`player._select_paths`). Persisted as
+  `fast_mode` so it also gates generation next launch.
 
 ## Hard-won gotchas — do not regress these
 

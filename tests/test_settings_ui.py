@@ -43,3 +43,14 @@ def test_numeric_rows_have_a_range_containing_the_default():
             if not lo <= DEFAULTS[key] <= hi:
                 bad.append(f"{tab}/{key}={DEFAULTS[key]} not in [{lo}, {hi}]")
     assert not bad, bad
+
+
+def test_migration_backfills_new_hotkeys_into_an_old_file():
+    """`hotkeys` is a nested dict; an older settings.json overrides it wholesale
+    and would drop a hotkey added since (e.g. `fast`). Migration backfills it."""
+    from blip import settings as settings_mod
+    old = {"schema": 1, "hotkeys": {"panel": "ctrl+alt+c", "mute": "ctrl+alt+m"}}
+    migrated = settings_mod._migrate(old)
+    for name in settings_mod.DEFAULTS["hotkeys"]:
+        assert name in migrated["hotkeys"], f"{name} not backfilled"
+    assert migrated["hotkeys"]["panel"] == "ctrl+alt+c"   # existing keys untouched

@@ -26,6 +26,13 @@ DEFAULTS = {
     "first_popup_after": 2,
     "autostart": True,            # begin the cycle on launch
 
+    # --- fast mode (⚡): denser pace, quicker pops — toggle it live ---
+    "fast_mode": False,           # start in fast mode? (also the live toggle state)
+    "fast_interval_seconds": 8,   # pop interval while fast
+    "fast_rate": "+40%",          # word spoken at this edge-tts rate while fast
+                                  # (tempo change, not pitch — tones stay intact).
+                                  # Fast mode speaks only the word: no tones/meaning.
+
     # --- audio ---
     "play_audio": True,           # start with sound on
     "word_repeats": 3,
@@ -84,6 +91,7 @@ DEFAULTS = {
         "mute": "ctrl+alt+m",
         "got": "ctrl+alt+j",
         "miss": "ctrl+alt+k",
+        "fast": "ctrl+alt+f",
     },
 
     # --- tts (Phase 3 swaps the provider) ---
@@ -137,6 +145,13 @@ def _migrate(data):
     v = data.get("schema", 0)
     if v < 1:
         data["schema"] = 1        # first versioned release; nothing to move yet
+    # `hotkeys` is a nested dict, so a whole-dict override from an older file
+    # silently drops any hotkey added since (e.g. `fast`). Backfill the missing
+    # ones from DEFAULTS so a new binding works without editing settings.json.
+    hk = data.get("hotkeys")
+    if isinstance(hk, dict):
+        for name, default in DEFAULTS["hotkeys"].items():
+            hk.setdefault(name, default)
     return data
 
 

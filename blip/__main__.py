@@ -1,6 +1,5 @@
 """Entry point:  python -m blip"""
 import sys
-import threading
 
 from . import decks as decks_mod
 from . import firstrun
@@ -37,18 +36,13 @@ def _generate_audio_in_background(decks, settings, app, log):
         if done == total or done % 25 == 0:
             log.info("audio %s/%s", done, total)
 
-    def run():
-        try:
-            ok, total = tts.generate(decks, settings, progress=on_progress)
-        except Exception:
-            log.exception("background audio generation crashed")
-            return
+    def on_done(ok, total):
         if total:
             _console(f"\rGenerating audio… {ok}/{total}  done.", newline=True)
             log.info("Audio generation done: %s/%s.", ok, total)
         app.root.after(0, app.panel.set_generating, False)
 
-    threading.Thread(target=run, daemon=True, name="audio-gen").start()
+    tts.generate_async(decks, settings, on_progress, on_done)
 
 
 def main(argv=None):
@@ -102,8 +96,8 @@ def main(argv=None):
              __import__("blip").__version__, len(decks), words,
              s.interval_seconds)
     hk = s.hotkeys
-    log.info("%s show/hide panel · %s silent%s",
-             hk["panel"], hk["mute"],
+    log.info("%s show/hide panel · %s silent · %s fast%s",
+             hk["panel"], hk["mute"], hk.get("fast", "—"),
              f" · {hk['got']}/{hk['miss']} knew it/didn't" if s.recall_hotkeys else "")
 
     # Build the overlay first, THEN synthesize missing audio in the background —

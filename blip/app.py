@@ -17,7 +17,7 @@ from . import decks as decks_mod
 from . import hotkeys as hk
 from . import scheduler as sched_mod
 from . import win32
-from .audio import cues, player
+from .audio import cues, player, tts
 from .logging_setup import get
 from .ui import theme
 from .ui.card import Card
@@ -37,6 +37,7 @@ class App:
         self.current = None
         self.annoying = settings.annoying_mode
         self.sound_on = settings.play_audio
+        self.fast = settings.get("fast_mode", False)
         player.set_audio(self.sound_on)
 
         self._next_job = self._hide_job = self._reveal_job = None
@@ -67,7 +68,7 @@ class App:
         self.panel = Panel(self.root, settings, decks, {
             "play": self.toggle_play, "stop": self.stop, "next": self.next_now,
             "replay": self.replay, "annoy": self.toggle_annoy,
-            "mute": self.toggle_mute, "quit": self.quit,
+            "mute": self.toggle_mute, "fast": self.toggle_fast, "quit": self.quit,
             "select_deck": self.select_deck,
             "settings": self.open_settings, "editor": self.open_editor,
             "catalog": self.open_catalog, "quiz": self.open_quiz,
@@ -77,6 +78,7 @@ class App:
         self._bar_h = self.panel.place(self.rect)
         self.panel.set_annoy(self.annoying)
         self.panel.set_sound(self.sound_on)
+        self.panel.set_fast(self.fast)
         self._refresh_decks()
 
     def _apply_dpi(self):
@@ -182,11 +184,12 @@ class App:
             self.card.render_answer(word, self.rect)
             self.flash.render(word, self.rect)
             player.play_word(word, self.s, self.deck, on_event=self._fx_emit,
-                             chime=chiming)
+                             chime=chiming, fast=self.fast)
         else:
             self.card.place(self.rect)
             self.card.show()
-            player.play_word(word, self.s, self.deck, chime=chiming)
+            player.play_word(word, self.s, self.deck, chime=chiming,
+                             fast=self.fast)
             if self.s.reveal_quiz and self.s.reveal_delay > 0 and not self._is_new:
                 self._reveal_job = self.root.after(
                     int(self.s.reveal_delay * 1000), lambda w=word: self._reveal(w))
@@ -202,12 +205,18 @@ class App:
         if self.current is word:
             self.card.render_answer(word, self.rect)
 
+    def _interval_ms(self):
+        """Milliseconds between pops — the fast interval when fast mode is on."""
+        secs = (self.s.fast_interval_seconds if self.fast
+                else self.s.interval_seconds)
+        return max(1, int(secs)) * 1000
+
     def _tick(self):
         if self.state != RUNNING:
             return
         self._show(self.sched.next())
         self._refresh_decks()
-        self._next_job = self.root.after(self.s.interval_seconds * 1000, self._tick)
+        self._next_job = self.root.after(self._interval_ms(), self._tick)
 
     # ---------- audio -> UI events ----------
     def _fx_emit(self, kind):
@@ -274,6 +283,31 @@ class App:
         player.set_audio(self.sound_on)
         self.panel.set_sound(self.sound_on)
 
+    def toggle_fast(self):
+        self.fast = not self.fast
+        self.s.set("fast_mode", self.fast)      # persisted: also gates fast-clip gen
+        self.s.save()
+        self.panel.set_fast(self.fast)
+        self._status()                          # status shows the new interval
+        if self.fast:
+            self._generate_fast_audio()         # background top-up of fast clips
+        if self.state == RUNNING:               # re-pace the pending pop
+            self._cancel(self._next_job)
+            self._next_job = self.root.after(self._interval_ms(), self._tick)
+
+    def _generate_fast_audio(self):
+        """Fill in the fast-rate word clips in the background (they only exist
+        once fast mode has been enabled). A pop plays the normal word until its
+        fast clip lands."""
+        def on_progress(done, _total, _w):
+            if done == 1:
+                self.root.after(0, self.panel.set_generating, True)
+
+        def on_done(_ok, _total):
+            self.root.after(0, self.panel.set_generating, False)
+
+        tts.generate_async(self.decks, self.s, on_progress, on_done)
+
     def open_settings(self):
         """Launch Settings as a separate process — it needs focus, and our
         windows must never take it."""
@@ -328,7 +362,9 @@ class App:
 
     # ---------- plumbing ----------
     def _status(self):
-        self.panel.set_status(self.state, self.s.interval_seconds)
+        secs = (self.s.fast_interval_seconds if self.fast
+                else self.s.interval_seconds)
+        self.panel.set_status(self.state, secs)
 
     def _cancel(self, job):
         if job:
@@ -358,6 +394,8 @@ class App:
                     self.rate_current(True)
                 elif hid == hk.MISS:
                     self.rate_current(False)
+                elif hid == hk.FAST:
+                    self.toggle_fast()
         except queue.Empty:
             pass
         self.root.after(80, self._poll_hotkey)

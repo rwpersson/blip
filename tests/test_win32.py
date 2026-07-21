@@ -212,6 +212,32 @@ def test_card_is_placed_on_the_target_monitor(app, words):
     assert abs(x - (mx + (mw - w) // 2)) <= 1, "card isn't centered on it"
 
 
+def test_fast_mode_toggle_changes_pace_and_persists(app, monkeypatch):
+    """⚡ Fast flips the pop interval and remembers itself, and its clip top-up
+    runs off the network."""
+    from blip.audio import tts
+    from blip.ui import theme
+
+    monkeypatch.setattr(tts, "generate_async", lambda *a, **k: None)   # no network
+    monkeypatch.setattr(app.s, "save", lambda *a, **k: None)           # no real file
+    prev_fast, prev_set = app.fast, app.s.get("fast_mode")
+    try:
+        app.fast = False
+        assert app._interval_ms() == app.s.interval_seconds * 1000
+        app.toggle_fast()
+        assert app.fast is True
+        assert app._interval_ms() == app.s.fast_interval_seconds * 1000
+        assert app.s.get("fast_mode") is True                 # persisted
+        assert app.panel.fast_btn.cget("bg") == theme.BTN_PRIMARY  # filled when on
+        app.toggle_fast()
+        assert app.fast is False
+        assert app._interval_ms() == app.s.interval_seconds * 1000
+    finally:
+        app.fast = prev_fast
+        app.s.set("fast_mode", prev_set)
+        app.panel.set_fast(prev_fast)
+
+
 def test_opening_test_mode_pauses_the_overlay(app, monkeypatch):
     """Clicking Test Mode should pause the pops and silence a word being read,
     so the user doesn't have to pause manually first."""

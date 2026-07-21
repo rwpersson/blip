@@ -27,7 +27,7 @@ _user32.GetMessageW.argtypes = [ctypes.POINTER(wintypes.MSG), wintypes.HWND,
                                 wintypes.UINT, wintypes.UINT]
 
 # hotkey ids
-PANEL, GOT, MISS, MUTE = 1, 2, 3, 4
+PANEL, GOT, MISS, MUTE, FAST = 1, 2, 3, 4, 5
 
 _MOD_NAMES = {"ctrl": MOD_CONTROL, "control": MOD_CONTROL, "alt": MOD_ALT,
               "shift": MOD_SHIFT, "win": MOD_WIN}
@@ -83,14 +83,14 @@ class HotkeyListener(threading.Thread):
         return self.ok
 
 
-NAMES = {PANEL: "panel", GOT: "got", MISS: "miss", MUTE: "mute"}
+NAMES = {PANEL: "panel", GOT: "got", MISS: "miss", MUTE: "mute", FAST: "fast"}
 
 
 def build(settings):
     """Turn the settings hotkey map into (id, mods, vk) tuples."""
     specs = settings.hotkeys
     out = []
-    wanted = [(PANEL, "panel"), (MUTE, "mute")]
+    wanted = [(PANEL, "panel"), (MUTE, "mute"), (FAST, "fast")]
     if settings.recall_hotkeys:
         wanted += [(GOT, "got"), (MISS, "miss")]
     for hid, name in wanted:

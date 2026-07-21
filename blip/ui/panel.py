@@ -139,9 +139,11 @@ class Panel:
         ), bar, P)
 
         # --- toggles ---
-        self.annoy_btn, self.mute_btn = self._fill_row((
+        self.annoy_btn, self.mute_btn, self.fast_btn = self._fill_row((
             ("😈 Annoy", self.a["annoy"], "Flash words big across the screen"),
             ("🔊 Sound", self.a["mute"],  "Mute everything"),
+            ("⚡ Fast", self.a["fast"],
+             "Faster pace: quicker pops, word-only audio, sped up"),
         ), bar, P)
 
         # --- deck sources: get curated decks, or author your own ---
@@ -397,6 +399,15 @@ class Panel:
     def set_sound(self, on):
         self.mute_btn.configure(text="🔊 Sound" if on else "🔇 Silent",
                                 fg=theme.FG if on else theme.SUB)
+
+    def set_fast(self, on):
+        # filled when on, like the primary action, so the faster pace is obvious
+        self.fast_btn.configure(
+            text="⚡ Fast" if on else "⚡ Fast: off",
+            bg=theme.BTN_PRIMARY if on else theme.BTN,
+            fg=theme.BTN_PRIMARY_FG if on else theme.SUB)
+        self.fast_btn._bg = theme.BTN_PRIMARY if on else theme.BTN
+        self.fast_btn._hi = theme.BTN_PRIMARY_HI if on else theme.BTN_HI
 
     # ---------- visibility ----------
     def place(self, rect=None):

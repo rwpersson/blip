@@ -103,3 +103,20 @@ def test_orphans_finds_stale_clips_after_a_voice_change(settings, tmp_path):
     after = clips.paths_for(deck["words"][0], settings, deck, tmp_path)
     assert after[clips.MEANING] == before[clips.MEANING]     # untouched
     assert after[clips.WORD] != before[clips.WORD]           # re-keyed
+
+
+def test_fast_mode_adds_a_faster_word_clip_only_when_enabled(settings, tmp_path):
+    """Fast mode speaks the word at a quicker rate — a separate content-addressed
+    clip, generated only when fast mode is on so it costs nothing otherwise."""
+    w = {"id": "1", "term": "你好", "reading": "nǐ hǎo", "tones": "3-3",
+         "meaning": "hi"}
+    assert clips.WORD_FAST not in clips.paths_for(w, settings, audio_dir=tmp_path)
+
+    settings.set("fast_mode", True)
+    paths = clips.paths_for(w, settings, audio_dir=tmp_path)
+    assert clips.WORD_FAST in paths
+    # a distinct file from the normal word (different rate -> different hash)
+    assert paths[clips.WORD_FAST] != paths[clips.WORD]
+    # and it's the rate fast mode declares
+    assert paths[clips.WORD_FAST] == clips.clip_path(
+        "你好", settings.voice, settings.fast_rate, tmp_path)

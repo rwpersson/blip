@@ -29,6 +29,10 @@ SPEC = [
         ("display_seconds", "Card stays for (0 = until next)", "int", (0, 120), ""),
         ("first_popup_after", "First card after (s)", "int", (0, 120), ""),
         ("autostart", "Start automatically on launch", "bool", None, ""),
+        ("fast_interval_seconds", "Fast mode: seconds between words", "int",
+         (2, 120), "The pace while ⚡ Fast is on (panel button / Ctrl+Alt+F)."),
+        ("fast_rate", "Fast mode: word speed", "str", None,
+         "e.g. +40%. Fast mode speaks only the word, at this speed."),
     ]),
     ("Audio", [
         ("play_audio", "Sound on at launch", "bool", None,
@@ -95,6 +99,7 @@ SPEC = [
     ("Hotkeys", [
         ("panel", "Show/hide panel", "hotkey", None, ""),
         ("mute", "Silent mode", "hotkey", None, ""),
+        ("fast", "Fast mode", "hotkey", None, ""),
         ("got", "I knew it", "hotkey", None, ""),
         ("miss", "I didn't know it", "hotkey", None, ""),
     ]),
