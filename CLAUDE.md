@@ -330,6 +330,17 @@ These each cost real debugging. Verify them after touching windowing/audio.
     focus — nothing to do with us. It cried wolf ~1 run in 8. Ask `GetWindowThread
     ProcessId` who owns the foreground window: ours = a real failure, anyone else's
     = skip. Don't loosen the guarantee to hide an unrelated flake.
+20. **Audio generates in the BACKGROUND, after the overlay is up** (`__main__.
+    _generate_audio_in_background`). It used to run synchronously before
+    `App().run()`; a fresh launch with hundreds of clips then showed no window for
+    minutes and looked hung — and closing it mid-way cached nothing, so the next
+    launch started over (a real user hit this loop). Now the window is up
+    immediately and cards whose clips aren't ready play silently until they are.
+    Two things this needs: generation writes each clip to a `.part` temp then
+    `os.replace()`s it in, so a card mid-generation never plays a truncated file
+    (`tts._synthesize_atomic`); and progress shows in the console, the log, and the
+    panel status (`panel.set_generating`). Don't move generation back ahead of
+    `run()`. Guarded by `tests/test_startup.py`.
 
 ## Testing
 

@@ -67,6 +67,7 @@ class Panel:
         self.decks = decks
         self.a = actions
         self.visible = False
+        self._state, self._interval, self._generating = "stopped", 0, False
         self.f = f = theme.ui_font(root)
         P = theme.PAD
 
@@ -362,15 +363,31 @@ class Panel:
                     fill=theme.ACCENT if active else theme.PROGRESS_IDLE, width=0)
 
     def set_status(self, state, interval):
-        if state == "running":
+        self._state, self._interval = state, interval
+        self._refresh_status()
+
+    def set_generating(self, active):
+        """Show a background-audio-generation indicator in the status line. Called
+        True when generation starts, False when it finishes. Steady text (no live
+        count — that's in the console/log) so it doesn't resize the panel per clip;
+        re-anchor once when it appears/clears in case the panel is already open."""
+        self._generating = bool(active)
+        self._refresh_status()
+        if self.visible:
+            self.place()
+
+    def _refresh_status(self):
+        if self._state == "running":
             self.play_btn.configure(text="⏸  Pause")
-            dot, txt = theme.STATUS_OK, f"every {interval}s"
-        elif state == "paused":
+            dot, txt = theme.STATUS_OK, f"every {self._interval}s"
+        elif self._state == "paused":
             self.play_btn.configure(text="▶  Play")
             dot, txt = theme.STATUS_WARN, "paused"
         else:
             self.play_btn.configure(text="▶  Play")
             dot, txt = theme.STATUS_STOP, "stopped"
+        if self._generating:
+            txt += "  ·  ⏳ audio…"
         self.status_lbl.configure(text=f"● {txt}", fg=dot)
 
     def set_annoy(self, on):

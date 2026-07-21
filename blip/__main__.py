@@ -1,5 +1,6 @@
 """Entry point:  python -m blip"""
 import sys
+import threading
 
 from . import decks as decks_mod
 from . import firstrun
@@ -7,6 +8,47 @@ from . import paths, settings as settings_mod, win32
 from .app import App
 from .audio import cues, tts
 from .logging_setup import get, setup
+
+
+def _console(msg, newline=False):
+    """Best-effort console write. Under pythonw / a frozen build there's no real
+    stdout, so this must never raise."""
+    try:
+        sys.stdout.write(msg + ("\n" if newline else ""))
+        sys.stdout.flush()
+    except Exception:
+        pass
+
+
+def _generate_audio_in_background(decks, settings, app, log):
+    """Fill in missing audio AFTER the overlay is up, on a daemon thread.
+
+    A big first launch has hundreds of clips to synthesize over the network; doing
+    it before the window appeared made the app look hung for minutes (and if you
+    closed it mid-way, nothing was cached, so the next launch started over). Now
+    the overlay is usable immediately and cards whose clips aren't ready yet just
+    play silently until they are. Progress shows in the console, the log, and the
+    panel's status line."""
+    def on_progress(done, total, _word):
+        if done == 1:
+            log.info("Generating %s audio clip(s) in the background…", total)
+            app.root.after(0, app.panel.set_generating, True)
+        _console(f"\rGenerating audio… {done}/{total}   ")
+        if done == total or done % 25 == 0:
+            log.info("audio %s/%s", done, total)
+
+    def run():
+        try:
+            ok, total = tts.generate(decks, settings, progress=on_progress)
+        except Exception:
+            log.exception("background audio generation crashed")
+            return
+        if total:
+            _console(f"\rGenerating audio… {ok}/{total}  done.", newline=True)
+            log.info("Audio generation done: %s/%s.", ok, total)
+        app.root.after(0, app.panel.set_generating, False)
+
+    threading.Thread(target=run, daemon=True, name="audio-gen").start()
 
 
 def main(argv=None):
@@ -55,10 +97,6 @@ def main(argv=None):
             log.error("Every deck is filtered out.")
             return 1
 
-    ok, total = tts.generate(decks, s)
-    if total:
-        log.info("Generated %s/%s audio clips.", ok, total)
-
     words = sum(len(d["words"]) for d in decks)
     log.info("Blip %s — %s deck(s), %s words, every %ss.",
              __import__("blip").__version__, len(decks), words,
@@ -68,7 +106,11 @@ def main(argv=None):
              hk["panel"], hk["mute"],
              f" · {hk['got']}/{hk['miss']} knew it/didn't" if s.recall_hotkeys else "")
 
-    App(decks, s).run()
+    # Build the overlay first, THEN synthesize missing audio in the background —
+    # so the app is on screen and usable at once instead of blocking for minutes.
+    app = App(decks, s)
+    _generate_audio_in_background(decks, s, app, log)
+    app.run()
     return 0
 
 
