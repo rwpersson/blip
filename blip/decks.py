@@ -52,14 +52,22 @@ def word_say(w):
 def _normalize(deck_id, data, source):
     if isinstance(data, list):                 # tolerate a bare word list
         data = {"name": deck_id, "words": data}
-    return {
+    # Keep every key the file carried (forward-compat: a companion app — Blipfeed
+    # — or a future version may add fields we don't manage; they must survive a
+    # round-trip). Then normalize the ones we own on top.
+    deck = {k: v for k, v in data.items() if k not in ("id", "source")}
+    deck.update({
         "id": deck_id,
         "name": data.get("name", deck_id),
         "language": data.get("language", DEFAULT_LANGUAGE),
         "voice": data.get("voice"),            # optional per-deck voice override
+        # `archived` (the Blipfeed⇄Blip seam): retired from review, still listed.
+        # Absent means active — readers must treat missing as False.
+        "archived": bool(data.get("archived", False)),
         "words": data.get("words", []),
         "source": source,
-    }
+    })
+    return deck
 
 
 def validate(deck):
@@ -153,6 +161,8 @@ def apply_filters(decks, settings):
     hide_swears = settings.get("hide_swears")
     out = []
     for d in decks:
+        if d.get("archived"):
+            continue                  # archived = listable in the editor, not reviewed
         if enabled and d["id"] not in enabled:
             continue
         words = d["words"]
@@ -199,16 +209,33 @@ def deck_path(deck):
     return user_decks_dir() / f"{deck['id']}.json"
 
 
+# Deck-level keys we serialize ourselves; everything else is carried through
+# untouched so a rewrite never drops a field we don't manage (contract rule).
+_MANAGED_DECK_KEYS = {"id", "source", "schema", "name", "language", "voice",
+                      "archived", "words"}
+
+
 def to_json(deck):
-    """Serialize, dropping our in-memory bookkeeping and empty fields."""
-    return {
+    """Serialize, dropping our in-memory bookkeeping and empty fields.
+
+    Preserves the archive flag and any unknown deck-level keys — the rewrite rule
+    of the deck-archive contract: carry through fields you didn't intend to change,
+    so a routine save on our side never silently un-archives or loses data.
+    """
+    out = {
         "schema": SCHEMA,
         "name": deck.get("name", deck["id"]),
         "language": deck.get("language", DEFAULT_LANGUAGE),
         "voice": deck.get("voice"),
-        "words": [{k: w[k] for k in _WORD_FIELDS if w.get(k)}
-                  for w in deck.get("words", [])],
     }
+    if deck.get("archived"):
+        out["archived"] = True         # omit when active, to keep active decks clean
+    for k, v in deck.items():          # forward-compat: unknown deck-level keys
+        if k not in _MANAGED_DECK_KEYS:
+            out[k] = v
+    out["words"] = [{k: w[k] for k in _WORD_FIELDS if w.get(k)}
+                    for w in deck.get("words", [])]
+    return out
 
 
 def save(deck, path=None):
@@ -223,7 +250,18 @@ def save(deck, path=None):
 def create(name, language=DEFAULT_LANGUAGE, deck_id=None, voice=None):
     """A new, empty deck (not yet saved)."""
     return {"id": deck_id or slugify(name), "name": name, "language": language,
-            "voice": voice, "words": [], "source": None}
+            "voice": voice, "archived": False, "words": [], "source": None}
+
+
+def set_archived(deck, archived):
+    """Archive or un-archive a deck — the Blipfeed⇄Blip contract flag.
+
+    Only the flag changes: words, voice, name, schema, ids, audio, and any keys
+    we don't manage are all preserved (to_json carries them through). Writes the
+    deck and returns its path.
+    """
+    deck["archived"] = bool(archived)
+    return save(deck)
 
 
 def next_word_id(deck):

@@ -46,6 +46,12 @@ class EditorController:
                 raise
         self.decks = [d for d in self.decks if d is not deck]
 
+    def set_archived(self, deck, archived):
+        """Archive/un-archive a deck (the Blipfeed⇄Blip flag). Archived decks stay
+        listed here but drop out of the overlay's review rotation next launch."""
+        decks_mod.set_archived(deck, archived)
+        return deck
+
     # ---------- cards ----------
     def autofill(self, term, language):
         """(reading, tones) suggestion for the form — never forced on the user."""

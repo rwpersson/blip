@@ -94,7 +94,7 @@ generate_audio.py · new_deck.py · expand_wordbank.py    (thin CLIs)
 
 | Data | Shape |
 |---|---|
-| `decks/<id>.json` | `{"schema":1,"name":…,"language":"zh-CN","voice":null,"words":[…]}` |
+| `decks/<id>.json` | `{"schema":1,"name":…,"language":"zh-CN","voice":null,"archived":false?,"words":[…]}` |
 | word | `{id, term, reading?, tones?, cat, meaning, note, alt?, say?}` |
 | `state.json` | `{"schema":3,"decks":{<id>:{"words":{id:{e,due,intro}},"last":id}},"last_deck":…}` |
 
@@ -106,6 +106,24 @@ names, which is what keeps imported/third-party decks working.
 where it lives: `tts.py` generates from `specs_for()`, `player.py` plays from
 `paths_for()`, so generation and playback can't disagree about a filename. Anything
 that touches audio goes through it — never build a path by hand.
+
+## Deck archive flag (the Blipfeed ⇄ Blip seam)
+
+A deck may carry an optional top-level `"archived": true`. It's the agreed interface
+with **Blipfeed** (the companion OCR app that writes `immersion-*.json` decks): an
+archived deck is **retired from review but still a real, listed deck**. Contract in
+`C:\Blipfeed\docs\DECK_ARCHIVE_CONTRACT.md`. What Blip does:
+- **Load** (`decks._normalize`): normalise `archived` to a bool (**absent = false**).
+- **Review** (`decks.apply_filters`): archived decks are **excluded** from the study
+  rotation (and so from the panel picker) — but `load_all()` still returns them, so
+  the editor lists them.
+- **Toggle**: the editor's **Archive / Un-archive** button (`decks.set_archived` →
+  `save`), marked with 📦 in the deck list.
+- **Preserve everything on rewrite** — the crux. `_normalize` keeps *all* file keys
+  and `to_json` re-emits unknown deck-level keys + `archived` (omitted when false), so
+  a routine save never drops a field Blipfeed wrote or silently un-archives. Only the
+  flag changes; `words`, `voice`, ids, audio, `state.json` progress are untouched.
+  `tests/test_decks.py` + `test_display_and_filters.py` + `test_editor.py` cover it.
 
 ## Creator decks (the catalog)
 

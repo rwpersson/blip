@@ -86,6 +86,17 @@ def test_a_deck_emptied_by_filters_is_dropped(settings):
     assert d.apply_filters(decks, settings) == []
 
 
+def test_archived_decks_are_excluded_from_review(decks_fixture, settings):
+    """The archive contract: an archived deck stays a real deck but drops out of
+    the review rotation. Absent/false stays active."""
+    decks_fixture[0]["archived"] = True          # deck 'a' retired
+    out = [x["id"] for x in d.apply_filters(decks_fixture, settings)]
+    assert out == ["b"]                          # 'a' excluded, 'b' still reviewed
+    # explicit false is treated exactly like absent
+    decks_fixture[0]["archived"] = False
+    assert [x["id"] for x in d.apply_filters(decks_fixture, settings)] == ["a", "b"]
+
+
 # ------------------------------ hotkeys -------------------------------------
 @pytest.mark.parametrize("spec,mods_vk", [
     ("ctrl+alt+c", (hk.MOD_CONTROL | hk.MOD_ALT, ord("C"))),

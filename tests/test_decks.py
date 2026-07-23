@@ -71,3 +71,43 @@ def test_load_all_skips_unreadable_deck(tmp_path, monkeypatch):
     (tmp_path / "broken.json").write_text("{not json", encoding="utf-8")
     monkeypatch.setattr(d.paths, "decks_dirs", lambda: [tmp_path])
     assert d.load_all() == []                    # logged, not crashed
+
+
+# --- deck-archive contract (Blipfeed <-> Blip seam) --------------------------
+def test_archived_flag_defaults_to_false_when_absent():
+    """Readers must treat a missing `archived` key as active."""
+    deck = d._normalize("x", {"name": "X", "words": []}, None)
+    assert deck["archived"] is False
+
+
+def test_archived_true_round_trips_and_omits_when_false(tmp_path):
+    deck = d._normalize("imm", {"name": "Imm", "archived": True,
+                                "words": [{"id": "1", "term": "你好",
+                                           "meaning": "hi"}]}, None)
+    assert deck["archived"] is True
+    p = d.save(deck, tmp_path / "imm.json")
+    assert json.loads(p.read_text(encoding="utf-8"))["archived"] is True
+
+    # un-archiving omits the key entirely (writers keep active decks clean)
+    d.set_archived(deck, False)
+    raw = json.loads(p.read_text(encoding="utf-8"))
+    assert "archived" not in raw
+    # ...and it reloads as active
+    assert d._normalize("imm", raw, None)["archived"] is False
+
+
+def test_rewrite_preserves_unknown_keys_and_words(tmp_path):
+    """The rewrite rule: a routine save must carry through fields we don't manage
+    (forward-compat) and never touch the words, or Blip could silently drop data
+    a companion app wrote."""
+    src = {"schema": 1, "name": "Imm", "language": "zh-CN", "voice": None,
+           "archived": True, "blipfeed_meta": {"graduated": "2026-07-21"},
+           "words": [{"id": "1", "term": "你好", "reading": "nǐ hǎo",
+                      "tones": "3-3", "cat": "common", "meaning": "hi",
+                      "note": "greeting", "alt": "您好"}]}
+    deck = d._normalize("imm", src, None)
+    raw = d.to_json(deck)
+    assert raw["blipfeed_meta"] == {"graduated": "2026-07-21"}   # unknown key kept
+    assert raw["archived"] is True
+    w = raw["words"][0]
+    assert (w["note"], w["alt"], w["tones"]) == ("greeting", "您好", "3-3")

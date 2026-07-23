@@ -46,6 +46,9 @@ class EditorWindow:
         ttk.Button(bar, text="Import…", command=self._import).pack(side="left", padx=4)
         ttk.Button(bar, text="Export…", command=self._export).pack(side="left")
         ttk.Button(bar, text="Delete deck", command=self._delete_deck).pack(side="left", padx=4)
+        self.archive_btn = ttk.Button(bar, text="Archive",
+                                      command=self._toggle_archive)
+        self.archive_btn.pack(side="left")
         ttk.Button(bar, text="Creator decks…",
                    command=self._catalog).pack(side="right")
 
@@ -114,7 +117,10 @@ class EditorWindow:
     def _load_decks(self, select_id=None):
         self.deck_list.delete(0, "end")
         for d in self.c.decks:
-            self.deck_list.insert("end", f"{d['name']}  ({len(d['words'])})")
+            mark = "📦 " if d.get("archived") else ""
+            tail = "  · archived" if d.get("archived") else ""
+            self.deck_list.insert("end",
+                                  f"{mark}{d['name']}  ({len(d['words'])}){tail}")
         if self.c.decks:
             idx = 0
             if select_id:
@@ -129,8 +135,21 @@ class EditorWindow:
         if not sel:
             return
         self.deck = self.c.decks[sel[0]]
+        self.archive_btn.configure(
+            text="Un-archive" if self.deck.get("archived") else "Archive")
         self._refresh_cards()
         self._new_card()
+
+    def _toggle_archive(self):
+        if not self.deck:
+            return
+        now = not self.deck.get("archived", False)
+        self.c.set_archived(self.deck, now)
+        self._load_decks(select_id=self.deck["id"])   # re-mark + reselect
+        verb = "Archived" if now else "Restored"
+        where = ("excluded from review (next launch)" if now
+                 else "back in review (next launch)")
+        self._say(f"{verb} “{self.deck['name']}” — {where}")
 
     def _visible_words(self):
         q = self.search.get().strip().lower()

@@ -140,3 +140,23 @@ def test_user_deck_overrides_bundled_one(settings, tmp_path, monkeypatch):
     assert len(loaded) == 1                        # not two decks with one id
     assert loaded[0]["name"] == "Week 1 (edited)"  # the user's copy wins
     assert d.word_term(loaded[0]["words"][0]) == "新"
+
+
+def test_set_archived_toggles_and_persists(ctl):
+    """The deck manager's archive toggle (Blipfeed<->Blip contract). Archiving a
+    deck excludes it from review but keeps its cards intact; it survives a reload."""
+    from blip import settings as settings_mod
+    deck = ctl.create_deck("Immersion")
+    ctl.save_card(deck, {"term": "你好", "meaning": "hi"})
+
+    ctl.set_archived(deck, True)
+    assert deck["archived"] is True
+    reloaded = d.load_all()[0]
+    assert reloaded["archived"] is True                 # persisted
+    assert len(reloaded["words"]) == 1                  # cards untouched
+    # excluded from the review rotation
+    s = settings_mod.Settings()
+    assert d.apply_filters([reloaded], s) == []
+
+    ctl.set_archived(deck, False)
+    assert d.load_all()[0]["archived"] is False         # restored
