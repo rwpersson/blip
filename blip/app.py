@@ -38,6 +38,7 @@ class App:
         self.annoying = settings.annoying_mode
         self.sound_on = settings.play_audio
         self.fast = settings.get("fast_mode", False)
+        self._dpi_base = {}          # unscaled originals of the DPI-scaled keys
         player.set_audio(self.sound_on)
 
         self._next_job = self._hide_job = self._reveal_job = None
@@ -98,8 +99,27 @@ class App:
         except tk.TclError:
             log.exception("could not set Tk scaling")
         for key in ("card_width", "margin"):     # pixel dimensions
+            self._dpi_base[key] = self.s[key]     # remember the user's real value
             self.s.set(key, int(self.s[key] * scale))
         log.info("display scale %.2fx — scaled fonts and card geometry", scale)
+
+    def _persist_settings(self):
+        """Save settings.json holding the user's UN-scaled values.
+
+        _apply_dpi() scales card_width/margin into self.s in place for this
+        monitor's DPI. Those are *derived* pixels — writing them back would make
+        the next launch scale the already-scaled value again, compounding every
+        run (the card creeping down the screen, 24px margin ballooning to 400+).
+        So restore the base values across the save, then re-apply the scaling for
+        the still-running session.
+        """
+        scaled_now = {}
+        for key, base in self._dpi_base.items():
+            scaled_now[key] = self.s[key]
+            self.s.set(key, base)
+        self.s.save()
+        for key, val in scaled_now.items():
+            self.s.set(key, val)
 
     # ---------- decks ----------
     @property
@@ -286,7 +306,7 @@ class App:
     def toggle_fast(self):
         self.fast = not self.fast
         self.s.set("fast_mode", self.fast)      # persisted: also gates fast-clip gen
-        self.s.save()
+        self._persist_settings()                # never write back DPI-scaled geometry
         self.panel.set_fast(self.fast)
         self._status()                          # status shows the new interval
         if self.fast:

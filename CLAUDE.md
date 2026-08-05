@@ -309,6 +309,13 @@ These each cost real debugging. Verify them after touching windowing/audio.
     1536×960 for a real 1920×1200 screen). *With* it, nothing is scaled for us, so
     `app._apply_dpi()` must scale Tk fonts and the pixel settings — otherwise
     everything comes out tiny. The two go together; never enable one alone.
+    **`_apply_dpi()` mutates `self.s` in place** (`card_width`, `margin` become
+    scaled pixels), so those are *derived* values — **never persist them.** A
+    `self.s.save()` in the overlay process would write the scaled pixels, and next
+    launch scales them *again*: compounding every run (a real bug — `toggle_fast`'s
+    save crept `margin` 24→415 and marched the card down the screen). App-side
+    saves go through `app._persist_settings()`, which restores the unscaled base
+    (`self._dpi_base`) across the write. Guarded by `test_startup.py`.
 12. **`winfo_screenwidth()` is the PRIMARY monitor only.** Place windows using
     `win32.monitor_rect(settings.monitor)`, which is threaded through as `app.rect`.
 13. **ONE `Tk()` root per PROCESS — in the tests too.** An earlier version of this

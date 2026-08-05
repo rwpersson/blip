@@ -81,3 +81,27 @@ def test_a_crash_in_generation_never_escapes_the_worker(monkeypatch):
     main_mod._generate_audio_in_background(["deck"], object(), app,
                                            logging.getLogger("test"))
     _wait_for_gen_thread()                   # thread exits cleanly, no crash
+
+
+def test_persist_settings_never_writes_dpi_scaled_geometry(tmp_path, monkeypatch):
+    """The compounding-card bug: _apply_dpi scales margin/card_width into self.s
+    in place for the current monitor's DPI. A save must write the user's UNSCALED
+    values — otherwise each launch re-scales the already-scaled value and the card
+    marches down the screen (margin 24 -> 30 -> 37 -> ... -> 400+)."""
+    import json
+    import types
+
+    from blip import app as app_mod, paths
+    from blip import settings as settings_mod
+
+    monkeypatch.setattr(paths, "settings_file", lambda: tmp_path / "settings.json")
+    s = settings_mod.Settings()
+    s.set("margin", 30)                       # as if _apply_dpi scaled 24 * 1.25
+    s.set("card_width", 450)                  # ...and 360 * 1.25
+    fake = types.SimpleNamespace(s=s, _dpi_base={"margin": 24, "card_width": 360})
+
+    app_mod.App._persist_settings(fake)
+
+    saved = json.loads((tmp_path / "settings.json").read_text(encoding="utf-8"))
+    assert saved["margin"] == 24 and saved["card_width"] == 360   # base, not scaled
+    assert s["margin"] == 30 and s["card_width"] == 450           # session unchanged
